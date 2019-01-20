@@ -1,4 +1,4 @@
-# vue-tailwind-purge
+# vue-cli-app for creating poster walls!
 
 ## Project setup
 ```
