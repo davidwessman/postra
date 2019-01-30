@@ -1,29 +1,24 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
+  <div id="app" class="flex flex-col h-screen">
+    <!-- <div 
+      class="flex justify-center w-full bg-blue-lightest py-4 border-b border-solid border-grey text-center h-20"
+    >
+      <h1>Poster wall!</h1>
+    </div> -->
+    <div class="flex flex-grow max-h-full justify-center py-1">
+      <Wall />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import HelloWorld from "./components/HelloWorld.vue";
+import Wall from "./components/Wall.vue";
 
 @Component({
   components: {
-    HelloWorld
+    Wall
   }
 })
 export default class App extends Vue {}
 </script>
-
-<style>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
