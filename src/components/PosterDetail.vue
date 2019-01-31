@@ -2,19 +2,15 @@
   <div>
     <div class="editfields">
       <div>
-        <label>id: </label>
-        <input
-          v-if="addingPoster"
-          type="number"
-          v-model="editingPoster.id"
-          ref="id"
-          placeholder="id"
-        />
         <label v-if="!addingPoster" class="value">{{ editingPoster.id }}</label>
       </div>
       <div>
         <label>url: </label>
-        <input v-model="editingPoster.url" ref="url" placeholder="url" />
+        <select ref="url" v-model="editingPoster.url">
+          <option v-for="url in urls" v-bind:key="url" v-bind:value="url">
+            {{ url }}
+          </option>
+        </select>
       </div>
       <div>
         <label>width x heigth: </label>
@@ -39,6 +35,8 @@ import { Poster } from "../poster";
 export default class PosterDetail extends Vue {
   @Prop()
   poster!: Poster;
+  @Prop({ default: [] })
+  urls!: string[];
   addingPoster = !this.poster;
   editingPoster!: Poster | null;
 
@@ -48,8 +46,7 @@ export default class PosterDetail extends Vue {
   }
 
   $refs!: {
-    id: HTMLElement;
-    name: HTMLElement;
+    url: HTMLElement;
   };
 
   addPoster() {
@@ -75,11 +72,7 @@ export default class PosterDetail extends Vue {
   }
 
   mounted() {
-    if (this.addingPoster && this.editingPoster) {
-      this.$refs.id.focus();
-    } else {
-      this.$refs.name.focus();
-    }
+    this.$refs.url.focus();
   }
 
   save() {
