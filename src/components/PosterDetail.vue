@@ -1,29 +1,70 @@
 <template>
-  <div>
+  <div class="w-full max-w-xs">
     <div class="editfields">
       <div>
         <label v-if="!addingPoster" class="value">{{ editingPoster.id }}</label>
       </div>
-      <div>
-        <label>url: </label>
-        <select ref="url" v-model="editingPoster.url">
+      <div class="mb-4">
+        <label class="block text-grey-darker text-sm font-bold mb-2" for="url">
+          URL:
+        </label>
+        <select
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-dark"
+          ref="url"
+          v-model="editingPoster.url"
+        >
           <option v-for="url in urls" v-bind:key="url" v-bind:value="url">
             {{ url }}
           </option>
         </select>
       </div>
-      <div>
-        <label>width x heigth: </label>
-        <input v-model="editingPoster.width" placeholder="width" />
+      <div class="mb-4">
+        <label
+          class="block text-grey-darker text-sm font-bold mb-2"
+          for="resolution"
+        >
+          Width x height:
+        </label>
         <input
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-dark"
+          v-model="editingPoster.width"
+          placeholder="width"
+        />
+        <input
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-dark"
           v-model="editingPoster.heigth"
           placeholder="heigth"
           @keyup.enter="save"
         />
       </div>
+      <div class="mb-4">
+        <label
+          class="block text-grey-darker text-sm font-bold mb-2"
+          for="position"
+        >
+          X &amp; y:
+        </label>
+        <input
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-dark"
+          v-model="editingPoster.x"
+          placeholder="x"
+        />
+        <input
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-dark"
+          v-model="editingPoster.y"
+          placeholder="y"
+          @keyup.enter="save"
+        />
+      </div>
     </div>
-    <button @click="clear">Cancel</button>
-    <button @click="save">Save</button>
+    <div class="flex justify-between">
+      <button class="p-2 border border-black rounded" @click="save">
+        Save
+      </button>
+      <button class="p-2 border border-black rounded" @click="clear">
+        Cancel
+      </button>
+    </div>
   </div>
 </template>
 

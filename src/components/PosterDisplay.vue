@@ -1,5 +1,6 @@
 <template>
   <image
+    @click="onClick(poster)"
     :xlink:href="poster.url"
     :width="posterWidth"
     :heigth="posterHeight"
@@ -22,6 +23,13 @@ export default class PosterDisplay extends Vue {
   x!: number;
   @Prop({ default: 50 })
   y!: number;
+  @Prop()
+  onClick!: Function;
+
+  created() {
+    this.poster.x = this.x;
+    this.poster.y = this.y;
+  }
 
   get posterWidth() {
     return this.poster.width * this.scale + "%";
@@ -32,12 +40,12 @@ export default class PosterDisplay extends Vue {
   }
 
   get topLeftX() {
-    let x = this.x - (this.poster.width * this.scale) / 2;
+    let x = this.poster.x - (this.poster.width * this.scale) / 2;
     return x + "%";
   }
 
   get topLeftY() {
-    let y = this.y - (this.poster.heigth * this.scale) / 2;
+    let y = this.poster.y - (this.poster.heigth * this.scale) / 2;
     return y + "%";
   }
 }

@@ -1,9 +1,8 @@
 <template>
   <div class="flex w-full flex-wrap">
-    <div class="w-full">
+    <div class="flex w-full h-screen px-auto justify-center">
       <svg
-        width="100%"
-        heigth="100%"
+        class="h-screen w-auto"
         xmlns="http://www.w3.org/2000/svg"
         role="presentation"
         viewBox="0 0 15 10"
@@ -16,6 +15,7 @@
         />
         <PosterDisplay
           v-for="poster in posters"
+          v-bind:onClick="onSelect"
           :key="poster.id"
           :poster="poster"
           :x="posterXs[poster.id]"
@@ -23,8 +23,12 @@
         />
       </svg>
     </div>
-    <div class="w-full">
-      <button @click="enableAddMode" v-if="!addingPoster && !selectedPoster">
+    <div class="flex w-full justify-center py-2">
+      <button
+        class="p-2 border border-black rounded"
+        @click="enableAddMode"
+        v-if="!addingPoster && !selectedPoster"
+      >
         Add
       </button>
       <transition name="fade">
@@ -65,7 +69,7 @@ export default class Wall extends Vue {
     "https://posterstore.se/images/2x/normal/vee-speers-birthdat.jpg",
     "https://posterstore.se/images/2x/normal/morning-sun.jpg",
     "https://posterstore.se/images/2x/normal/flower-bouquet.jpg"
-  ]
+  ];
 
   get posterWidth() {
     let width = this.posters.reduce((acc, p) => {
