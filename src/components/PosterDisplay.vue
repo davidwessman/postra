@@ -1,19 +1,32 @@
 <template>
-  <image
-    @click="onClick(poster)"
-    :xlink:href="poster.url"
-    :width="posterWidth"
-    :heigth="posterHeight"
-    :x="topLeftX"
-    :y="topLeftY"
-  />
+  <VueDragResize
+    :isActive="true"
+    :w="posterWidth"
+    :h="posterHeight"
+    v-on:resizeing="resize"
+    v-on:dragging="resize"
+  >
+    <image
+      :xlink:href="poster.url"
+      :width="posterWidth"
+      :heigth="posterHeight"
+      :x="topLeftX"
+      :y="topLeftY"
+      @click="onClick(poster)"
+    />
+  </VueDragResize>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
+import VueDragResize from "vue-drag-resize";
 import { Poster } from "../poster";
 
-@Component
+@Component({
+  components: {
+    VueDragResize
+  }
+})
 export default class PosterDisplay extends Vue {
   @Prop()
   poster!: Poster;
@@ -29,6 +42,11 @@ export default class PosterDisplay extends Vue {
   created() {
     this.poster.x = this.x;
     this.poster.y = this.y;
+  }
+
+  resize(newRect: any) {
+    this.poster.x = newRect.left;
+    this.poster.y = newRect.top;
   }
 
   get posterWidth() {

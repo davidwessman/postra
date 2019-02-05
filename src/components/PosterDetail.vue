@@ -9,11 +9,11 @@
           URL:
         </label>
         <select
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-dark"
           ref="url"
           v-model="editingPoster.url"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-dark"
         >
-          <option v-for="url in urls" v-bind:key="url" v-bind:value="url">
+          <option v-for="url in urls" :key="url" :value="url">
             {{ url }}
           </option>
         </select>
@@ -26,33 +26,14 @@
           Width x height:
         </label>
         <input
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-dark"
           v-model="editingPoster.width"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-dark"
           placeholder="width"
         />
         <input
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-dark"
           v-model="editingPoster.heigth"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-dark"
           placeholder="heigth"
-          @keyup.enter="save"
-        />
-      </div>
-      <div class="mb-4">
-        <label
-          class="block text-grey-darker text-sm font-bold mb-2"
-          for="position"
-        >
-          X &amp; y:
-        </label>
-        <input
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-dark"
-          v-model="editingPoster.x"
-          placeholder="x"
-        />
-        <input
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-dark"
-          v-model="editingPoster.y"
-          placeholder="y"
           @keyup.enter="save"
         />
       </div>

@@ -15,8 +15,8 @@
         />
         <PosterDisplay
           v-for="poster in posters"
-          v-bind:onClick="onSelect"
           :key="poster.id"
+          :onClick="onSelect"
           :poster="poster"
           :x="posterXs[poster.id]"
           :y="posterYs[poster.id]"
@@ -25,9 +25,9 @@
     </div>
     <div class="flex w-full justify-center py-2">
       <button
+        v-if="!addingPoster && !selectedPoster"
         class="p-2 border border-black rounded"
         @click="enableAddMode"
-        v-if="!addingPoster && !selectedPoster"
       >
         Add
       </button>
