@@ -26,12 +26,12 @@
           Width x height:
         </label>
         <input
-          v-model="editingPoster.width"
+          v-model.number="editingPoster.width"
           class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-dark"
           placeholder="width"
         />
         <input
-          v-model="editingPoster.heigth"
+          v-model.number="editingPoster.heigth"
           class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-dark"
           placeholder="heigth"
           @keyup.enter="save"

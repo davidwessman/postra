@@ -1,28 +1,7 @@
 <template>
   <div class="flex w-full flex-wrap">
     <div class="flex w-full h-screen px-auto justify-center">
-      <svg
-        class="h-screen w-auto"
-        xmlns="http://www.w3.org/2000/svg"
-        role="presentation"
-        viewBox="0 0 15 10"
-      >
-        <image
-          class="z-0"
-          :xlink:href="bg_image"
-          heigth="100%"
-          width="100%"
-          preserveAspectRatio="xMinYMid meet"
-        />
-        <PosterDisplay
-          v-for="poster in posters"
-          :key="poster.id"
-          :onClick="onSelect"
-          :poster="poster"
-          :x="posterXs[poster.id]"
-          :y="posterYs[poster.id]"
-        />
-      </svg>
+      <Posters :posters="posters" @onSelect="onSelect" />
     </div>
     <div
       class="absolute pin-b flex bg-blue-transparent w-full justify-center py-2 z-40"
@@ -48,21 +27,19 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import PosterDetail from "./PosterDetail.vue";
-import PosterDisplay from "./PosterDisplay.vue";
+import Posters from "./Posters.vue";
 import { Poster } from "../poster";
 
 @Component({
   components: {
     PosterDetail,
-    PosterDisplay
+    Posters
   }
 })
 export default class Wall extends Vue {
-  bg_image = require("../assets/rawpixel-760112-unsplash.jpg");
   addingPoster = false;
   selectedPoster: Poster | null = null;
   posters: Poster[] = [];
-  space = 10;
   nextId: number = 0;
   posterUrls: string[] = [
     "https://posterstore.se/images/2x/normal/peonies.jpg",
@@ -71,50 +48,6 @@ export default class Wall extends Vue {
     "https://posterstore.se/images/2x/normal/morning-sun.jpg",
     "https://posterstore.se/images/2x/normal/flower-bouquet.jpg"
   ];
-
-  get posterWidth() {
-    let width = this.posters.reduce((acc, p) => {
-      return acc + p.width;
-    }, 0);
-    width += (this.posters.length - 1) * this.space;
-    return width;
-  }
-
-  get posterXs() {
-    let count = this.posters.length;
-    switch (this.posters.length) {
-      case 1:
-        return [50];
-      case 2:
-        return [35, 65];
-      case 3:
-        return [25, 50, 75];
-      case 4:
-        return [35, 65, 35, 65];
-      case 5:
-        return [25, 50, 75, 35, 65];
-      default:
-        return [];
-    }
-  }
-
-  get posterYs() {
-    let count = this.posters.length;
-    switch (this.posters.length) {
-      case 1:
-        return [40];
-      case 2:
-        return [40, 40];
-      case 3:
-        return [40, 40, 40];
-      case 4:
-        return [30, 30, 60, 60];
-      case 5:
-        return [30, 30, 30, 60, 60];
-      default:
-        return [];
-    }
-  }
 
   created() {
     this.posters.push({
@@ -140,10 +73,6 @@ export default class Wall extends Vue {
     this.selectedPoster = null;
   }
 
-  getPosters() {
-    return this.posters;
-  }
-
   posterChanged(poster: Poster, mode: string) {
     // eslint-disable-next-line
     console.log("poster changed", poster);
@@ -159,7 +88,6 @@ export default class Wall extends Vue {
 
   onSelect(poster: Poster) {
     this.addingPoster = false;
-    this.selectedPoster = null;
     this.selectedPoster = poster;
   }
 
@@ -167,7 +95,5 @@ export default class Wall extends Vue {
     this.addingPoster = false;
     this.selectedPoster = null;
   }
-
-  scale = 100 / 300;
 }
 </script>

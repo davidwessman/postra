@@ -20,8 +20,10 @@ import { Poster } from "../poster";
 export default class PosterDisplay extends Vue {
   @Prop()
   poster!: Poster;
-  @Prop({ default: 100 / 300 })
-  scale!: number;
+  @Prop({ default: 1 })
+  hScale!: number;
+  @Prop({ default: 1 })
+  wScale!: number;
   @Prop({ default: 500 })
   x!: number;
   @Prop({ default: 500 })
@@ -34,26 +36,21 @@ export default class PosterDisplay extends Vue {
     this.poster.y = this.y;
   }
 
-  resize(newRect: any) {
-    this.poster.x = newRect.left;
-    this.poster.y = newRect.top;
-  }
-
   get posterWidth() {
-    return this.poster.width * this.scale + "%";
+    return this.poster.width * this.wScale + "%";
   }
 
   get posterHeight() {
-    return this.poster.heigth * this.scale + "%";
+    return this.poster.heigth * this.hScale + "%";
   }
 
   get topLeftX() {
-    let x = this.poster.x - (this.poster.width * this.scale) / 2;
+    let x = this.poster.x - (this.poster.width * this.wScale) / 2;
     return x + "%";
   }
 
   get topLeftY() {
-    let y = this.poster.y - (this.poster.heigth * this.scale) / 2;
+    let y = this.poster.y - (this.poster.heigth * this.hScale) / 2;
     return y + "%";
   }
 }
