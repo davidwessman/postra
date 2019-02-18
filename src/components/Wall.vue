@@ -8,6 +8,7 @@
         viewBox="0 0 15 10"
       >
         <image
+          class="z-0"
           :xlink:href="bg_image"
           heigth="100%"
           width="100%"
@@ -23,23 +24,23 @@
         />
       </svg>
     </div>
-    <div class="flex w-full justify-center py-2">
+    <div
+      class="absolute pin-b flex bg-blue-transparent w-full justify-center py-2 z-40"
+    >
       <button
         v-if="!addingPoster && !selectedPoster"
-        class="p-2 border border-black rounded"
+        class="p-2 border border-grey-darker bg-white rounded text-grey-darker"
         @click="enableAddMode"
       >
         Add
       </button>
-      <transition name="fade">
-        <PosterDetail
-          v-if="selectedPoster || addingPoster"
-          :poster="selectedPoster"
-          :urls="posterUrls"
-          @unselect="unselect"
-          @posterChanged="posterChanged"
-        />
-      </transition>
+      <PosterDetail
+        v-if="selectedPoster || addingPoster"
+        :poster="selectedPoster"
+        :urls="posterUrls"
+        @unselect="unselect"
+        @posterChanged="posterChanged"
+      />
     </div>
   </div>
 </template>
@@ -157,6 +158,8 @@ export default class Wall extends Vue {
   }
 
   onSelect(poster: Poster) {
+    this.addingPoster = false;
+    this.selectedPoster = null;
     this.selectedPoster = poster;
   }
 

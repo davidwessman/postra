@@ -39,10 +39,18 @@
       </div>
     </div>
     <div class="flex justify-between">
-      <button class="p-2 border border-black rounded" @click="save">
+      <button
+        class="p-2 border rounded border-grey-darker bg-white
+               hover:bg-grey-darker hover:border-grey-light hover:text-white"
+        @click="save"
+      >
         Save
       </button>
-      <button class="p-2 border border-black rounded" @click="clear">
+      <button
+        class="p-2 border rounded border-grey-darker bg-white
+               hover:bg-grey-darker hover:border-grey-light hover:text-white"
+        @click="clear"
+      >
         Cancel
       </button>
     </div>
@@ -60,21 +68,21 @@ export default class PosterDetail extends Vue {
   @Prop({ default: [] })
   urls!: string[];
   addingPoster = !this.poster;
-  editingPoster!: Poster | null;
-
-  @Watch("poster")
-  onPosterChanged(value: string, oldValue: string) {
-    this.editingPoster = this.cloneIt();
-  }
-
+  editingPoster: Poster | null = null;
   $refs!: {
     url: HTMLElement;
   };
+
+  @Watch("poster")
+  onPosterChanged(value: Poster, oldValue: Poster) {
+    this.editingPoster = Object.assign({}, value);
+  }
 
   addPoster() {
     const poster = <Poster>this.editingPoster;
     this.emitRefresh(poster, "add");
   }
+
   @Emit("unselect")
   clear() {
     this.editingPoster = null;
