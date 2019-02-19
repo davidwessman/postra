@@ -31,16 +31,12 @@
 
 <script lang="ts">
 import { Component, Emit, Prop, Vue, Watch } from "vue-property-decorator";
-import VueSelectImage from 'vue-select-image';
 import { Frame } from "../frame";
 import { Poster } from "../poster";
 
-// require('vue-select-image/dist/vue-select-image.css')
 
 @Component({
-  components: {
-    VueSelectImage
-  }
+  components: {}
 })
 export default class FrameDetail extends Vue {
   @Prop()
