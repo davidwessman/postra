@@ -44,8 +44,11 @@ export default class Wall extends Vue {
   @Prop()
   onSelect!: Function;
 
-  wScale: number = 1 / 300;
-  hScale: number = 1 / 200;
+  @Prop({ default: 1 })
+  hScale!: number;
+
+  @Prop({ default: 1 })
+  wScale!: number;
 
   space: number = 10;
   width: number = 0;

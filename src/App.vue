@@ -2,23 +2,42 @@
   <div id="app" class="flex flex-col h-screen">
     <div class="flex w-full flex-wrap">
       <div class="flex w-full h-screen px-auto justify-center">
+        <div class="absolute pin-t">
+          <button
+            class="mt-1 p-2 border rounded border-grey-darker bg-white
+                  hover:bg-grey-darker hover:border-grey-light hover:text-white"
+            @click="togglePatternSwitching"
+          >
+            Switch pattern
+          </button>
+        </div>
         <Wall
-          :posters="posters"
-          :pattern="selectedPattern"
+          :h-scale="hScale"
           :on-select="selectFrame"
+          :pattern="selectedPattern"
+          :posters="posters"
+          :w-scale="wScale"
         />
       </div>
-      <div
-        class="absolute pin-b flex bg-blue-transparent w-full justify-center py-2 z-40"
-      >
-        <FrameDetail
-          v-if="selectedFrame"
-          :frame="selectedFrame"
-          :urls="posterUrls"
-          @unselect="unselectFrame"
-          @frameChanged="frameChanged"
-        />
-      </div>
+    </div>
+    <div
+      class="absolute pin-b flex bg-blue-transparent w-full justify-center py-2 z-40"
+    >
+      <PatternSwitcher
+        v-if="switchPattern"
+        :h-scale="hScale"
+        :patterns="patterns"
+        :selected="selectedPattern"
+        :w-scale="wScale"
+        @switched="patternSwitched"
+      />
+      <PosterSwitcher
+        v-if="selectedFrame"
+        :frame="selectedFrame"
+        :urls="posterUrls"
+        @unselect="unselectFrame"
+        @frameChanged="frameChanged"
+      />
     </div>
   </div>
 </template>
@@ -26,15 +45,17 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import Wall from "./components/Wall.vue";
-import FrameDetail from "./components/FrameDetail.vue";
+import PatternSwitcher from "./components/PatternSwitcher.vue";
+import PosterSwitcher from "./components/PosterSwitcher.vue";
 import { Poster } from "./poster";
 import { Pattern } from "./pattern";
 import { Frame } from "./frame";
 
 @Component({
   components: {
-    Wall,
-    FrameDetail
+    PatternSwitcher,
+    PosterSwitcher,
+    Wall
   }
 })
 export default class App extends Vue {
@@ -45,6 +66,7 @@ export default class App extends Vue {
   patterns: Pattern[] = [];
   nextPostId: number = 0;
   nextPatternId: number = 0;
+  switchPattern: boolean = false;
   posterUrls: string[] = [
     "https://posterstore.se/images/2x/normal/peonies.jpg",
     "https://posterstore.se/images/2x/normal/133.jpg",
@@ -53,35 +75,14 @@ export default class App extends Vue {
     "https://posterstore.se/images/2x/normal/flower-bouquet.jpg"
   ];
 
+  wScale: number = 1 / 300;
+  hScale: number = 1 / 200;
+
   created() {
     this.addPoster(this.posterUrls[0]);
-    this.addPattern([
-      {
-        id: 0,
-        x: -(35 + 25 + 7),
-        y: 10,
-        width: 50,
-        height: 70,
-        poster: null
-      },
-      {
-        id: 1,
-        x: 0,
-        y: 10,
-        width: 70,
-        height: 100,
-        poster: null
-      },
-      {
-        id: 2,
-        x: 35 + 25 + 7,
-        y: 10,
-        width: 50,
-        height: 70,
-        poster: null
-      }
-    ]);
-    this.selectPattern(this.patterns[0]);
+    this.addPattern(this.basePatterns[0]);
+    this.addPattern(this.basePatterns[1]);
+    this.patternSwitched(this.patterns[0]);
   }
 
   enableAddMode() {
@@ -121,8 +122,70 @@ export default class App extends Vue {
     this.selectedFrame = null;
   }
 
-  selectPattern(pattern: Pattern) {
+  togglePatternSwitching() {
+    this.switchPattern = !this.switchPattern;
+  }
+
+  patternSwitched(pattern: Pattern) {
     this.selectedPattern = pattern;
+    this.switchPattern = false;
+  }
+
+  get basePatterns() {
+    return [
+      [
+        {
+          id: 0,
+          x: -(35 + 25 + 7),
+          y: 10,
+          width: 50,
+          height: 70,
+          poster: null
+        },
+        {
+          id: 1,
+          x: 0,
+          y: 10,
+          width: 70,
+          height: 100,
+          poster: null
+        },
+        {
+          id: 2,
+          x: 35 + 25 + 7,
+          y: 10,
+          width: 50,
+          height: 70,
+          poster: null
+        }
+      ],
+      [
+        {
+          id: 0,
+          x: -(35 + 35 + 7),
+          y: 10,
+          width: 70,
+          height: 100,
+          poster: null
+        },
+        {
+          id: 1,
+          x: 0,
+          y: 10,
+          width: 70,
+          height: 100,
+          poster: null
+        },
+        {
+          id: 2,
+          x: 35 + 35 + 7,
+          y: 10,
+          width: 70,
+          height: 100,
+          poster: null
+        }
+      ]
+    ];
   }
 }
 </script>

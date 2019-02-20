@@ -2,12 +2,13 @@
   <div>
     <label class="value">Frame: {{ editingFrame.id }}</label>
     <div class="flex flex-row w-full p-3 mb-2">
-      <img v-for="poster in getPosters"
-          :key="poster.id"
-          :src="poster.src"
-          class="h-64 w-auto mx-auto"
-          :class="{ 'border-8 border-teal': selectedPoster && selectedPoster.id === poster.id }"
-          @click="onSelectPoster(poster)"
+      <img
+        v-for="poster in getPosters"
+        :key="poster.id"
+        :src="poster.src"
+        class="h-64 w-auto mx-auto"
+        :class="{ 'border-8 border-teal': selectedPoster && selectedPoster.id === poster.id }"
+        @click="onSelectPoster(poster)"
       />
     </div>
     <div class="flex justify-between">
@@ -87,10 +88,6 @@ export default class FrameDetail extends Vue {
   }
 
   save() {
-    this.updateFrame();
-  }
-
-  updateFrame() {
     const frame = <Frame>this.editingFrame;
     frame.poster = this.selectedPoster;
     this.emitRefresh(frame, "update");
@@ -99,6 +96,7 @@ export default class FrameDetail extends Vue {
   onSelectPoster(poster: Poster) {
     console.log(poster)
     this.selectedPoster = poster;
+    this.save()
   }
 }
 </script>

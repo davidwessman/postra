@@ -1,17 +1,8 @@
 <template>
-  <svg>
-    <image
-      v-if="helper.hasImage(frame)"
-      class="z-20"
-      :xlink:href="frame.poster.src"
-      :width="helper.width(frame)"
-      :height="helper.height(frame)"
-      :x="helper.x(frame)"
-      :y="helper.y(frame)"
-      @click="onClick(frame)"
-    />
+  <svg @click="onClick(pattern)" class="bg-white">
     <rect
-      v-if="!helper.hasImage(frame)"
+      v-for="frame in pattern.frames"
+      :key="frame.id"
       class="z-20"
       :width="helper.width(frame)"
       :height="helper.height(frame)"
@@ -20,7 +11,6 @@
       stroke="black"
       stroke-width="1"
       fill="transparent"
-      @click="onClick(frame)"
     />
   </svg>
 </template>
@@ -28,13 +18,14 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { Frame, FrameHelper } from "../frame";
+import { Pattern } from "../pattern";
 
 @Component({
   components: {}
 })
-export default class FrameDisplay extends Vue {
+export default class PatternDisplay extends Vue {
   @Prop()
-  frame!: Frame;
+  pattern!: Pattern;
   @Prop({ default: 1 })
   hScale!: number;
   @Prop({ default: 1 })
