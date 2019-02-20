@@ -1,5 +1,5 @@
 <template>
-  <svg @click="onClick(pattern)" class="bg-white">
+  <svg class="bg-white" @click="onClick(pattern)">
     <rect
       v-for="frame in pattern.frames"
       :key="frame.id"

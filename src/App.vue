@@ -1,42 +1,34 @@
 <template>
   <div id="app" class="flex flex-col h-screen">
     <div class="flex w-full flex-wrap">
-      <div class="flex w-full h-screen px-auto justify-center">
-        <div class="absolute pin-t">
-          <button
-            class="mt-1 p-2 border rounded border-grey-darker bg-white
-                  hover:bg-grey-darker hover:border-grey-light hover:text-white"
-            @click="togglePatternSwitching"
-          >
-            Switch pattern
-          </button>
-        </div>
-        <Wall
-          :h-scale="hScale"
-          :on-select="selectFrame"
-          :pattern="selectedPattern"
-          :posters="posters"
-          :w-scale="wScale"
-        />
+      <div class="flex w-full absolute pin-t justify-center p-3">
+        <button
+          class="p-2 border rounded border-grey-darker bg-white
+                hover:bg-grey-darker hover:border-grey-light hover:text-white"
+          @click="togglePatternSwitching"
+        >
+          Switch pattern
+        </button>
       </div>
+      <Wall
+        :h-scale="hScale"
+        :pattern="selectedPattern"
+        :posters="posters"
+        :poster-urls="posterUrls"
+        :w-scale="wScale"
+        :frame-changed="frameChanged"
+      />
     </div>
     <div
+      v-if="switchPattern"
       class="absolute pin-b flex bg-blue-transparent w-full justify-center py-2 z-40"
     >
       <PatternSwitcher
-        v-if="switchPattern"
         :h-scale="hScale"
         :patterns="patterns"
         :selected="selectedPattern"
         :w-scale="wScale"
         @switched="patternSwitched"
-      />
-      <PosterSwitcher
-        v-if="selectedFrame"
-        :frame="selectedFrame"
-        :urls="posterUrls"
-        @unselect="unselectFrame"
-        @frameChanged="frameChanged"
       />
     </div>
   </div>
@@ -60,7 +52,6 @@ import { Frame } from "./frame";
 })
 export default class App extends Vue {
   addingPoster = false;
-  selectedFrame: Frame | null = null;
   selectedPattern: Pattern | null = null;
   posters: Poster[] = [];
   patterns: Pattern[] = [];
@@ -79,21 +70,18 @@ export default class App extends Vue {
   hScale: number = 1 / 200;
 
   created() {
-    this.addPoster(this.posterUrls[0]);
     this.addPattern(this.basePatterns[0]);
     this.addPattern(this.basePatterns[1]);
     this.patternSwitched(this.patterns[0]);
-  }
-
-  enableAddMode() {
-    this.addingPoster = true;
-    this.selectedFrame = null;
   }
 
   frameChanged(frame: Frame, mode: string) {
     if (this.selectedPattern !== null) {
       let index = this.selectedPattern.frames.findIndex(f => frame.id === f.id);
       this.selectedPattern.frames.splice(index, 1, frame);
+      if (frame !== null) {
+        this.posters.push(<Poster>frame.poster);
+      }
     }
   }
 
@@ -114,14 +102,6 @@ export default class App extends Vue {
     this.nextPatternId += 1;
   }
 
-  selectFrame(frame: Frame) {
-    this.selectedFrame = frame;
-  }
-
-  unselectFrame() {
-    this.selectedFrame = null;
-  }
-
   togglePatternSwitching() {
     this.switchPattern = !this.switchPattern;
   }
@@ -129,6 +109,15 @@ export default class App extends Vue {
   patternSwitched(pattern: Pattern) {
     this.selectedPattern = pattern;
     this.switchPattern = false;
+    let posterId = 0;
+    this.selectedPattern.frames.filter(frame=> {
+      return frame.poster === null;
+    }).forEach(frame => {
+      if (this.posters.length >= posterId + 1) {
+        frame.poster = this.posters[posterId];
+        posterId += 1;
+      }
+    });
   }
 
   get basePatterns() {

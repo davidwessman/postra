@@ -1,37 +1,55 @@
 <template>
-  <svg
-    class="h-screen w-auto"
-    xmlns="http://www.w3.org/2000/svg"
-    role="presentation"
-    viewBox="0 0 145 100"
-  >
-    <image
-      class="z-0"
-      :xlink:href="bgImage"
-      height="100%"
-      width="100%"
-      preserveAspectRatio="xMinYMid meet"
-    />
-    <FrameDisplay
-      v-for="frame in frames"
-      :key="frame.id"
-      :frame="frame"
-      :hScale="hScale"
-      :wScale="wScale"
-      :on-click="onSelect"
-    />
-  </svg>
+  <div class="flex w-full h-screen px-auto justify-center">
+    <svg
+      class="h-screen w-auto"
+      xmlns="http://www.w3.org/2000/svg"
+      role="presentation"
+      viewBox="0 0 145 100"
+    >
+      <image
+        class="z-0"
+        :xlink:href="bgImage"
+        height="100%"
+        width="100%"
+        preserveAspectRatio="xMinYMid meet"
+      />
+      <FrameDisplay
+        v-for="frame in frames"
+        :key="frame.id"
+        :frame="frame"
+        :selected="selectedFrame === frame"
+        :hScale="hScale"
+        :wScale="wScale"
+        :on-click="selectFrame"
+      />
+    </svg>
+    <div
+      v-if="selectedFrame !== null"
+      class="absolute pin-b flex bg-blue-transparent w-full justify-center py-2 z-40"
+    >
+      <PosterSwitcher
+        v-if="selectedFrame"
+        :frame="selectedFrame"
+        :urls="posterUrls"
+        @unselect="unselectFrame"
+        @frameChanged="frameChanged"
+      />
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import FrameDisplay from "./FrameDisplay.vue";
+import PosterSwitcher from "./PosterSwitcher.vue";
 import { Pattern } from "../pattern";
 import { Poster } from "../poster";
+import { Frame } from "../frame";
 
 @Component({
   components: {
-    FrameDisplay
+    FrameDisplay,
+    PosterSwitcher
   }
 })
 export default class Wall extends Vue {
@@ -41,25 +59,20 @@ export default class Wall extends Vue {
   @Prop()
   pattern!: Pattern;
 
-  @Prop()
-  onSelect!: Function;
-
   @Prop({ default: 1 })
   hScale!: number;
 
   @Prop({ default: 1 })
   wScale!: number;
 
-  space: number = 10;
-  width: number = 0;
-  height: number = 0;
+  @Prop({ default: [] })
+  posterUrls!: string[];
 
+  @Prop()
+  frameChanged!: Function;
+
+  selectedFrame: Frame | null = null;
   bgImage = require("../assets/rawpixel-760112-unsplash.jpg");
-
-  // created() {
-  //   this.width = this.calculateWidth;
-  //   this.height = this.calculateHeight;
-  // }
 
   get frames() {
     if (this.pattern === null) {
@@ -68,66 +81,12 @@ export default class Wall extends Vue {
     return this.pattern.frames;
   }
 
-  get hSpace() {
-    return this.space * this.hScale;
+  selectFrame(frame: Frame) {
+    this.selectedFrame = frame;
   }
 
-  get wSpace() {
-    return this.space * this.wScale;
-  }
-
-  get calculateWidth() {
-    let width: number = this.pattern.frames.reduce(
-      (acc, frame) => +acc + +frame.width,
-      0
-    );
-
-    if (this.pattern.frames.length > 0) {
-      width += this.space * (this.pattern.frames.length - 1);
-    }
-    return width * this.wScale;
-  }
-
-  get calculateHeight() {
-    let height: number = this.pattern.frames.reduce(
-      (acc, frame) => +acc + +frame.height,
-      0
-    );
-
-    if (this.pattern.frames.length > 0) {
-      height += this.space * (this.pattern.frames.length - 1);
-    }
-    return height * this.hScale;
-  }
-
-  get posterXs() {
-    let pos = 50 - this.calculateWidth / 2;
-    let positions: number[] = [];
-    this.pattern.frames.forEach(frame => {
-      let half = (frame.width * this.wScale) / 2;
-      pos += half;
-      positions.push(pos);
-      pos += half + this.wSpace;
-    });
-    return positions;
-  }
-
-  get posterYs() {
-    let count = this.posters.length;
-    switch (this.posters.length) {
-      case 1:
-        return [40];
-      case 2:
-        return [40, 40];
-      case 3:
-        return [40, 40, 40];
-      case 4:
-        return [30, 30, 60, 60];
-      case 5:
-        return [30, 30, 30, 60, 60];
-      default:
-        return [];
-    }
+  unselectFrame() {
+    this.selectedFrame = null;
   }
 }
 </script>

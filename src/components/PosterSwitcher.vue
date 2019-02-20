@@ -11,22 +11,6 @@
         @click="onSelectPoster(poster)"
       />
     </div>
-    <div class="flex justify-between">
-      <button
-        class="p-2 border rounded border-grey-darker bg-white
-               hover:bg-grey-darker hover:border-grey-light hover:text-white"
-        @click="save"
-      >
-        Save
-      </button>
-      <button
-        class="p-2 border rounded border-grey-darker bg-white
-               hover:bg-grey-darker hover:border-grey-light hover:text-white"
-        @click="clear"
-      >
-        Cancel
-      </button>
-    </div>
   </div>
 </template>
 
@@ -39,7 +23,7 @@ import { Poster } from "../poster";
 @Component({
   components: {}
 })
-export default class FrameDetail extends Vue {
+export default class PosterSwitcher extends Vue {
   @Prop()
   frame!: Frame;
   @Prop({ default: [] })
