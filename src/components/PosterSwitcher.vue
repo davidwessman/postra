@@ -1,13 +1,23 @@
 <template>
-  <div>
-    <label class="value">Frame: {{ editingFrame.id }}</label>
-    <div class="flex flex-row w-full p-3 mb-2">
+  <div
+    class="fixed pin-b flex overflow-x-auto bg-blue-transparent justify-center p-3 z-40 w-full"
+  >
+    <div
+      v-for="poster in availablePosters"
+      :key="poster.id"
+      class="items-center h-auto mx-1"
+      style="width: 200px;"
+      :class="{
+        rotated: rotate(poster),
+      }"
+    >
       <img
-        v-for="poster in getPosters"
-        :key="poster.id"
         :src="poster.src"
-        class="h-64 w-auto mx-auto"
-        :class="{ 'border-8 border-teal': selectedPoster && selectedPoster.id === poster.id }"
+        :alt="poster.description"
+        class="mx-auto max-h-100 w-auto"
+        :class="{
+          'border-4 border-teal': editingFrame.poster && poster.id === editingFrame.poster.id,
+        }"
         @click="onSelectPoster(poster)"
       />
     </div>
@@ -17,8 +27,8 @@
 <script lang="ts">
 import { Component, Emit, Prop, Vue, Watch } from "vue-property-decorator";
 import { Frame } from "../frame";
+import { Orientation } from "../orientation";
 import { Poster } from "../poster";
-
 
 @Component({
   components: {}
@@ -26,26 +36,13 @@ import { Poster } from "../poster";
 export default class PosterSwitcher extends Vue {
   @Prop()
   frame!: Frame;
-  @Prop({ default: [] })
-  urls!: string[];
-  selectedPoster: Poster | null = null;
+  @Prop()
+  posters!: Poster[];
   editingFrame: Frame | null = null;
-  $refs!: {
-    url: HTMLElement;
-  };
 
-  get getPosters(): Poster[] {
-    let data: Poster[] = []
-    let id = 0;
-    this.urls.forEach(url => {
-      data.push({
-        id: id,
-        src: url,
-        alt: 'Alternative',
-      })
-      id += 1;
-    })
-    return data;
+  get rotated() {
+    return this.editingFrame &&
+      this.editingFrame.orientation === Orientation.Landscape;
   }
 
   @Watch("frame")
@@ -58,12 +55,23 @@ export default class PosterSwitcher extends Vue {
     this.editingFrame = null;
   }
 
-  cloneIt() {
-    return Object.assign({}, this.frame);
+  created() {
+    this.editingFrame = Object.assign({}, this.frame);
   }
 
-  created() {
-    this.editingFrame = this.cloneIt();
+  get availablePosters() {
+    return this.posters.filter(poster => {
+      return poster.orientation === Orientation.Both ||
+        (this.editingFrame && poster.orientation === this.editingFrame.orientation);
+    });
+  }
+
+  rotate(poster: Poster) {
+    if (this.editingFrame === null) {
+      return false;
+    }
+    return poster.orientation === Orientation.Both &&
+      this.editingFrame.orientation === Orientation.Landscape;
   }
 
   @Emit("frameChanged")
@@ -71,16 +79,11 @@ export default class PosterSwitcher extends Vue {
     this.clear();
   }
 
-  save() {
-    const frame = <Frame>this.editingFrame;
-    frame.poster = this.selectedPoster;
-    this.emitRefresh(frame, "update");
-  }
-
   onSelectPoster(poster: Poster) {
-    console.log(poster)
-    this.selectedPoster = poster;
-    this.save()
+    const frame = <Frame>this.editingFrame;
+    frame.poster = poster;
+    this.emitRefresh(frame, "update");
   }
 }
 </script>
+

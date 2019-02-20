@@ -1,14 +1,12 @@
 <template>
-  <rect
+  <image
     class="z-20"
+    :xlink:href="image"
     :width="width"
     :height="height"
     :x="x"
     :y="y"
     :transform="transform"
-    stroke="black"
-    stroke-width="0.5"
-    fill="transparent"
     @click="onClick"
   />
 </template>
@@ -16,22 +14,13 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { Frame, FrameHelper } from "../frame";
+import FrameDisplay from "./FrameDisplay.vue";
 
 @Component({
   components: {}
 })
-export default class FrameDisplay extends Vue {
+export default class PosterDisplay extends FrameDisplay {
   @Prop()
-  x!: string;
-  @Prop()
-  y!: string;
-  @Prop()
-  width!: string;
-  @Prop()
-  height!: string;
-  @Prop()
-  transform!: string;
-  @Prop()
-  onClick!: Function;
+  image!: string;
 }
 </script>

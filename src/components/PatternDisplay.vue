@@ -1,5 +1,5 @@
 <template>
-  <svg class="bg-white" @click="onClick(pattern)">
+  <svg class="bg-white" viewBox="0 0 145 100" @click="onClick(pattern)">
     <rect
       v-for="frame in pattern.frames"
       :key="frame.id"
@@ -9,7 +9,7 @@
       :x="helper.x(frame)"
       :y="helper.y(frame)"
       stroke="black"
-      stroke-width="1"
+      stroke-width="0.7"
       fill="transparent"
     />
   </svg>
@@ -36,7 +36,7 @@ export default class PatternDisplay extends Vue {
   helper: FrameHelper | null = null;
 
   created() {
-    this.helper = new FrameHelper(this.wScale, this.hScale);
+    this.helper = new FrameHelper(this.wScale, this.hScale, 0, 0);
   }
 }
 </script>

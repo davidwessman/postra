@@ -14,46 +14,55 @@
         preserveAspectRatio="xMinYMid meet"
       />
       <FrameDisplay
-        v-for="frame in frames"
+        v-for="frame in emptyFrames"
         :key="frame.id"
-        :frame="frame"
-        :selected="selectedFrame === frame"
-        :hScale="hScale"
-        :wScale="wScale"
-        :on-click="selectFrame"
-      />
+        :x="helper.x(frame)"
+        :y="helper.y(frame)"
+        :height="helper.height(frame)"
+        :width="helper.width(frame)"
+        :transform="helper.rotateSvg(frame)"
+        :on-click="() => selectFrame(frame)"
+      ></FrameDisplay>
+      <PosterDisplay
+        v-for="frame in posterFrames"
+        :key="frame.id"
+        :image="frame.poster.src"
+        :x="helper.x(frame)"
+        :y="helper.y(frame)"
+        :height="helper.height(frame)"
+        :width="helper.width(frame)"
+        :transform="helper.rotateSvg(frame)"
+        :on-click="() => selectFrame(frame)"
+      ></PosterDisplay>
     </svg>
-    <div
-      v-if="selectedFrame !== null"
-      class="absolute pin-b flex bg-blue-transparent w-full justify-center py-2 z-40"
-    >
-      <PosterSwitcher
-        v-if="selectedFrame"
-        :frame="selectedFrame"
-        :urls="posterUrls"
-        @unselect="unselectFrame"
-        @frameChanged="frameChanged"
-      />
-    </div>
+    <PosterSwitcher
+      v-if="selectedFrame"
+      :frame="selectedFrame"
+      :posters="posters"
+      @unselect="unselectFrame"
+      @frameChanged="frameChanged"
+    />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import FrameDisplay from "./FrameDisplay.vue";
+import PosterDisplay from "./PosterDisplay.vue";
 import PosterSwitcher from "./PosterSwitcher.vue";
 import { Pattern } from "../pattern";
 import { Poster } from "../poster";
-import { Frame } from "../frame";
+import { Frame, FrameHelper } from "../frame";
 
 @Component({
   components: {
     FrameDisplay,
+    PosterDisplay,
     PosterSwitcher
   }
 })
 export default class Wall extends Vue {
-  @Prop({ default: [] })
+  @Prop()
   posters!: Poster[];
 
   @Prop()
@@ -64,9 +73,6 @@ export default class Wall extends Vue {
 
   @Prop({ default: 1 })
   wScale!: number;
-
-  @Prop({ default: [] })
-  posterUrls!: string[];
 
   @Prop()
   frameChanged!: Function;
@@ -81,12 +87,29 @@ export default class Wall extends Vue {
     return this.pattern.frames;
   }
 
+  get emptyFrames() {
+    return this.frames.filter(frame => frame.poster === null);
+  }
+
+  get posterFrames() {
+    return this.frames.filter(frame => frame.poster !== null);
+  }
+
   selectFrame(frame: Frame) {
     this.selectedFrame = frame;
   }
 
   unselectFrame() {
     this.selectedFrame = null;
+  }
+
+  get helper() {
+    return new FrameHelper(
+      this.wScale,
+      this.hScale,
+      this.pattern.offsetX,
+      this.pattern.offsetY
+    );
   }
 }
 </script>
