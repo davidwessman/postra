@@ -1,37 +1,49 @@
 <template>
-  <div
-    class="fixed pin-b flex overflow-x-auto bg-blue-transparent justify-center p-3 z-40 w-full"
-  >
+  <Modal name="poster-switcher" @close="close">
+    <template v-slot:header>
+      <div>
+        <h2 class="mr-2">Change poster</h2>
+        <span>Select a poster by clicking it.</span>
+      </div>
+    </template>
     <div
-      v-for="poster in availablePosters"
-      :key="poster.id"
-      class="items-center h-auto mx-1"
-      style="width: 200px;"
-      :class="{
-        rotated: rotate(poster),
-      }"
+      class="flex flex-wrap justify-center overflow-y-auto p-3 z-40 w-full -mx-4"
+      style="max-height: 60%"
     >
-      <img
-        :src="poster.src"
-        :alt="poster.description"
-        class="mx-auto max-h-100 w-auto"
+      <div
+        v-for="poster in availablePosters"
+        :key="poster.id"
+        class="flex items-center h-auto w-1/5 px-2 mx-2"
         :class="{
-          'border-4 border-teal': editingFrame.poster && poster.id === editingFrame.poster.id,
+          rotated: rotate(poster),
+          'w-1/4 px-8': rotate(poster),
         }"
-        @click="onSelectPoster(poster)"
-      />
+      >
+        <img
+          :src="poster.src"
+          :alt="poster.description"
+          class="mx-auto max-h-100 w-auto"
+          :class="{
+            'border-4 border-teal': editingFrame.poster && poster.id === editingFrame.poster.id,
+          }"
+          @click="onSelectPoster(poster)"
+        >
+      </div>
     </div>
-  </div>
+  </Modal>
 </template>
 
 <script lang="ts">
 import { Component, Emit, Prop, Vue, Watch } from "vue-property-decorator";
+import Modal from "./modal.vue";
 import { Frame } from "../frame";
 import { Orientation } from "../orientation";
 import { Poster } from "../poster";
 
 @Component({
-  components: {}
+  components: {
+    Modal
+  }
 })
 export default class PosterSwitcher extends Vue {
   @Prop()
@@ -41,8 +53,10 @@ export default class PosterSwitcher extends Vue {
   editingFrame: Frame | null = null;
 
   get rotated() {
-    return this.editingFrame &&
-      this.editingFrame.orientation === Orientation.Landscape;
+    return (
+      this.editingFrame &&
+      this.editingFrame.orientation === Orientation.Landscape
+    );
   }
 
   @Watch("frame")
@@ -50,8 +64,8 @@ export default class PosterSwitcher extends Vue {
     this.editingFrame = Object.assign({}, value);
   }
 
-  @Emit("unselect")
-  clear() {
+  @Emit("close")
+  close() {
     this.editingFrame = null;
   }
 
@@ -61,8 +75,11 @@ export default class PosterSwitcher extends Vue {
 
   get availablePosters() {
     return this.posters.filter(poster => {
-      return poster.orientation === Orientation.Both ||
-        (this.editingFrame && poster.orientation === this.editingFrame.orientation);
+      return (
+        poster.orientation === Orientation.Both ||
+        (this.editingFrame &&
+          poster.orientation === this.editingFrame.orientation)
+      );
     });
   }
 
@@ -70,13 +87,15 @@ export default class PosterSwitcher extends Vue {
     if (this.editingFrame === null) {
       return false;
     }
-    return poster.orientation === Orientation.Both &&
-      this.editingFrame.orientation === Orientation.Landscape;
+    return (
+      poster.orientation === Orientation.Both &&
+      this.editingFrame.orientation === Orientation.Landscape
+    );
   }
 
   @Emit("frameChanged")
   emitRefresh(frame: Frame, mode: string) {
-    this.clear();
+    this.close();
   }
 
   onSelectPoster(poster: Poster) {

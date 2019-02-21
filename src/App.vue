@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="flex flex-col">
+  <div id="app" class="flex flex-col justify-center items-center">
     <Wall
       :h-scale="hScale"
       :pattern="selectedPattern"
@@ -7,7 +7,8 @@
       :w-scale="wScale"
       :frame-changed="frameChanged"
     />
-    <div class="flex w-full fixed pin-t justify-center p-3">
+    <div class="flex w-full sm:w-3/4 fixed pin-t justify-between p-3">
+      <h1>PosterWall</h1>
       <button
         class="p-2 border rounded border-grey-darker bg-white hover:bg-grey-darker hover:border-grey-light hover:text-white"
         @click="togglePatternSwitching"

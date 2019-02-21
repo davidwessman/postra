@@ -1,29 +1,38 @@
 <template>
-  <div>
-    <div class="flex flex-row w-full p-3 mb-2">
-      <PatternDisplay
-        v-for="pattern in patterns"
-        :key="pattern.id"
-        :pattern="pattern"
-        :w-scale="wScale"
-        :h-scale="hScale"
-        class="h-64 w-64 mx-auto hover:border-4 hover:border-teal"
-        :class="{
-          'border-8 border-teal': selected && selected.id === pattern.id
-        }"
-        :on-click="onSelectPattern"
-      />
-    </div>
-  </div>
+  <Modal name="poster-switcher" @close="close">
+    <template v-slot:header>
+      <div>
+        <h2 class="mr-2">Change pattern</h2>
+        <span>
+          Select a pattern by clicking it.
+        </span>
+      </div>
+    </template>
+    <PatternDisplay
+      v-for="pattern in patterns"
+      :key="pattern.id"
+      :pattern="pattern"
+      :w-scale="wScale"
+      :h-scale="hScale"
+      class="h-64 w-64 mx-auto"
+      :class="{
+        'border-4 border-teal': selected && selected.id === pattern.id,
+        'border border-black': !(selected && selected.id === pattern.id)
+      }"
+      :on-click="onSelectPattern"
+    />
+  </Modal>
 </template>
 
 <script lang="ts">
 import { Component, Emit, Prop, Vue } from "vue-property-decorator";
 import { Pattern } from "../pattern";
 import PatternDisplay from "./PatternDisplay.vue";
+import Modal from "./modal.vue";
 
 @Component({
   components: {
+    Modal,
     PatternDisplay
   }
 })
@@ -41,10 +50,14 @@ export default class PatternSwitcher extends Vue {
   wScale!: number;
 
   @Emit("switched")
-  emitRefresh(pattern: Pattern, mode: string) {}
+  emitRefresh(pattern: Pattern | null, mode: string) {}
 
   onSelectPattern(pattern: Pattern) {
     this.emitRefresh(pattern, "update");
+  }
+
+  close() {
+    this.emitRefresh(this.selected, "update");
   }
 }
 </script>

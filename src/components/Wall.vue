@@ -36,10 +36,10 @@
       ></PosterDisplay>
     </svg>
     <PosterSwitcher
-      v-if="selectedFrame"
-      :frame="selectedFrame"
+      v-if="switchingFrame"
+      :frame="switchingFrame"
       :posters="posters"
-      @unselect="unselectFrame"
+      @close="closeSwitcher"
       @frameChanged="frameChanged"
     />
   </div>
@@ -77,7 +77,7 @@ export default class Wall extends Vue {
   @Prop()
   frameChanged!: Function;
 
-  selectedFrame: Frame | null = null;
+  switchingFrame: Frame | null = null;
   bgImage = require("../assets/rawpixel-760112-unsplash.jpg");
 
   get frames() {
@@ -96,11 +96,11 @@ export default class Wall extends Vue {
   }
 
   selectFrame(frame: Frame) {
-    this.selectedFrame = frame;
+    this.switchingFrame = frame;
   }
 
-  unselectFrame() {
-    this.selectedFrame = null;
+  closeSwitcher() {
+    this.switchingFrame = null;
   }
 
   get helper() {
