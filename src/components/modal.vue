@@ -2,7 +2,7 @@
   <transition name="modal-fade">
     <div class="fixed pin flex justify-center items-center bg-blue-transparent">
       <div
-        class="bg-white shadow-md overflow-x-auto flex flex-col max-h-3/4"
+        class="bg-white shadow-md rounded-lg overflow-x-auto flex flex-col max-h-3/4 mx-4"
         style="min-width: 80%"
       >
         <header

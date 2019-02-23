@@ -9,29 +9,37 @@
     />
     <div class="flex w-full sm:w-3/4 fixed pin-t justify-between p-3">
       <h1>PosterWall</h1>
-      <button
-        class="p-2 border rounded border-grey-darker bg-white hover:bg-grey-darker hover:border-grey-light hover:text-white"
-        @click="togglePatternSwitching"
-      >Switch pattern</button>
+      <div>
+        <button
+          class="p-2 border rounded border-grey-darker bg-white mr-2 hover:bg-grey-darker hover:border-grey-light hover:text-white"
+          @click="togglePatternSwitching"
+        >
+          Switch pattern
+        </button>
+        <button
+          class="p-2 border rounded border-grey-darker bg-white hover:bg-grey-darker hover:border-grey-light hover:text-white"
+          @click="toggleInformation"
+        >
+          About this page
+        </button>
+      </div>
     </div>
-    <div
-      v-if="switchPattern"
-      class="fixed pin-b flex bg-blue-transparent w-full justify-center py-2 z-40"
-    >
-      <PatternSwitcher
-        :h-scale="hScale"
-        :patterns="patterns"
-        :selected="selectedPattern"
-        :w-scale="wScale"
-        @switched="patternSwitched"
-      />
-    </div>
+    <PatternSwitcher
+      v-show="switchPattern"
+      :h-scale="hScale"
+      :patterns="patterns"
+      :selected="selectedPattern"
+      :w-scale="wScale"
+      @switched="patternSwitched"
+    />
+    <Information v-show="information" @close="toggleInformation" />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import Wall from "./components/Wall.vue";
+import Information from "./components/Information.vue";
 import PatternSwitcher from "./components/PatternSwitcher.vue";
 import PosterSwitcher from "./components/PosterSwitcher.vue";
 import { Poster } from "./poster";
@@ -42,6 +50,7 @@ const posters_json = require("./assets/posters.json");
 
 @Component({
   components: {
+    Information,
     PatternSwitcher,
     PosterSwitcher,
     Wall
@@ -56,6 +65,7 @@ export default class App extends Vue {
   nextPostId: number = 0;
   nextPatternId: number = 0;
   switchPattern: boolean = false;
+  information: boolean = false;
   jsonPosters: Poster[] = posters_json.posters;
   jsonPatterns: Pattern[] = patterns_json.patterns;
 
@@ -88,6 +98,10 @@ export default class App extends Vue {
 
   togglePatternSwitching() {
     this.switchPattern = !this.switchPattern;
+  }
+
+  toggleInformation() {
+    this.information = !this.information;
   }
 
   patternSwitched(pattern: Pattern) {
