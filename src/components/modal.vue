@@ -20,7 +20,7 @@
           </button>
         </header>
 
-        <section class="flex py-4 px-3">
+        <section class="flex justify-center py-4 px-3">
           <slot></slot>
         </section>
       </div>

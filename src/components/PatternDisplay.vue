@@ -1,18 +1,26 @@
 <template>
-  <svg class="bg-white" viewBox="0 0 145 100" @click="onClick(pattern)">
-    <rect
-      v-for="frame in pattern.frames"
-      :key="frame.id"
-      class="z-20"
-      :width="helper.width(frame)"
-      :height="helper.height(frame)"
-      :x="helper.x(frame)"
-      :y="helper.y(frame)"
-      stroke="black"
-      stroke-width="0.7"
-      fill="transparent"
-    />
-  </svg>
+  <div class="flex p-2 w-full sm:w-1/2 md:w-1/4 justify-center">
+    <svg
+      class="bg-white h-64 w-64 z-20"
+      :class="{
+        'border-4 border-teal': isSelected,
+        'border border-black hover:border-4 hover:border-blue': !isSelected
+      }"
+      viewBox="0 0 145 100"
+      @click="onClick(pattern)">
+      <rect
+        v-for="frame in pattern.frames"
+        :key="frame.id"
+        :width="helper.width(frame)"
+        :height="helper.height(frame)"
+        :x="helper.x(frame)"
+        :y="helper.y(frame)"
+        stroke="black"
+        stroke-width="0.7"
+        fill="transparent"
+      />
+    </svg>
+  </div>
 </template>
 
 <script lang="ts">
@@ -32,6 +40,8 @@ export default class PatternDisplay extends Vue {
   wScale!: number;
   @Prop()
   onClick!: Function;
+  @Prop({ default: false })
+  isSelected!: boolean;
 
   helper: FrameHelper | null = null;
 

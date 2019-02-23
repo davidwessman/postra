@@ -13,16 +13,16 @@
       <div
         v-for="poster in availablePosters"
         :key="poster.id"
-        class="flex items-center h-auto w-1/5 px-2 mx-2"
+        class="flex items-center h-auto w-1/3 md:w-1/5 px-2 mx-2"
         :class="{
           rotated: rotate(poster),
-          'w-1/4 px-8': rotate(poster),
+          'px-8': rotate(poster),
         }"
       >
         <img
           :src="poster.src"
           :alt="poster.description"
-          class="mx-auto max-h-100 w-auto"
+          class="mx-auto max-h-full w-auto"
           :class="{
             'border-4 border-teal': editingFrame.poster && poster.id === editingFrame.poster.id,
           }"
