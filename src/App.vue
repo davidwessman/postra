@@ -5,7 +5,7 @@
       :pattern="selectedPattern"
       :posters="jsonPosters"
       :w-scale="wScale"
-      :frame-changed="frameChanged"
+      :frame-switched-poster="frameSwitchedPoster"
     />
     <div class="flex w-full sm:w-3/4 fixed pin-t justify-between p-3">
       <h1>PosterWall</h1>
@@ -78,13 +78,12 @@ export default class App extends Vue {
     this.patternSwitched(this.patterns[0]);
   }
 
-  frameChanged(frame: Frame, mode: string) {
+  frameSwitchedPoster(frame: Frame, poster: Poster) {
     if (this.selectedPattern !== null) {
       let index = this.selectedPattern.frames.findIndex(f => frame.id === f.id);
+      frame.poster = poster;
       this.selectedPattern.frames.splice(index, 1, frame);
-      if (frame !== null) {
-        this.selectedPosters.push(<Poster>frame.poster);
-      }
+      this.selectedPosters.push(poster);
     }
   }
 

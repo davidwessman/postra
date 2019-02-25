@@ -6,43 +6,34 @@
         <span>Select a poster by clicking it.</span>
       </div>
     </template>
-    <div
-      class="flex flex-wrap justify-center overflow-y-auto p-3 z-40 w-full -mx-4"
-      style="max-height: 60%"
-    >
-      <div
-        v-for="poster in availablePosters"
-        :key="poster.id"
-        class="flex items-center h-auto w-1/3 md:w-1/5 px-2 mx-2"
-        :class="{
-          rotated: rotate(poster),
-          'px-8': rotate(poster),
-        }"
-      >
-        <img
-          :src="poster.src"
-          :alt="poster.description"
-          class="mx-auto max-h-full w-auto"
-          :class="{
-            'border-4 border-teal': editingFrame.poster && poster.id === editingFrame.poster.id,
-          }"
-          @click="onSelectPoster(poster)"
-        >
+    <template v-slot:body>
+      <div class="flex flex-wrap">
+        <PosterInformation
+          v-for="poster in availablePosters"
+          :poster="poster"
+          :key="poster.id"
+          :selected="selected(poster)"
+          :frameRotated="rotated"
+          :onSelect="onSelectPoster"
+          :close="close"
+        />
       </div>
-    </div>
+    </template>
   </Modal>
 </template>
 
 <script lang="ts">
 import { Component, Emit, Prop, Vue, Watch } from "vue-property-decorator";
 import Modal from "./modal.vue";
+import PosterInformation from "./PosterInformation.vue";
 import { Frame } from "../frame";
 import { Orientation } from "../orientation";
 import { Poster } from "../poster";
 
 @Component({
   components: {
-    Modal
+    Modal,
+    PosterInformation
   }
 })
 export default class PosterSwitcher extends Vue {
@@ -50,59 +41,43 @@ export default class PosterSwitcher extends Vue {
   frame!: Frame;
   @Prop()
   posters!: Poster[];
-  editingFrame: Frame | null = null;
+
+  selectedPoster: Poster | null = null;
 
   get rotated() {
-    return (
-      this.editingFrame &&
-      this.editingFrame.orientation === Orientation.Landscape
-    );
-  }
-
-  @Watch("frame")
-  onFrameChanged(value: Frame, oldValue: Frame) {
-    this.editingFrame = Object.assign({}, value);
-  }
-
-  @Emit("close")
-  close() {
-    this.editingFrame = null;
-  }
-
-  created() {
-    this.editingFrame = Object.assign({}, this.frame);
+    return this.frame && this.frame.orientation === Orientation.Landscape;
   }
 
   get availablePosters() {
     return this.posters.filter(poster => {
       return (
         poster.orientation === Orientation.Both ||
-        (this.editingFrame &&
-          poster.orientation === this.editingFrame.orientation)
+        (this.frame && poster.orientation === this.frame.orientation)
       );
     });
   }
 
-  rotate(poster: Poster) {
-    if (this.editingFrame === null) {
-      return false;
-    }
-    return (
-      poster.orientation === Orientation.Both &&
-      this.editingFrame.orientation === Orientation.Landscape
-    );
+  created() {
+    this.selectedPoster = this.frame.poster;
   }
 
+  selected(poster: Poster): boolean {
+    return this.selectedPoster !== null && poster.id === this.selectedPoster.id;
+  }
+
+  @Emit("close")
+  close() {}
+
+
   @Emit("frameChanged")
-  emitRefresh(frame: Frame, mode: string) {
-    this.close();
+  emitRefresh(frame: Frame, poster: Poster) {
   }
 
   onSelectPoster(poster: Poster) {
-    const frame = <Frame>this.editingFrame;
+    const frame = <Frame>this.frame;
     frame.poster = poster;
-    this.emitRefresh(frame, "update");
+    this.emitRefresh(frame, poster);
+    this.selectedPoster = poster;
   }
 }
 </script>
-

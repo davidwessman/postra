@@ -22,5 +22,7 @@ import FrameDisplay from "./FrameDisplay.vue";
 export default class PosterDisplay extends FrameDisplay {
   @Prop()
   image!: string;
+  @Prop()
+  transform!: string;
 }
 </script>

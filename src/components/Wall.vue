@@ -18,9 +18,10 @@
         :key="frame.id"
         :x="helper.x(frame)"
         :y="helper.y(frame)"
+        :xc="helper.xc(frame)"
+        :yc="helper.yc(frame)"
         :height="helper.height(frame)"
         :width="helper.width(frame)"
-        :transform="helper.rotateSvg(frame)"
         :on-click="() => selectFrame(frame)"
       ></FrameDisplay>
       <PosterDisplay
@@ -40,7 +41,7 @@
       :frame="switchingFrame"
       :posters="posters"
       @close="closeSwitcher"
-      @frameChanged="frameChanged"
+      @frameChanged="frameSwitchedPoster"
     />
   </div>
 </template>
@@ -75,7 +76,7 @@ export default class Wall extends Vue {
   wScale!: number;
 
   @Prop()
-  frameChanged!: Function;
+  frameSwitchedPoster!: Function;
 
   switchingFrame: Frame | null = null;
   bgImage = require("../assets/rawpixel-760112-unsplash.jpg");

@@ -8,20 +8,22 @@
         </span>
       </div>
     </template>
-    <div
-      class="flex flex-wrap justify-center overflow-y-auto p-3 z-40 w-full"
-      style="max-height: 60%"
-    >
-      <PatternDisplay
-        v-for="pattern in patterns"
-        :key="pattern.id"
-        :pattern="pattern"
-        :is-selected="selected && selected.id === pattern.id"
-        :w-scale="wScale"
-        :h-scale="hScale"
-        :on-click="onSelectPattern"
-      />
-    </div>
+    <template v-slot:body>
+      <div
+        class="flex flex-wrap justify-center overflow-y-auto p-3 z-40 w-full"
+        style="max-height: 60%"
+      >
+        <PatternDisplay
+          v-for="pattern in patterns"
+          :key="pattern.id"
+          :pattern="pattern"
+          :is-selected="selected && selected.id === pattern.id"
+          :w-scale="wScale"
+          :h-scale="hScale"
+          :on-click="onSelectPattern"
+        />
+      </div>
+    </template>
   </Modal>
 </template>
 

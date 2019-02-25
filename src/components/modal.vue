@@ -1,12 +1,16 @@
 <template>
   <transition name="modal-fade">
-    <div class="fixed pin flex justify-center items-center bg-blue-transparent">
+    <div
+      class="fixed pin flex justify-center items-center bg-blue-transparent"
+      @click="close"
+    >
       <div
         class="bg-white shadow-md rounded-lg overflow-x-auto flex flex-col max-h-3/4 mx-4"
         style="min-width: 80%"
+        @click.stop
       >
         <header
-          class="flex flex-grow border-b border-grey-dark items-center justify-between text-blue-dark p-3 py-4"
+          class="flex flex-grow border-b border-grey-dark items-center justify-between text-blue-dark px-3 py-4"
         >
           <slot name="header">
             Default title
@@ -21,7 +25,7 @@
         </header>
 
         <section class="flex justify-center py-4 px-3">
-          <slot></slot>
+          <slot name="body"></slot>
         </section>
       </div>
     </div>

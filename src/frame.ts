@@ -21,6 +21,9 @@ export class FrameHelper {
     private offsetY: number
   ) {}
 
+  svgWidth: number = 145;
+  svgHeight: number = 100;
+
   hasImage(frame: Frame): boolean {
     return frame.poster !== null;
   }
@@ -36,11 +39,25 @@ export class FrameHelper {
     return this.asPercent(frame.width * this.wScale);
   }
 
+  widthNum(frame: Frame): number {
+    if (this.shouldRotate(frame)) {
+      return frame.height * this.wScale * this.svgWidth;
+    }
+    return frame.width * this.wScale * this.svgWidth;
+  }
+
   height(frame: Frame): string {
     if (this.shouldRotate(frame)) {
       return this.asPercent(frame.width * this.hScale);
     }
     return this.asPercent(frame.height * this.hScale);
+  }
+
+  heightNum(frame: Frame): number {
+    if (this.shouldRotate(frame)) {
+      return frame.width * this.hScale * this.svgHeight;
+    }
+    return frame.height * this.hScale * this.svgHeight;
   }
 
   xNum(frame: Frame): number {
@@ -62,6 +79,10 @@ export class FrameHelper {
     return this.asPercent(this.xNum(frame));
   }
 
+  xc(frame: Frame): string {
+    return this.asPercent(this.xCenter(frame));
+  }
+
   yNum(frame: Frame): number {
     let y;
     if (this.shouldRotate(frame)) {
@@ -79,6 +100,10 @@ export class FrameHelper {
 
   y(frame: Frame): string {
     return this.asPercent(this.yNum(frame));
+  }
+
+  yc(frame: Frame): string {
+    return this.asPercent(this.yCenter(frame));
   }
 
   shouldRotate(frame: Frame) {

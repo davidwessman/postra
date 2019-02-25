@@ -7,7 +7,8 @@
         'border border-black hover:border-4 hover:border-blue': !isSelected
       }"
       viewBox="0 0 145 100"
-      @click="onClick(pattern)">
+      @click="onClick(pattern)"
+    >
       <rect
         v-for="frame in pattern.frames"
         :key="frame.id"
