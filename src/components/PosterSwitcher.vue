@@ -8,6 +8,7 @@
     </template>
     <template v-slot:body>
       <div class="flex flex-wrap">
+        <PosterForm :poster="newPoster" :onSubmit="onSubmitPoster" />
         <PosterInformation
           v-for="poster in availablePosters"
           :poster="poster"
@@ -25,6 +26,7 @@
 <script lang="ts">
 import { Component, Emit, Prop, Vue, Watch } from "vue-property-decorator";
 import Modal from "./modal.vue";
+import PosterForm from "./PosterForm.vue";
 import PosterInformation from "./PosterInformation.vue";
 import { Frame } from "../frame";
 import { Orientation } from "../orientation";
@@ -33,6 +35,7 @@ import { Poster } from "../poster";
 @Component({
   components: {
     Modal,
+    PosterForm,
     PosterInformation
   }
 })
@@ -41,8 +44,11 @@ export default class PosterSwitcher extends Vue {
   frame!: Frame;
   @Prop()
   posters!: Poster[];
+  @Prop()
+  addPoster!: Function;
 
   selectedPoster: Poster | null = null;
+  newPoster: Poster | null = new Poster(0, "", "");
 
   get rotated() {
     return this.frame && this.frame.orientation === Orientation.Landscape;
@@ -68,16 +74,20 @@ export default class PosterSwitcher extends Vue {
   @Emit("close")
   close() {}
 
-
   @Emit("frameChanged")
-  emitRefresh(frame: Frame, poster: Poster) {
-  }
+  emitRefresh(frame: Frame, poster: Poster) {}
 
   onSelectPoster(poster: Poster) {
     const frame = <Frame>this.frame;
     frame.poster = poster;
     this.emitRefresh(frame, poster);
     this.selectedPoster = poster;
+  }
+
+  onSubmitPoster(poster: Poster) {
+    this.addPoster(poster);
+    this.onSelectPoster(poster);
+    this.close();
   }
 }
 </script>

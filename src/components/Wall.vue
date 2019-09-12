@@ -42,6 +42,7 @@
       :posters="posters"
       @close="closeSwitcher"
       @frameChanged="frameSwitchedPoster"
+      @addPoster="addPoster"
     />
   </div>
 </template>
@@ -77,6 +78,9 @@ export default class Wall extends Vue {
 
   @Prop()
   frameSwitchedPoster!: Function;
+
+  @Prop()
+  addPoster!: Function;
 
   switchingFrame: Frame | null = null;
   bgImage = require("../assets/rawpixel-760112-unsplash.jpg");

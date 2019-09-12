@@ -62,7 +62,7 @@ export default class App extends Vue {
   selectedPosters: Poster[] = [];
   posters: Poster[] = [];
   patterns: Pattern[] = [];
-  nextPostId: number = 0;
+  nextPosterId: number = 0;
   nextPatternId: number = 0;
   switchPattern: boolean = false;
   information: boolean = false;
@@ -88,10 +88,12 @@ export default class App extends Vue {
   }
 
   addPattern(pattern: Pattern) {
+    pattern.id = this.nextPatternId++;
     this.patterns.push(pattern);
   }
 
   addPoster(poster: Poster) {
+    poster.id = this.nextPosterId++;
     this.posters.push(poster);
   }
 

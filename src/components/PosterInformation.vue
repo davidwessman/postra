@@ -11,18 +11,16 @@
     <div v-if="selected" class="flex flex-col w-3/4 p-3">
       <h3>{{ poster.title }}</h3>
       <span class="my-3">
-        Source: <a :href="poster.link">{{ poster.link }}</a>
+        Source:
+        <a :href="poster.link">{{ poster.link }}</a>
       </span>
       <span class="my-3">
         <button
           type="button"
           class="px-3 py-1 rounded-lg border bg-blue border-blue text-white hover:bg-blue-dark"
           @click="close"
-        >
-          Close
-        </button>
+        >Close</button>
       </span>
-      </ul>
     </div>
     <div v-if="selected" class="w-1/4">
       <img :src="poster.src" :alt="poster.title" class="mx-auto h-auto w-full" />
