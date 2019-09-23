@@ -1,5 +1,5 @@
 {
-  "name": "vue-tailwind-purge",
+  "name": "poster-wall",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -14,6 +14,8 @@
   },
   "devDependencies": {
     "@fullhuman/postcss-purgecss": "^1.3.0",
+    "@typescript-eslint/eslint-plugin": "^2.2.0",
+    "@typescript-eslint/parser": "^2.2.0",
     "@vue/cli-plugin-babel": "^3.3.0",
     "@vue/cli-plugin-eslint": "^3.3.0",
     "@vue/cli-plugin-typescript": "^3.3.0",
@@ -21,7 +23,7 @@
     "@vue/eslint-config-prettier": "^4.0.1",
     "@vue/eslint-config-typescript": "^4.0.0",
     "babel-eslint": "^10.0.3",
-    "eslint": "^5.16.0",
+    "eslint": "^6.3.0",
     "eslint-plugin-vue": "^5.2.3",
     "node-sass": "^4.12.0",
     "purgecss": "^1.4.0",
@@ -29,21 +31,6 @@
     "tailwindcss": "^0.7.3",
     "typescript": "~3.6.2",
     "vue-template-compiler": "^2.6.10"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/recommended",
-      "@vue/prettier",
-      "@vue/typescript"
-    ],
-    "rules": {},
-    "parserOptions": {
-      "parser": "typescript-eslint-parser"
-    }
   },
   "postcss": {
     "plugins": {
