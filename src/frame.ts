@@ -21,8 +21,8 @@ export class FrameHelper {
     private offsetY: number
   ) {}
 
-  svgWidth: number = 145;
-  svgHeight: number = 100;
+  svgWidth = 145;
+  svgHeight = 100;
 
   hasImage(frame: Frame): boolean {
     return frame.poster !== null;
@@ -71,7 +71,7 @@ export class FrameHelper {
   }
 
   xCenter(frame: Frame): number {
-    let x = frame.x + this.offsetX;
+    const x = frame.x + this.offsetX;
     return x * this.wScale + 1 / 2;
   }
 
@@ -94,7 +94,7 @@ export class FrameHelper {
   }
 
   yCenter(frame: Frame): number {
-    let y = frame.y + this.offsetY;
+    const y = frame.y + this.offsetY;
     return -(y * this.hScale) + 1 / 2;
   }
 

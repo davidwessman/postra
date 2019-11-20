@@ -33,12 +33,14 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Emit } from "vue-property-decorator";
+import { Component, Vue, Emit } from "vue-property-decorator";
 
 @Component({})
 export default class Modal extends Vue {
   @Emit("close")
-  close() {}
+  close(): void {
+    undefined;
+  }
 }
 </script>
 

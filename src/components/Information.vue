@@ -52,9 +52,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Emit, Prop, Vue } from "vue-property-decorator";
-import { Pattern } from "../pattern";
-import PatternDisplay from "./PatternDisplay.vue";
+import { Component, Emit, Vue } from "vue-property-decorator";
 import Modal from "./modal.vue";
 
 @Component({
@@ -64,6 +62,8 @@ import Modal from "./modal.vue";
 })
 export default class Information extends Vue {
   @Emit("close")
-  close() {}
+  close(): void {
+    undefined;
+  }
 }
 </script>

@@ -16,7 +16,6 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import { Frame, FrameHelper } from "../frame";
 
 @Component({
   components: {}
@@ -37,7 +36,7 @@ export default class FrameDisplay extends Vue {
   @Prop()
   onClick!: Function;
 
-  get viewBox() {
+  get viewBox(): string {
     return "0 0 " + this.width + " " + this.height;
   }
 }
