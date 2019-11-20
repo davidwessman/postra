@@ -8,14 +8,14 @@
     </template>
     <template v-slot:body>
       <div class="flex flex-wrap">
-        <PosterForm :poster="newPoster" :onSubmit="onSubmitPoster" />
+        <PosterForm :poster="newPoster" :on-submit="onSubmitPoster" />
         <PosterInformation
           v-for="poster in availablePosters"
-          :poster="poster"
           :key="poster.id"
+          :poster="poster"
           :selected="selected(poster)"
-          :frameRotated="rotated"
-          :onSelect="onSelectPoster"
+          :frame-rotated="rotated"
+          :on-select="onSelectPoster"
           :close="close"
         />
       </div>
@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Emit, Prop, Vue, Watch } from "vue-property-decorator";
+import { Component, Emit, Prop, Vue } from "vue-property-decorator";
 import Modal from "./modal.vue";
 import PosterForm from "./PosterForm.vue";
 import PosterInformation from "./PosterInformation.vue";
@@ -50,11 +50,11 @@ export default class PosterSwitcher extends Vue {
   selectedPoster: Poster | null = null;
   newPoster: Poster | null = new Poster(0, "", "");
 
-  get rotated() {
+  get rotated(): boolean {
     return this.frame && this.frame.orientation === Orientation.Landscape;
   }
 
-  get availablePosters() {
+  get availablePosters(): Poster[] {
     return this.posters.filter(poster => {
       return (
         poster.orientation === Orientation.Both ||
@@ -63,7 +63,7 @@ export default class PosterSwitcher extends Vue {
     });
   }
 
-  created() {
+  created(): void {
     this.selectedPoster = this.frame.poster;
   }
 
@@ -72,19 +72,23 @@ export default class PosterSwitcher extends Vue {
   }
 
   @Emit("close")
-  close() {}
+  close(): void {
+    undefined;
+  }
 
   @Emit("frameChanged")
-  emitRefresh(frame: Frame, poster: Poster) {}
+  emitRefresh(frame: Frame, poster: Poster): void {
+    undefined;
+  }
 
-  onSelectPoster(poster: Poster) {
-    const frame = <Frame>this.frame;
+  onSelectPoster(poster: Poster): void {
+    const frame: Frame = this.frame;
     frame.poster = poster;
     this.emitRefresh(frame, poster);
     this.selectedPoster = poster;
   }
 
-  onSubmitPoster(poster: Poster) {
+  onSubmitPoster(poster: Poster): void {
     this.addPoster(poster);
     this.onSelectPoster(poster);
     this.close();

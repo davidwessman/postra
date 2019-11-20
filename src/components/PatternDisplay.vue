@@ -26,7 +26,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import { Frame, FrameHelper } from "../frame";
+import { FrameHelper } from "../frame";
 import { Pattern } from "../pattern";
 
 @Component({
@@ -46,7 +46,7 @@ export default class PatternDisplay extends Vue {
 
   helper: FrameHelper | null = null;
 
-  created() {
+  created(): void {
     this.helper = new FrameHelper(this.wScale, this.hScale, 0, 0);
   }
 }

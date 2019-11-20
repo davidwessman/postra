@@ -12,8 +12,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
-import { Frame, FrameHelper } from "../frame";
+import { Component, Prop } from "vue-property-decorator";
 import FrameDisplay from "./FrameDisplay.vue";
 
 @Component({

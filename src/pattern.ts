@@ -1,4 +1,4 @@
-import { Frame } from './frame';
+import { Frame } from "./frame";
 
 export class Pattern {
   constructor(
@@ -7,6 +7,6 @@ export class Pattern {
     public description: string,
     public offsetX: number,
     public offsetY: number,
-    public frames: Frame[],
+    public frames: Frame[]
   ) {}
 }

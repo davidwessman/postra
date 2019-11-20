@@ -85,30 +85,30 @@ export default class Wall extends Vue {
   switchingFrame: Frame | null = null;
   bgImage = require("../assets/rawpixel-760112-unsplash.jpg");
 
-  get frames() {
+  get frames(): Frame[] {
     if (this.pattern === null) {
       return [];
     }
     return this.pattern.frames;
   }
 
-  get emptyFrames() {
+  get emptyFrames(): Frame[] {
     return this.frames.filter(frame => frame.poster === null);
   }
 
-  get posterFrames() {
+  get posterFrames(): Frame[] {
     return this.frames.filter(frame => frame.poster !== null);
   }
 
-  selectFrame(frame: Frame) {
+  selectFrame(frame: Frame): void {
     this.switchingFrame = frame;
   }
 
-  closeSwitcher() {
+  closeSwitcher(): void {
     this.switchingFrame = null;
   }
 
-  get helper() {
+  get helper(): FrameHelper {
     return new FrameHelper(
       this.wScale,
       this.hScale,

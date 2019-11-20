@@ -53,13 +53,15 @@ export default class PatternSwitcher extends Vue {
   wScale!: number;
 
   @Emit("switched")
-  emitRefresh(pattern: Pattern | null, mode: string) {}
+  emitRefresh(pattern: Pattern | null, mode: string): void {
+    undefined;
+  }
 
-  onSelectPattern(pattern: Pattern) {
+  onSelectPattern(pattern: Pattern): void {
     this.emitRefresh(pattern, "update");
   }
 
-  close() {
+  close(): void {
     this.emitRefresh(this.selected, "update");
   }
 }

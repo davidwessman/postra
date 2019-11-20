@@ -45,8 +45,8 @@ import PosterSwitcher from "./components/PosterSwitcher.vue";
 import { Poster } from "./poster";
 import { Pattern } from "./pattern";
 import { Frame } from "./frame";
-const patterns_json = require("./assets/patterns.json");
-const posters_json = require("./assets/posters.json");
+import patternsJson from "./assets/patterns.json";
+import postersJson from "./assets/posters.json";
 
 @Component({
   components: {
@@ -62,50 +62,52 @@ export default class App extends Vue {
   selectedPosters: Poster[] = [];
   posters: Poster[] = [];
   patterns: Pattern[] = [];
-  nextPosterId: number = 0;
-  nextPatternId: number = 0;
-  switchPattern: boolean = false;
-  information: boolean = false;
-  jsonPosters: Poster[] = posters_json.posters;
-  jsonPatterns: Pattern[] = patterns_json.patterns;
+  nextPosterId = 0;
+  nextPatternId = 0;
+  switchPattern = false;
+  information = false;
+  jsonPosters: Poster[] = postersJson.posters;
+  jsonPatterns: Pattern[] = patternsJson.patterns;
 
   wScale: number = 1 / 300;
   hScale: number = 1 / 200;
 
-  created() {
+  created(): void {
     this.jsonPatterns.forEach(pattern => this.addPattern(pattern));
     this.jsonPosters.forEach(poster => this.addPoster(poster));
     this.patternSwitched(this.patterns[0]);
   }
 
-  frameSwitchedPoster(frame: Frame, poster: Poster) {
+  frameSwitchedPoster(frame: Frame, poster: Poster): void {
     if (this.selectedPattern !== null) {
-      let index = this.selectedPattern.frames.findIndex(f => frame.id === f.id);
+      const index = this.selectedPattern.frames.findIndex(
+        f => frame.id === f.id
+      );
       frame.poster = poster;
       this.selectedPattern.frames.splice(index, 1, frame);
       this.selectedPosters.push(poster);
     }
   }
 
-  addPattern(pattern: Pattern) {
+  addPattern(pattern: Pattern): void {
     pattern.id = this.nextPatternId++;
     this.patterns.push(pattern);
   }
 
-  addPoster(poster: Poster) {
+  addPoster(poster: Poster): void {
     poster.id = this.nextPosterId++;
     this.posters.push(poster);
   }
 
-  togglePatternSwitching() {
+  togglePatternSwitching(): void {
     this.switchPattern = !this.switchPattern;
   }
 
-  toggleInformation() {
+  toggleInformation(): void {
     this.information = !this.information;
   }
 
-  patternSwitched(pattern: Pattern) {
+  patternSwitched(pattern: Pattern): void {
     this.selectedPattern = pattern;
     this.switchPattern = false;
     let posterId = 0;

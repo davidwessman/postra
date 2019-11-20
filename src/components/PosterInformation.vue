@@ -19,11 +19,17 @@
           type="button"
           class="px-3 py-1 rounded-lg border bg-blue border-blue text-white hover:bg-blue-dark"
           @click="close"
-        >Close</button>
+        >
+          Close
+        </button>
       </span>
     </div>
     <div v-if="selected" class="w-1/4">
-      <img :src="poster.src" :alt="poster.title" class="mx-auto h-auto w-full" />
+      <img
+        :src="poster.src"
+        :alt="poster.title"
+        class="mx-auto h-auto w-full"
+      />
     </div>
     <img
       v-if="!selected"
@@ -41,7 +47,6 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { Poster } from "../poster";
-import { Frame } from "../frame";
 import { Orientation } from "../orientation";
 
 @Component({
@@ -59,7 +64,7 @@ export default class PosterInformation extends Vue {
   @Prop()
   close!: Function;
 
-  get rotate() {
+  get rotate(): boolean {
     return this.frameRotated && this.poster.orientation === Orientation.Both;
   }
 }

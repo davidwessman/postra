@@ -2,30 +2,36 @@
   <div class="flex w-full">
     <div class="flex flex-col w-2/3">
       <div class="mb-4">
-        <label class="block text-gray-700 text-sm font-bold mb-2" for="title">Title</label>
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="title"
+          >Title</label
+        >
         <input
-          v-model="poster.title"
           id="title"
+          v-model="poster.title"
           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           type="text"
           placeholder="Title"
         />
       </div>
       <div class="mb-4">
-        <label class="block text-gray-700 text-sm font-bold mb-2" for="title">Image link</label>
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="title"
+          >Image link</label
+        >
         <input
-          v-model="poster.src"
           id="src"
+          v-model="poster.src"
           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           type="text"
           placeholder="Link"
         />
       </div>
       <div class="mb-4">
-        <label class="block text-gray-700 text-sm font-bold mb-2" for="title">Orientation</label>
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="title"
+          >Orientation</label
+        >
         <select
-          v-model="poster.orientation"
           id="orientation"
+          v-model="poster.orientation"
           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           type="text"
           placeholder="Orientation"
@@ -40,7 +46,9 @@
           type="button"
           class="px-3 py-1 rounded-lg border bg-blue border-blue text-white hover:bg-blue-dark"
           @click="onSubmit(poster)"
-        >Save</button>
+        >
+          Save
+        </button>
       </span>
     </div>
     <div class="w-1/3">
@@ -59,7 +67,6 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { Poster } from "../poster";
-import { Frame } from "../frame";
 import { Orientation } from "../orientation";
 
 @Component({
