@@ -2,7 +2,7 @@
   <Modal name="information" @close="close">
     <template v-slot:header>
       <div>
-        <h2 class="mr-2">About this page</h2>
+        <h2 class="text-l font-semibold mr-2">About this page</h2>
       </div>
     </template>
     <div
@@ -21,7 +21,7 @@
           </li>
         </ol>
         In the end, we were unable to decide which posters to buy...
-        <hr class="w-full border border-grey-dark" />
+        <hr class="w-full border border-gray-700" />
       </span>
 
       <span class="mb-4">
@@ -30,7 +30,7 @@
         <br />
         <br />
         All the currently included posters are borrowed from:
-        <a href="https://posterstore.se/">
+        <a href="https://posterstore.se/" class="text-blue-700 underline">
           <img
             src="https://posterstore.se/userfiles/image/logotype-ps.png"
             alt="Posterstore"

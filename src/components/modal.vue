@@ -1,30 +1,30 @@
 <template>
   <transition name="modal-fade">
     <div
-      class="fixed pin flex justify-center items-center bg-blue-transparent"
+      class="fixed top-0 flex justify-center min-w-full items-center bg-transparent py-16 px-6"
       @click="close"
     >
       <div
-        class="bg-white shadow-md rounded-lg overflow-x-auto flex flex-col max-h-3/4 mx-4"
+        class="p-4 bg-white shadow-md rounded-lg border border-gray-100 overflow-auto flex flex-col max-h-3/4 mx-4"
         style="min-width: 80%"
         @click.stop
       >
         <header
-          class="flex flex-grow border-b border-grey-dark items-center justify-between text-blue-dark px-3 py-4"
+          class="flex flex-grow border-b border-gray-700 items-center justify-between text-blue-dark px-3 py-4"
         >
           <slot name="header">
             Default title
           </slot>
           <button
             type="button"
-            class="px-3 py-1 rounded-lg border bg-blue border-blue text-white hover:bg-blue-dark"
+            class="px-3 py-1 rounded-lg border bg-blue-400 border-blue-700 text-white hover:bg-blue-900"
             @click="close"
           >
             Close
           </button>
         </header>
 
-        <section class="flex justify-center py-4 px-3">
+        <section class="flex min-height-full h-screen overflow-y-auto justify-center py-4 px-3">
           <slot name="body"></slot>
         </section>
       </div>

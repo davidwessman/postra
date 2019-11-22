@@ -2,7 +2,7 @@
   <Modal name="poster-switcher" @close="close">
     <template v-slot:header>
       <div>
-        <h2 class="mr-2">Change pattern</h2>
+        <h2 class="text-l font-semibold mr-2">Change pattern</h2>
         <span>
           Select a pattern by clicking it.
         </span>

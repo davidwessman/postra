@@ -2,12 +2,12 @@
   <Modal name="poster-switcher" @close="close">
     <template v-slot:header>
       <div>
-        <h2 class="mr-2">Change poster</h2>
+        <h2 class="text-l font-semibold mr-2">Change poster</h2>
         <span>Select a poster by clicking it.</span>
       </div>
     </template>
     <template v-slot:body>
-      <div class="flex flex-wrap">
+      <div class="flex flex-wrap overflow-auto">
         <PosterForm :poster="newPoster" :on-submit="onSubmitPoster" />
         <PosterInformation
           v-for="poster in availablePosters"
