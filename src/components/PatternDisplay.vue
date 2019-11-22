@@ -3,7 +3,7 @@
     <svg
       class="bg-white h-64 w-64 z-20"
       :class="{
-        'border-4 border-teal': isSelected,
+        'border-4 border-teal-400': isSelected,
         'border border-black hover:border-4 hover:border-blue': !isSelected
       }"
       viewBox="0 0 145 100"

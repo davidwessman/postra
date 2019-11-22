@@ -7,17 +7,17 @@
       :w-scale="wScale"
       :frame-switched-poster="frameSwitchedPoster"
     />
-    <div class="flex w-full sm:w-3/4 fixed pin-t justify-between p-3">
-      <h1>PosterWall</h1>
+    <div class="flex w-full sm:w-3/4 fixed top-0 justify-between p-3">
+      <h1 class="text-xl font-semibold">PosterWall</h1>
       <div>
         <button
-          class="p-2 border rounded border-grey-darker bg-white mr-2 hover:bg-grey-darker hover:border-grey-light hover:text-white"
+          class="p-2 border rounded border-gray-800 bg-white mr-2 hover:bg-gray-800 hover:border-gray-300 hover:text-white"
           @click="togglePatternSwitching"
         >
           Switch pattern
         </button>
         <button
-          class="p-2 border rounded border-grey-darker bg-white hover:bg-grey-darker hover:border-grey-light hover:text-white"
+          class="p-2 border rounded border-gray-800 bg-white hover:bg-gray-800 hover:border-gray-300 hover:text-white"
           @click="toggleInformation"
         >
           About this page

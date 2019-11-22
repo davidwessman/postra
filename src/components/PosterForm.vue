@@ -44,7 +44,7 @@
       <span class="my-3">
         <button
           type="button"
-          class="px-3 py-1 rounded-lg border bg-blue border-blue text-white hover:bg-blue-dark"
+          class="px-3 py-1 rounded-lg border bg-blue-700 border-blue-700 text-white hover:bg-blue-dark"
           @click="onSubmit(poster)"
         >
           Save
@@ -57,7 +57,7 @@
         :alt="poster.title"
         class="mx-auto max-h-full w-auto"
         :class="{
-          'border-4 border-teal': selected
+          'border-4 border-teal-400': selected
         }"
       />
     </div>

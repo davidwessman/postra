@@ -12,12 +12,14 @@
       <h3>{{ poster.title }}</h3>
       <span class="my-3">
         Source:
-        <a :href="poster.link">{{ poster.link }}</a>
+        <a class="text-blue-700 underline" :href="poster.link">
+          {{ poster.link }}
+        </a>
       </span>
       <span class="my-3">
         <button
           type="button"
-          class="px-3 py-1 rounded-lg border bg-blue border-blue text-white hover:bg-blue-dark"
+          class="px-3 py-1 rounded-lg border bg-blue-700 border-blue-700 text-white hover:bg-blue-900"
           @click="close"
         >
           Close
@@ -37,7 +39,7 @@
       :alt="poster.title"
       class="mx-auto max-h-full w-auto"
       :class="{
-        'border-4 border-teal': selected
+        'border-4 border-teal-400': selected
       }"
       @click="onSelect(poster)"
     />
