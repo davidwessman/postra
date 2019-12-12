@@ -24,7 +24,9 @@
           </button>
         </header>
 
-        <section class="flex min-height-full h-screen overflow-y-auto justify-center py-4 px-3">
+        <section
+          class="flex min-height-full h-screen overflow-y-auto justify-center py-4 px-3"
+        >
           <slot name="body"></slot>
         </section>
       </div>
