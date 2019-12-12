@@ -8,7 +8,7 @@
       :frame-switched-poster="frameSwitchedPoster"
     />
     <div class="flex w-full sm:w-3/4 fixed top-0 justify-between p-3">
-      <h1 class="text-xl font-semibold">PosterWall</h1>
+      <h1 class="text-xl font-semibold">Postra</h1>
       <div>
         <button
           class="p-2 border rounded border-gray-800 bg-white mr-2 hover:bg-gray-800 hover:border-gray-300 hover:text-white"
