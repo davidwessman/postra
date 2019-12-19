@@ -1,7 +1,6 @@
 const tailwindcss = require("tailwindcss");
 const autoprefixer = require("autoprefixer");
 const postcss_preset_env = require("postcss-preset-env");
-const purgecss = require("@fullhuman/postcss-purgecss");
 const purgecss = require('@fullhuman/postcss-purgecss')({
 
     // Specify the paths to all of the template files in your project
