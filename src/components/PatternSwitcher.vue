@@ -1,12 +1,10 @@
 <template>
-  <Modal name="poster-switcher" @close="close">
-    <template v-slot:header>
-      <div>
-        <h2 class="text-l font-semibold mr-2">Change pattern</h2>
-        <span>
-          Select a pattern by clicking it.
-        </span>
-      </div>
+  <Modal name="poster-switcher" :open="open" @close="close">
+    <template v-slot:title>
+      <h2 class="text-l font-semibold mr-2">Change pattern</h2>
+      <span>
+        Select a pattern by clicking it.
+      </span>
     </template>
     <template v-slot:body>
       <div
@@ -40,6 +38,9 @@ import Modal from "./modal.vue";
   }
 })
 export default class PatternSwitcher extends Vue {
+  @Prop()
+  open!: boolean;
+
   @Prop({ default: [] })
   patterns!: Pattern[];
 
