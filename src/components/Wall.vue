@@ -37,12 +37,12 @@
       ></PosterDisplay>
     </svg>
     <PosterSwitcher
-      v-if="switchingFrame"
+      :open="switchingFrame != null"
       :frame="switchingFrame"
       :posters="posters"
+      :addPoster="addPoster"
       @close="closeSwitcher"
       @frameChanged="frameSwitchedPoster"
-      @addPoster="addPoster"
     />
   </div>
 </template>

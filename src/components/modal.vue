@@ -1,59 +1,114 @@
 <template>
-  <transition name="modal-fade">
+  <portal to="modals">
     <div
-      class="fixed top-0 flex justify-center min-w-full items-center bg-transparent py-16 px-6"
-      @click="close"
+      v-if="showModal"
+      class="fixed inset-0 flex items-center justify-center"
     >
-      <div
-        class="p-4 bg-white shadow-md rounded-lg border border-gray-100 overflow-auto flex flex-col max-h-3/4 mx-4"
-        style="min-width: 80%"
-        @click.stop
+      <transition
+        @before-leave="backdropLeaving = true"
+        @after-leave="backdropLeaving = false"
+        enter-active-class="transition-all transition-fast ease-out-quad"
+        leave-active-class="transition-all transition-medium ease-in-quad"
+        enter-class="opacity-0"
+        enter-to-class="opacity-100"
+        leave-class="opacity-100"
+        leave-to-class="opacity-0"
+        appear
       >
-        <header
-          class="flex flex-grow border-b border-gray-700 items-center justify-between text-blue-dark px-3 py-4"
-        >
-          <slot name="header">
-            Default title
-          </slot>
-          <button
-            type="button"
-            class="px-3 py-1 rounded-lg border bg-blue-400 border-blue-700 text-white hover:bg-blue-900"
+        <div v-if="showBackdrop">
+          <div
+            class="absolute inset-0 bg-black opacity-25"
             @click="close"
-          >
-            Close
-          </button>
-        </header>
+          ></div>
+        </div>
+      </transition>
 
-        <section
-          class="flex min-height-full h-screen overflow-y-auto justify-center py-4 px-3"
-        >
-          <slot name="body"></slot>
-        </section>
-      </div>
+      <transition
+        @before-leave="cardLeaving = true"
+        @after-leave="cardLeaving = false"
+        enter-active-class="transition-all transition-fast ease-out-quad"
+        leave-active-class="transition-all transition-medium ease-in-quad"
+        enter-class="opacity-0 scale-70"
+        enter-to-class="opacity-100 scale-100"
+        leave-class="opacity-100 scale-100"
+        leave-to-class="opacity-0 scale-70"
+        appear
+      >
+        <div v-if="showContent" class="relative">
+          <div class="max-w-lg w-full bg-white rounded-lg shadow-2xl px-6 py-6 max-h-screen overflow-y-auto">
+            <slot name="title">
+              <h2
+                class="font-semibold text-gray-900 text-2xl leading-tight border-b-2 border-gray-200 pb-4"
+              >
+                Title
+              </h2>
+            </slot>
+            <slot name="body"></slot>
+          </div>
+        </div>
+      </transition>
     </div>
-  </transition>
+  </portal>
 </template>
 
-<script lang="ts">
-import { Component, Vue, Emit } from "vue-property-decorator";
+<script>
+export default {
+  props: ["open"],
+  data() {
+    return {
+      showModal: false,
+      showBackdrop: false,
+      showContent: false,
+      backdropLeaving: false,
+      cardLeaving: false
+    };
+  },
+  created() {
+    const onEscape = e => {
+      if (this.open && e.keyCode === 27) {
+        this.close();
+      }
+    };
 
-@Component({})
-export default class Modal extends Vue {
-  @Emit("close")
-  close(): void {
-    undefined;
+    document.addEventListener("keydown", onEscape);
+
+    this.$once("hook:destroyed", () => {
+      document.removeEventListener("keydown", onEscape);
+    });
+  },
+  watch: {
+    open: {
+      handler: function(newValue) {
+        if (newValue) {
+          this.show();
+        } else {
+          this.close();
+        }
+      },
+      immediate: true
+    },
+    leaving(newValue) {
+      if (newValue === false) {
+        this.showModal = false;
+        this.$emit("close");
+      }
+    }
+  },
+  computed: {
+    leaving() {
+      return this.backdropLeaving || this.cardLeaving;
+    }
+  },
+  methods: {
+    show() {
+      this.showModal = true;
+      this.showBackdrop = true;
+      this.showContent = true;
+    },
+    close() {
+      this.showBackdrop = false;
+      this.showContent = false;
+    }
   }
-}
+};
 </script>
-
-<style lang="scss">
-.modal-fade-enter,
-.modal-fade-leave-active {
-  opacity: 0;
-}
-
-.modal-fade-enter-active,
-.modal-fade-leave-active {
-  transition: opacity 0.5s ease;
-}
-</style>

@@ -6,13 +6,14 @@
       :posters="jsonPosters"
       :w-scale="wScale"
       :frame-switched-poster="frameSwitchedPoster"
+      :addPoster="addPoster"
     />
-    <div class="flex w-full bg-blue-800-transparent fixed top-0 justify-between p-3 px-6">
+    <div class="flex w-full bg-blue-800-transparent fixed top-0 justify-center md:justify-between p-3 px-6">
       <div class="flex flex-row items-center">
         <img :src="logoUrl" class="h-16" />
         <h1 class="text-xl font-semibold ml-3">Postra</h1>
       </div>
-      <div>
+      <div class="hidden md:flex">
         <button
           class="p-2 border rounded border-gray-800 bg-white mr-2 hover:bg-gray-800 hover:border-gray-300 hover:text-white"
           @click="togglePatternSwitching"
@@ -27,15 +28,35 @@
         </button>
       </div>
     </div>
+    <div class="flex md:hidden w-full bg-blue-800-transparent fixed bottom-0 justify-between p-3 px-6">
+      <div class="flex w-1/2 justify-center">
+        <button
+          class="p-2 border rounded border-gray-800 bg-white mr-2 hover:bg-gray-800 hover:border-gray-300 hover:text-white"
+          @click="togglePatternSwitching"
+        >
+          Switch pattern
+        </button>
+      </div>
+      <div class="flex w-1/2 justify-center">
+        <button
+          class="p-2 border rounded border-gray-800 bg-white hover:bg-gray-800 hover:border-gray-300 hover:text-white"
+          @click="toggleInformation"
+        >
+          About this page
+        </button>
+      </div>
+    </div>
+
     <PatternSwitcher
-      v-show="switchPattern"
+      :open="switchPattern"
       :h-scale="hScale"
       :patterns="patterns"
       :selected="selectedPattern"
       :w-scale="wScale"
       @switched="patternSwitched"
     />
-    <Information v-show="information" @close="toggleInformation" />
+    <Information :open="information" @close="toggleInformation" />
+    <portal-target name="modals"></portal-target>
   </div>
 </template>
 
