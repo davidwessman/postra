@@ -5,7 +5,7 @@ import "./main.css";
 import "./registerServiceWorker";
 
 Vue.config.productionTip = false;
-Vue.use(PortalVue)
+Vue.use(PortalVue);
 
 new Vue({
   render: h => h(App)

@@ -3,12 +3,14 @@
     <Wall
       :h-scale="hScale"
       :pattern="selectedPattern"
-      :posters="jsonPosters"
+      :posters="posters"
       :w-scale="wScale"
       :frame-switched-poster="frameSwitchedPoster"
-      :addPoster="addPoster"
+      :add-poster="addPersonalPoster"
     />
-    <div class="flex w-full bg-blue-800-transparent fixed top-0 justify-center md:justify-between p-3 px-6">
+    <div
+      class="flex w-full bg-blue-800-transparent fixed top-0 justify-center md:justify-between p-3 px-6"
+    >
       <div class="flex flex-row items-center">
         <img :src="logoUrl" class="h-16" />
         <h1 class="text-xl font-semibold ml-3">Postra</h1>
@@ -28,7 +30,9 @@
         </button>
       </div>
     </div>
-    <div class="flex md:hidden w-full bg-blue-800-transparent fixed bottom-0 justify-between p-3 px-6">
+    <div
+      class="flex md:hidden w-full bg-blue-800-transparent fixed bottom-0 justify-between p-3 px-6"
+    >
       <div class="flex w-1/2 justify-center">
         <button
           class="p-2 border rounded border-gray-800 bg-white mr-2 hover:bg-gray-800 hover:border-gray-300 hover:text-white"
@@ -69,6 +73,7 @@ import PosterSwitcher from "./components/PosterSwitcher.vue";
 import { Poster } from "./poster";
 import { Pattern } from "./pattern";
 import { Frame } from "./frame";
+import { checkStorage, saveToStorage } from "./localStorage";
 import patternsJson from "./assets/patterns.json";
 import postersJson from "./assets/posters.json";
 
@@ -82,9 +87,8 @@ import postersJson from "./assets/posters.json";
 })
 export default class App extends Vue {
   addingPoster = false;
-  selectedPattern: Pattern | null = null;
-  selectedPosters: Poster[] = [];
   posters: Poster[] = [];
+  personalPosters: Poster[] = [];
   patterns: Pattern[] = [];
   nextPosterId = 0;
   nextPatternId = 0;
@@ -92,6 +96,7 @@ export default class App extends Vue {
   information = false;
   jsonPosters: Poster[] = postersJson.posters;
   jsonPatterns: Pattern[] = patternsJson.patterns;
+  selectedPattern: Pattern = this.jsonPatterns[0];
 
   logoUrl = require("./assets/logo.svg");
 
@@ -101,18 +106,21 @@ export default class App extends Vue {
   created(): void {
     this.jsonPatterns.forEach(pattern => this.addPattern(pattern));
     this.jsonPosters.forEach(poster => this.addPoster(poster));
-    this.patternSwitched(this.patterns[0]);
+    const selectedPattern = checkStorage('selectedPattern');
+    if (selectedPattern === null) {
+      this.patternSwitched(this.patterns[0]);
+    } else {
+      this.selectedPattern = selectedPattern;
+    }
+    this.loadPersonalPosters();
   }
 
   frameSwitchedPoster(frame: Frame, poster: Poster): void {
-    if (this.selectedPattern !== null) {
-      const index = this.selectedPattern.frames.findIndex(
-        f => frame.id === f.id
-      );
-      frame.poster = poster;
-      this.selectedPattern.frames.splice(index, 1, frame);
-      this.selectedPosters.push(poster);
-    }
+    const index = this.selectedPattern.frames.findIndex(
+      f => frame.id === f.id
+    );
+    frame.poster = poster;
+    this.selectedPattern.frames.splice(index, 1, frame);
   }
 
   addPattern(pattern: Pattern): void {
@@ -125,6 +133,25 @@ export default class App extends Vue {
     this.posters.push(poster);
   }
 
+  addPersonalPoster(poster: Poster): void {
+    poster.id = this.nextPosterId++;
+    poster.link = poster.src;
+    this.posters.push(poster);
+    this.personalPosters.push(poster);
+    saveToStorage('personalPosters', this.personalPosters);
+  }
+
+  loadPersonalPosters(): void {
+    const personalPosters: Poster[] | null = checkStorage('personalPosters')
+    if (personalPosters === null) {
+      return;
+    }
+    personalPosters.forEach(poster => {
+      this.addPoster(poster);
+      this.personalPosters.push(poster);
+    });
+  }
+
   togglePatternSwitching(): void {
     this.switchPattern = !this.switchPattern;
   }
@@ -134,22 +161,25 @@ export default class App extends Vue {
   }
 
   patternSwitched(pattern: Pattern): void {
+    const oldPattern: Pattern = this.selectedPattern;
     this.selectedPattern = pattern;
     this.switchPattern = false;
-    let posterId = 0;
+    let frameId = 0;
     this.selectedPattern.frames
-      .filter(frame => {
-        return frame.poster === null;
-      })
       .forEach(frame => {
-        if (this.selectedPosters.length >= posterId + 1) {
-          frame.poster = this.selectedPosters[posterId];
-          posterId += 1;
+        if (oldPattern.nbrFrames >= frameId + 1) {
+          frame.poster = oldPattern.frames[frameId].poster;
+          frameId += 1;
+        } else {
+          frame.poster = null;
         }
       });
+
+    saveToStorage('selectedPattern', this.selectedPattern);
   }
 }
 </script>
+
 <style lang="scss">
 img {
   max-width: unset;

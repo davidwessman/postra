@@ -51,7 +51,7 @@ export default class PosterSwitcher extends Vue {
   addPoster!: Function;
 
   selectedPoster: Poster | null = null;
-  newPoster: Poster | null = new Poster(0, "", "");
+  newPoster: Poster | null = new Poster(0, "", "", "");
 
   get rotated(): boolean {
     return this.frame && this.frame.orientation === Orientation.Landscape;
