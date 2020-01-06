@@ -107,7 +107,7 @@ export default class App extends Vue {
     this.jsonPatterns.forEach(pattern => this.addPattern(pattern));
     this.jsonPosters.forEach(poster => this.addPoster(poster));
     const selectedPattern = checkStorage('selectedPattern');
-    if (selectedPattern === null) {
+    if (selectedPattern === null || selectedPattern === undefined) {
       this.patternSwitched(this.patterns[0]);
     } else {
       this.selectedPattern = selectedPattern;
@@ -143,7 +143,7 @@ export default class App extends Vue {
 
   loadPersonalPosters(): void {
     const personalPosters: Poster[] | null = checkStorage('personalPosters')
-    if (personalPosters === null) {
+    if (personalPosters === null || personalPosters === undefined) {
       return;
     }
     personalPosters.forEach(poster => {
