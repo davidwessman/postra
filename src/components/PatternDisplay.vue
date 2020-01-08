@@ -1,5 +1,5 @@
 <template>
-  <div class="flex p-2 w-full sm:w-1/2 lg:w-1/4 justify-center">
+  <div class="flex p-2 w-full sm:w-1/2 md:w-1/3 justify-center">
     <svg
       class="bg-white h-64 w-64 z-20"
       :class="{

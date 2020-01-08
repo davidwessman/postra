@@ -5,7 +5,7 @@
       'w-full p-3 border rounded-md': selected,
       'w-1/3 lg:w-1/5': !selected,
       rotated: rotate && !selected,
-      'px-8': rotate && !selected
+      'px-4': rotate && !selected
     }"
   >
     <div v-if="selected" class="flex flex-row flex-wrap p-3">
@@ -31,7 +31,7 @@
       </div>
       <div class="w-1/4">
       <img
-        :src="poster.src"
+        v-lazy="poster.src"
         :alt="poster.title"
         class="mx-auto h-auto w-full"
       />
@@ -39,7 +39,7 @@
     </div>
     <img
       v-if="!selected"
-      :src="poster.src"
+      v-lazy="poster.src"
       :alt="poster.title"
       class="mx-auto max-h-full w-auto"
       :class="{

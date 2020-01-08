@@ -24,7 +24,7 @@
         </button>
         <button
           class="p-2 border rounded border-gray-800 bg-white hover:bg-gray-800 hover:border-gray-300 hover:text-white"
-          @click="toggleInformation"
+          @click="openInformation"
         >
           About this page
         </button>
@@ -44,7 +44,7 @@
       <div class="flex w-1/2 justify-center">
         <button
           class="p-2 border rounded border-gray-800 bg-white hover:bg-gray-800 hover:border-gray-300 hover:text-white"
-          @click="toggleInformation"
+          @click="openInformation"
         >
           About this page
         </button>
@@ -59,7 +59,7 @@
       :w-scale="wScale"
       @switched="patternSwitched"
     />
-    <Information :open="information" @close="toggleInformation" />
+    <Information :open="information" @close="closeInformation" />
     <portal-target name="modals"></portal-target>
   </div>
 </template>
@@ -156,8 +156,12 @@ export default class App extends Vue {
     this.switchPattern = !this.switchPattern;
   }
 
-  toggleInformation(): void {
-    this.information = !this.information;
+  openInformation(): void {
+    this.information = true;
+  }
+
+  closeInformation(): void {
+    this.information = false;
   }
 
   patternSwitched(pattern: Pattern): void {
