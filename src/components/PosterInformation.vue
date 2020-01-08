@@ -20,13 +20,6 @@
           </a>
         </span>
         <span class="my-3">
-          <button
-            type="button"
-            class="px-3 py-1 rounded-lg border bg-blue-700 border-blue-700 text-white hover:bg-blue-900"
-            @click="close"
-          >
-            Close
-          </button>
         </span>
       </div>
       <div class="w-1/4">
@@ -45,13 +38,13 @@
       :class="{
         'border-4 border-teal-400': selected
       }"
-      @click="onSelect(poster)"
+      @click="select(poster)"
     />
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Emit, Prop, Vue } from "vue-property-decorator";
 import { Poster } from "../poster";
 import { Orientation } from "../orientation";
 
@@ -61,14 +54,17 @@ import { Orientation } from "../orientation";
 export default class PosterInformation extends Vue {
   @Prop()
   poster!: Poster;
+
   @Prop({ default: false })
   selected!: boolean;
-  @Prop()
+
+  @Prop({ default: false })
   frameRotated!: boolean;
-  @Prop()
-  onSelect!: Function;
-  @Prop()
-  close!: Function;
+
+  @Emit("select")
+  select(poster: Poster): void {
+    undefined;
+  }
 
   get rotate(): boolean {
     return this.frameRotated && this.poster.orientation === Orientation.Both;
