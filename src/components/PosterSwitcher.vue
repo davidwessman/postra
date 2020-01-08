@@ -47,10 +47,8 @@
         <PosterForm :poster="newPoster" :on-submit="onSubmitPoster" />
       </div>
       <div v-if="!formMode" class="flex flex-wrap">
-        <PosterInformation
-          v-if="selectedPoster != null"
+        <SelectedPoster
           :poster="selectedPoster"
-          :selected="true"
           :frame-rotated="rotated"
         />
 
@@ -59,6 +57,7 @@
           :key="poster.id"
           :poster="poster"
           :frame-rotated="rotated"
+          :selected="selected(poster)"
           @select="onSelectPoster"
         />
       </div>
@@ -71,6 +70,7 @@ import { Component, Emit, Prop, Vue, Watch } from "vue-property-decorator";
 import Modal from "./modal.vue";
 import PosterForm from "./PosterForm.vue";
 import PosterInformation from "./PosterInformation.vue";
+import SelectedPoster from "./SelectedPoster.vue";
 import { Frame } from "../frame";
 import { Orientation } from "../orientation";
 import { Poster } from "../poster";
@@ -79,7 +79,8 @@ import { Poster } from "../poster";
   components: {
     Modal,
     PosterForm,
-    PosterInformation
+    PosterInformation,
+    SelectedPoster,
   }
 })
 export default class PosterSwitcher extends Vue {
@@ -104,6 +105,16 @@ export default class PosterSwitcher extends Vue {
     return this.frame && this.frame.orientation === Orientation.Landscape;
   }
 
+  selected(poster: Poster): boolean {
+    if (this.selectedPoster == null) {
+      return false;
+    }
+    console.log(poster.id);
+    console.log(this.selectedPoster.id === poster.id);
+    console.log(this.selectedPoster.id == poster.id);
+    return this.selectedPoster != null && this.selectedPoster.id === poster.id;
+  }
+
   @Emit("close")
   close(): void {
     undefined;
@@ -123,11 +134,14 @@ export default class PosterSwitcher extends Vue {
     }
   }
 
-  onSelectPoster(poster: Poster): void {
+  onSelectPoster(poster: Poster, confirmed = false): void {
     const frame: Frame = this.frame;
     frame.poster = poster;
     this.emitRefresh(frame, poster);
     this.selectedPoster = poster;
+    if (confirmed) {
+      this.close();
+    }
   }
 
   onSubmitPoster(poster: Poster): void {

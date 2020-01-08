@@ -2,7 +2,7 @@
   <Modal name="information" :open="open" @close="close">
     <template v-slot:title>
       <h2
-        class="font-semibold text-gray-900 text-2xl leading-tight border-b-2 border-gray-200 pb-4"
+        class="font-semibold text-gray-900 text-2xl leading-tight border-b-2 border-gray-200 ml-2 mb-4"
       >
         About this page
       </h2>
