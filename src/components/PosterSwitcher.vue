@@ -8,7 +8,7 @@
       <div class="flex flex-wrap">
         <PosterForm :poster="newPoster" :on-submit="onSubmitPoster" />
         <PosterInformation
-          v-for="poster in availablePosters"
+          v-for="poster in posters"
           :key="poster.id"
           :poster="poster"
           :selected="selected(poster)"
@@ -55,15 +55,6 @@ export default class PosterSwitcher extends Vue {
 
   get rotated(): boolean {
     return this.frame && this.frame.orientation === Orientation.Landscape;
-  }
-
-  get availablePosters(): Poster[] {
-    return this.posters.filter(poster => {
-      return (
-        poster.orientation === Orientation.Both ||
-        (this.frame && poster.orientation === this.frame.orientation)
-      );
-    });
   }
 
   selected(poster: Poster): boolean {

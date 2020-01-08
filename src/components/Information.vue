@@ -34,7 +34,7 @@
           All the currently included posters are borrowed from Posterstore:
           <a href="https://posterstore.se/" class="text-blue-700 underline">
             <img
-              src="https://posterstore.se/userfiles/image/logotype-ps.png"
+              v-lazy="posterStoreImage"
               alt="Posterstore"
               class="h-auto w-64 my-4"
             />
@@ -51,7 +51,7 @@
         </span>
         <button
           class="p-2 border rounded border-gray-800 bg-white mr-2 hover:bg-gray-800 hover:border-gray-300 hover:text-white"
-          @click="open = false"
+          @click="close"
         >
           Close
         </button>
@@ -72,6 +72,8 @@ import Modal from "./modal.vue";
 export default class Information extends Vue {
   @Prop()
   open!: boolean;
+
+  posterStoreImage = "https://posterstore.se/userfiles/image/logotype-ps.png";
 
   @Emit("close")
   close(): void {
