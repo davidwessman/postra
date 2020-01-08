@@ -2,7 +2,7 @@
   <portal to="modals">
     <div
       v-if="showModal"
-      class="fixed inset-0 flex items-center justify-center"
+      class="fixed inset-0 flex items-center justify-center max-h-screen max-w-full p-2"
     >
       <transition
         @before-leave="backdropLeaving = true"
@@ -34,8 +34,8 @@
         leave-to-class="opacity-0 scale-70"
         appear
       >
-        <div v-if="showContent" class="relative">
-          <div class="max-w-lg w-full bg-white rounded-lg shadow-2xl px-6 py-6 max-h-screen overflow-y-auto">
+        <div v-if="showContent" class="relative max-w-full">
+          <div class="max-w-lg w-full bg-white rounded-lg shadow-2xl p-2 lg:p-6 max-h-screen overflow-y-auto">
             <slot name="title">
               <h2
                 class="font-semibold text-gray-900 text-2xl leading-tight border-b-2 border-gray-200 pb-4"
