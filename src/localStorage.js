@@ -1,7 +1,7 @@
-function checkStorage(key: string): any {
+function checkStorage(key) {
   if (localStorage.getItem(key)) {
     try {
-      const data: any | null = localStorage.getItem(key);
+      const data = localStorage.getItem(key);
       if (data === null) {
         return null;
       }
@@ -13,7 +13,7 @@ function checkStorage(key: string): any {
   }
 }
 
-function saveToStorage(key: string, value: any): void {
+function saveToStorage(key, value) {
   localStorage.setItem(key, JSON.stringify(value));
 }
 

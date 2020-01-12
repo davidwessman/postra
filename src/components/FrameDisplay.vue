@@ -1,6 +1,7 @@
 <template>
   <svg :width="width" :height="height" :x="xpos" :y="ypos" @click="onClick">
     <rect
+      v-if="!hasPoster"
       class="z-20"
       width="100%"
       height="100%"
@@ -22,45 +23,38 @@
   </svg>
 </template>
 
-<script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+<script>
 import { Frame, FrameHelper } from "../frame";
-
-@Component({
-  components: {}
-})
-export default class FrameDisplay extends Vue {
-  @Prop()
-  frame!: Frame;
-  @Prop()
-  helper!: FrameHelper;
-
-  onClick() {
-    this.$emit("select", this.frame);
+export default {
+  props: {
+    frame: Object,
+    helper: Object
+  },
+  methods: {
+    onClick() {
+      this.$emit("select", this.frame);
+    }
+  },
+  computed: {
+    hasPoster() {
+      return this.helper.hasImage(this.frame);
+    },
+    xpos() {
+      return this.helper.xpos(this.frame);
+    },
+    ypos() {
+      return this.helper.ypos(this.frame);
+    },
+    width() {
+      return this.helper.width(this.frame);
+    },
+    height() {
+      return this.helper.height(this.frame);
+    },
+    viewBox() {
+      return `0 0 ${this.width} ${this.height}`;
+    }
   }
 
-  get hasPoster(): boolean {
-    return this.helper.hasImage(this.frame);
-  }
-
-  get xpos(): string {
-    return this.helper.x(this.frame);
-  }
-
-  get ypos(): string {
-    return this.helper.y(this.frame);
-  }
-
-  get width(): string {
-    return this.helper.width(this.frame);
-  }
-
-  get height(): string {
-    return this.helper.height(this.frame);
-  }
-
-  get viewBox(): string {
-    return `0 0 ${this.width} ${this.height}`;
-  }
 }
 </script>

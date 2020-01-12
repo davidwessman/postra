@@ -15,55 +15,50 @@
           v-for="pattern in patterns"
           :key="pattern.id"
           :pattern="pattern"
-          :is-selected="selected && selected.id === pattern.id"
+          :selected="selected && selected.id === pattern.id"
           :w-scale="wScale"
           :h-scale="hScale"
-          :on-click="onSelectPattern"
+          @select="onSelect"
         />
       </div>
     </template>
   </Modal>
 </template>
 
-<script lang="ts">
-import { Component, Emit, Prop, Vue } from "vue-property-decorator";
-import { Pattern } from "../pattern";
+<script>
+import { Pattern } from "../frame";
 import PatternDisplay from "./PatternDisplay.vue";
 import Modal from "./modal.vue";
 
-@Component({
+export default {
+  name: "PatternSwitcher",
   components: {
     Modal,
     PatternDisplay
+  },
+  props: {
+    open: Boolean,
+    patterns: {
+      type: Array,
+      default: () => []
+    },
+    selected: Object,
+    hScale: {
+      type: Number,
+      default: 1.0
+    },
+    wScale: {
+      type: Number,
+      default: 1.0
+    }
+  },
+  methods: {
+    onSelect(pattern) {
+      this.$emit("switched", pattern);
+    },
+    close() {
+      this.$emit("close", this.selected);
+    }
   }
-})
-export default class PatternSwitcher extends Vue {
-  @Prop()
-  open!: boolean;
-
-  @Prop({ default: [] })
-  patterns!: Pattern[];
-
-  @Prop({ default: null })
-  selected!: Pattern | null;
-
-  @Prop({ default: 1 })
-  hScale!: number;
-
-  @Prop({ default: 1 })
-  wScale!: number;
-
-  @Emit("switched")
-  emitRefresh(pattern: Pattern | null, mode: string): void {
-    undefined;
-  }
-
-  onSelectPattern(pattern: Pattern): void {
-    this.emitRefresh(pattern, "update");
-  }
-
-  close(): void {
-    this.emitRefresh(this.selected, "update");
-  }
-}
+};
 </script>

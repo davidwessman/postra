@@ -6,98 +6,98 @@
             "title": "Blue Agate Poster",
             "link": "https://posterstore.se/tavlor-posters/illustrationer-abstrakt/blue-agate-poster/",
             "src": "https://posterstore.se/images/2x/normal/blueaagate1a.jpeg",
-            "orientation": 3
+            "orientation": "both"
         },
         {
             "id": 2,
             "title": "The Matterhorn Poster",
             "link": "https://posterstore.se/tavlor-posters/natur/landskap/the-matterhorn-poster/",
             "src": "https://posterstore.se/images/2x/normal/159.jpg",
-            "orientation": 1
+            "orientation": "portrait"
         },
         {
             "id": 3,
             "title": "Blue flower cactus Poster",
             "link": "https://posterstore.se/tavlor-posters/natur/blue-flower-cactus-poster/",
             "src": "https://posterstore.se/images/2x/normal/336.jpg",
-            "orientation": 3
+            "orientation": "both"
         },
         {
             "id": 4,
             "title": "Blue flower Poster",
             "link": "https://posterstore.se/tavlor-posters/natur/blue-flower-poster/",
             "src": "https://posterstore.se/images/2x/normal/blueflowerforsta-41956.jpeg",
-            "orientation": 1
+            "orientation": "portrait"
         },
         {
             "id": 5,
             "title": "Winter Lake Poster",
             "link": "https://posterstore.se/tavlor-posters/natur/landskap/winter-lake-poster/",
             "src": "https://posterstore.se/images/2x/normal/winterlakeforsta.jpeg",
-            "orientation": 1
+            "orientation": "portrait"
         },
         {
             "id": 6,
             "title": "Peonies Poster",
             "link": "https://posterstore.se/tavlor-posters/topplistan-planscher-affischer/peonies-poster/",
             "src": "https://posterstore.se/images/2x/normal/peonies.jpg",
-            "orientation": 1
+            "orientation": "portrait"
         },
         {
             "id": 7,
             "title": "Vee Speers The Birthday Party #16 Poster",
             "link": "https://posterstore.se/tavlor-posters/selection/vee-speers/vee-speers-the-birthday-party-16-poster/",
             "src": "https://posterstore.se/images/2x/normal/vee-speers-birthdat.jpg",
-            "orientation": 1
+            "orientation": "portrait"
         },
         {
             "id": 8,
             "title": "Morning Sun Poster",
             "link": "https://posterstore.se/tavlor-posters/topplistan-planscher-affischer/morning-sun-poster/",
             "src": "https://posterstore.se/images/2x/normal/morning-sun.jpg",
-            "orientation": 1
+            "orientation": "portrait"
         },
         {
             "id": 9,
             "title": "Magnolia Poster",
             "link": "https://posterstore.se/tavlor-posters/topplistan-planscher-affischer/magnolia-poster/",
             "src": "https://posterstore.se/images/2x/normal/133.jpg",
-            "orientation": 1
+            "orientation": "portrait"
         },
         {
             "id": 10,
             "title": "Flower Bouqet Poster",
             "link": "https://posterstore.se/tavlor-posters/topplistan-planscher-affischer/flower-bouquet-poster/",
             "src": "https://posterstore.se/images/2x/normal/flower-bouquet.jpg",
-            "orientation": 1
+            "orientation": "portrait"
         },
         {
             "id": 11,
             "title": "Hogwarts Express Poster",
             "link": "https://posterstore.se/tavlor-posters/topplistan-planscher-affischer/hogwarts-express-poster/",
             "src": "https://posterstore.se/images/2x/normal/hogwarts-express.jpg",
-            "orientation": 1
+            "orientation": "portrait"
         },
         {
             "id": 12,
             "title": "Girl in Paris Window Poster",
             "link": "https://posterstore.se/tavlor-posters/topplistan-planscher-affischer/girl-in-paris-window-poster/",
             "src": "https://posterstore.se/images/2x/normal/299-girl-in-window-ii.jpg",
-            "orientation": 1
+            "orientation": "portrait"
         },
         {
             "id": 13,
             "title": "Angel Poster",
             "link": "https://posterstore.se/tavlor-posters/topplistan-planscher-affischer/angel-poster/",
             "src": "https://posterstore.se/images/2x/normal/148.jpg",
-            "orientation": 1
+            "orientation": "portrait"
         },
         {
             "id": 14,
             "title": "Love Poster",
             "link": "https://posterstore.se/tavlor-posters/topplistan-planscher-affischer/love-poster/",
             "src": "https://posterstore.se/images/2x/normal/love.jpg",
-            "orientation": 2
+            "orientation": "landscape"
         }
     ]
 }

@@ -36,9 +36,9 @@
           type="text"
           placeholder="Orientation"
         >
-          <option selected :value="orientations.Portrait">Portrait</option>
-          <option :value="orientations.Landscape">Landscape</option>
-          <option :value="orientations.Both">Both</option>
+          <option selected :value="orientations.PORTRAIT">Portrait</option>
+          <option :value="orientations.LANDSCAPE">Landscape</option>
+          <option :value="orientations.BOTH">Both</option>
         </select>
       </div>
       <span class="my-3">
@@ -64,24 +64,23 @@
   </div>
 </template>
 
-<script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
-import { Poster } from "../poster";
-import { Orientation } from "../orientation";
+<script>
+import { Orientation, Poster } from "../frame";
 
-@Component({
-  components: {}
-})
-export default class PosterForm extends Vue {
-  @Prop()
-  poster!: Poster;
-  @Prop({ default: false })
-  selected!: boolean;
-  @Prop()
-  frameRotated!: boolean;
-  @Prop()
-  onSubmit!: Function;
-
-  orientations = Orientation;
-}
+export default {
+  name: "PosterForm",
+  props: {
+    poster: Poster,
+    selected: {
+      type: Boolean,
+      default: false
+    },
+    frameRotated: Boolean
+  },
+  methods: {
+    handleSubmit(poster) {
+      this.$emit("submit", poster);
+    }
+  }
+};
 </script>

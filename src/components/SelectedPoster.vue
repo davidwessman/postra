@@ -25,27 +25,27 @@
   </div>
 </template>
 
-<script lang="ts">
-import { Component, Emit, Prop, Vue } from "vue-property-decorator";
-import { Poster } from "../poster";
-import { Orientation } from "../orientation";
+<script>
+import { Poster, orientations } from "../frame";
 
-@Component({
-  components: {}
-})
-export default class SelectedPoster extends Vue {
-  @Prop()
-  poster!: Poster | null;
-
-  @Prop({ default: false })
-  frameRotated!: boolean;
-
-  get rotate(): boolean {
-    if (this.poster == null) {
-      return false;
+export default {
+  name: "SelectedPoster",
+  props: {
+    poster: Object,
+    frameRotated: {
+      type: Boolean,
+      default: false
     }
+  },
+  methods: {},
+  computed: {
+    rotate() {
+      if (this.poster == null) {
+        return false;
+      }
 
-    return this.frameRotated && this.poster.orientation === Orientation.Both;
+      return this.frameRotated && this.poster.orientation === orientations.BOTH;
+    }
   }
-}
+};
 </script>

@@ -68,86 +68,73 @@
   </Modal>
 </template>
 
-<script lang="ts">
-import { Component, Emit, Prop, Vue, Watch } from "vue-property-decorator";
+<script>
 import Modal from "./modal.vue";
 import PosterForm from "./PosterForm.vue";
 import PosterInformation from "./PosterInformation.vue";
 import SelectedPoster from "./SelectedPoster.vue";
-import { Frame } from "../frame";
-import { Orientation } from "../orientation";
-import { Poster } from "../poster";
-
-@Component({
+import { Poster, orientations } from "../frame";
+export default {
+  name: "PosterSwitcher",
   components: {
     Modal,
     PosterForm,
     PosterInformation,
     SelectedPoster
-  }
-})
-export default class PosterSwitcher extends Vue {
-  @Prop()
-  open!: boolean;
-
-  @Prop()
-  frame!: Frame;
-
-  @Prop()
-  posters!: Poster[];
-
-  @Prop()
-  addPoster!: Function;
-
-  selectedPoster: Poster | null = null;
-  newPoster: Poster | null = new Poster(0, "", "", "");
-
-  formMode = false;
-
-  get rotated(): boolean {
-    return this.frame && this.frame.orientation === Orientation.Landscape;
-  }
-
-  selected(poster: Poster): boolean {
-    if (this.selectedPoster == null) {
-      return false;
+  },
+  data() {
+    return {
+      formMode: false,
+      selectedPoster: null,
+      newPoster: new Poster(0, "", "", "")
+    };
+  },
+  props: {
+    open: Boolean,
+    frame: Object,
+    posters: Array
+  },
+  methods: {
+    selected(poster) {
+      if (this.selectedPoster == null) {
+        return false;
+      }
+      return (
+        this.selectedPoster != null && this.selectedPoster.id === poster.id
+      );
+    },
+    close() {
+      this.$emit("close");
+    },
+    onSubmitPoster(poster) {
+      this.$emit("posterAdded", poster);
+      this.onSelectPoster(poster);
+    },
+    onSelectPoster(poster, confirmed = false) {
+      const frame = this.frame;
+      frame.poster = poster;
+      this.$emit("frameChanged", frame, poster);
+      this.selectedPoster = poster;
+      if (confirmed) {
+        this.close();
+      }
     }
-    return this.selectedPoster != null && this.selectedPoster.id === poster.id;
-  }
-
-  @Emit("close")
-  close(): void {
-    undefined;
-  }
-
-  @Emit("frameChanged")
-  emitRefresh(frame: Frame, poster: Poster): void {
-    undefined;
-  }
-
-  @Watch("frame")
-  onPropertyChanged(value: Frame | null, oldValue: Frame | null): void {
-    if (this.frame === null) {
-      this.selectedPoster = null;
-    } else {
-      this.selectedPoster = this.frame.poster;
+  },
+  computed: {
+    rotated() {
+      return this.frame && this.frame.orientation === orientations.LANDSCAPE;
     }
-  }
-
-  onSelectPoster(poster: Poster, confirmed = false): void {
-    const frame: Frame = this.frame;
-    frame.poster = poster;
-    this.emitRefresh(frame, poster);
-    this.selectedPoster = poster;
-    if (confirmed) {
-      this.close();
+  },
+  watch: {
+    frame: {
+      handler: function(value, oldValue) {
+        if (this.frame === null) {
+          this.selectedPoster = null;
+        } else {
+          this.selectedPoster = this.frame.poster;
+        }
+      }
     }
   }
-
-  onSubmitPoster(poster: Poster): void {
-    this.addPoster(poster);
-    this.onSelectPoster(poster);
-    this.close();
-  }
-}
+};
 </script>

@@ -60,24 +60,23 @@
   </Modal>
 </template>
 
-<script lang="ts">
-import { Component, Emit, Prop, Vue } from "vue-property-decorator";
+<script>
 import Modal from "./modal.vue";
-
-@Component({
-  components: {
-    Modal
+export default {
+  name: "Information",
+  components: { Modal },
+  props: {
+    open: Boolean
+  },
+  data() {
+    return {
+      posterStoreImage: "https://posterstore.se/userfiles/image/logotype-ps.png"
+    };
+  },
+  methods: {
+    close() {
+      this.$emit("close");
+    }
   }
-})
-export default class Information extends Vue {
-  @Prop()
-  open!: boolean;
-
-  posterStoreImage = "https://posterstore.se/userfiles/image/logotype-ps.png";
-
-  @Emit("close")
-  close(): void {
-    undefined;
-  }
-}
+};
 </script>

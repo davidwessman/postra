@@ -18,31 +18,31 @@
   </div>
 </template>
 
-<script lang="ts">
-import { Component, Emit, Prop, Vue } from "vue-property-decorator";
-import { Poster } from "../poster";
-import { Orientation } from "../orientation";
+<script>
+import { Poster, orientations } from "../frame";
 
-@Component({
-  components: {}
-})
-export default class PosterInformation extends Vue {
-  @Prop()
-  poster!: Poster;
-
-  @Prop({ default: false })
-  selected!: boolean;
-
-  @Prop({ default: false })
-  frameRotated!: boolean;
-
-  @Emit("select")
-  select(poster: Poster, confirmed = false): void {
-    undefined;
+export default {
+  name: "PosterInformation",
+  props: {
+    poster: Object,
+    selected: {
+      type: Boolean,
+      default: false
+    },
+    frameRotated: {
+      type: Boolean,
+      default: false
+    }
+  },
+  methods: {
+    select(poster, confirmed = false) {
+      this.$emit("select", poster, confirmed);
+    }
+  },
+  computed: {
+    rotate() {
+      return this.frameRotated && this.poster.orientation === orientations.BOTH;
+    }
   }
-
-  get rotate(): boolean {
-    return this.frameRotated && this.poster.orientation === Orientation.Both;
-  }
-}
+};
 </script>

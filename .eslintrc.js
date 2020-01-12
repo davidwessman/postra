@@ -12,13 +12,7 @@ module.exports = {
 
   extends: [
     "plugin:vue/recommended",
-    "plugin:@typescript-eslint/recommended",
     "plugin:vue/essential",
     "@vue/prettier",
-    "@vue/typescript"
   ],
-
-  parserOptions: {
-    parser: "@typescript-eslint/parser"
-  }
 };

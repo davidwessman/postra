@@ -35,7 +35,9 @@
         appear
       >
         <div v-if="showContent" class="relative max-w-full">
-          <div class="max-w-lg w-full bg-white rounded-lg shadow-2xl p-2 lg:p-6 max-h-screen overflow-y-auto">
+          <div
+            class="max-w-lg w-full bg-white rounded-lg shadow-2xl p-2 lg:p-6 max-h-screen overflow-y-auto"
+          >
             <slot name="title">
               <h2
                 class="font-semibold text-gray-900 text-2xl leading-tight border-b-2 border-gray-200 pb-4"
@@ -53,6 +55,7 @@
 
 <script>
 export default {
+  name: "Modal",
   props: ["open"],
   data() {
     return {

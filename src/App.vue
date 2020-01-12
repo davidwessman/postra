@@ -5,8 +5,8 @@
       :pattern="selectedPattern"
       :posters="posters"
       :w-scale="wScale"
-      :frame-switched-poster="frameSwitchedPoster"
-      :add-poster="addPersonalPoster"
+      @frameSwitched="frameSwitchedPoster"
+      @posterAdded="addPersonalPoster"
     />
     <div
       class="flex w-full bg-blue-800-transparent fixed top-0 justify-center md:justify-between p-3 px-6"
@@ -64,48 +64,43 @@
   </div>
 </template>
 
-<script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+<script>
 import Wall from "./components/Wall.vue";
 import Information from "./components/Information.vue";
 import PatternSwitcher from "./components/PatternSwitcher.vue";
-import PosterSwitcher from "./components/PosterSwitcher.vue";
-import { Poster } from "./poster";
-import { Pattern } from "./pattern";
-import { Frame } from "./frame";
 import { checkStorage, saveToStorage } from "./localStorage";
 import patternsJson from "./assets/patterns.json";
 import postersJson from "./assets/posters.json";
+import { Pattern } from "./frame";
 
-@Component({
+export default {
+  name: "App",
   components: {
     Information,
     PatternSwitcher,
-    PosterSwitcher,
     Wall
-  }
-})
-export default class App extends Vue {
-  addingPoster = false;
-  posters: Poster[] = [];
-  personalPosters: Poster[] = [];
-  patterns: Pattern[] = [];
-  nextPosterId = 0;
-  nextPatternId = 0;
-  switchPattern = false;
-  information = false;
-  jsonPosters: Poster[] = postersJson.posters;
-  jsonPatterns: Pattern[] = patternsJson.patterns;
-  selectedPattern: Pattern = this.jsonPatterns[0];
-
-  logoUrl = require("./assets/logo.svg");
-
-  wScale: number = 1 / 300;
-  hScale: number = 1 / 200;
-
-  created(): void {
+  },
+  data: function() {
+    return {
+      addingPoster: false,
+      posters: [],
+      personalPosters: [],
+      patterns: [],
+      nextPosterId: 0,
+      nextPatternId: 0,
+      switchPattern: false,
+      information: false,
+      jsonPosters: postersJson.posters,
+      jsonPatterns: patternsJson.patterns,
+      selectedPattern: null,
+      logoUrl: require("./assets/logo.svg"),
+      wScale: 1 / 300,
+      hScale: 1 / 200
+    };
+  },
+  created() {
     this.jsonPatterns.forEach(pattern => this.addPattern(pattern));
-    this.jsonPosters.forEach(poster => this.addPoster(poster));
+    this.jsonPosters.forEach(poster => this.posterAdded(poster));
     const selectedPattern = checkStorage("selectedPattern");
     if (selectedPattern === null || selectedPattern === undefined) {
       this.patternSwitched(this.patterns[0]);
@@ -113,72 +108,83 @@ export default class App extends Vue {
       this.selectedPattern = selectedPattern;
     }
     this.loadPersonalPosters();
-  }
+  },
+  methods: {
+    frameSwitchedPoster(frame, poster) {
+      const index = this.selectedPattern.frames.findIndex(
+        f => frame.id === f.id
+      );
+      frame.poster = poster;
+      this.selectedPattern.frames.splice(index, 1, frame);
+    },
 
-  frameSwitchedPoster(frame: Frame, poster: Poster): void {
-    const index = this.selectedPattern.frames.findIndex(f => frame.id === f.id);
-    frame.poster = poster;
-    this.selectedPattern.frames.splice(index, 1, frame);
-  }
+    addPattern(data) {
+      let pattern = new Pattern(
+        this.nextPatternId++,
+        data.nbrFrames,
+        data.description,
+        data.offsetX,
+        data.offsetY,
+        data.frames
+      );
+      this.patterns.push(pattern);
+    },
 
-  addPattern(pattern: Pattern): void {
-    pattern.id = this.nextPatternId++;
-    this.patterns.push(pattern);
-  }
+    posterAdded(poster) {
+      poster.id = this.nextPosterId++;
+      this.posters.push(poster);
+    },
 
-  addPoster(poster: Poster): void {
-    poster.id = this.nextPosterId++;
-    this.posters.push(poster);
-  }
-
-  addPersonalPoster(poster: Poster): void {
-    poster.id = this.nextPosterId++;
-    poster.link = poster.src;
-    this.posters.push(poster);
-    this.personalPosters.push(poster);
-    saveToStorage("personalPosters", this.personalPosters);
-  }
-
-  loadPersonalPosters(): void {
-    const personalPosters: Poster[] | null = checkStorage("personalPosters");
-    if (personalPosters === null || personalPosters === undefined) {
-      return;
-    }
-    personalPosters.forEach(poster => {
-      this.addPoster(poster);
+    addPersonalPoster(poster) {
+      poster.id = this.nextPosterId++;
+      poster.link = poster.src;
+      this.posters.push(poster);
       this.personalPosters.push(poster);
-    });
-  }
+      this.saveToStorage("personalPosters", this.personalPosters);
+    },
 
-  togglePatternSwitching(): void {
-    this.switchPattern = !this.switchPattern;
-  }
-
-  openInformation(): void {
-    this.information = true;
-  }
-
-  closeInformation(): void {
-    this.information = false;
-  }
-
-  patternSwitched(pattern: Pattern): void {
-    const oldPattern: Pattern = this.selectedPattern;
-    this.selectedPattern = pattern;
-    this.switchPattern = false;
-    let frameId = 0;
-    this.selectedPattern.frames.forEach(frame => {
-      if (oldPattern.nbrFrames >= frameId + 1) {
-        frame.poster = oldPattern.frames[frameId].poster;
-        frameId += 1;
-      } else {
-        frame.poster = null;
+    loadPersonalPosters() {
+      const personalPosters = checkStorage("personalPosters");
+      if (personalPosters === null || personalPosters === undefined) {
+        return;
       }
-    });
+      personalPosters.forEach(poster => {
+        this.posterAdded(poster);
+        this.personalPosters.push(poster);
+      });
+    },
 
-    saveToStorage("selectedPattern", this.selectedPattern);
+    togglePatternSwitching() {
+      this.switchPattern = !this.switchPattern;
+    },
+
+    openInformation() {
+      this.information = true;
+    },
+
+    closeInformation() {
+      this.information = false;
+    },
+    patternSwitched(pattern) {
+      const oldPattern = this.selectedPattern;
+      this.selectedPattern = pattern;
+      this.switchPattern = false;
+      let frameId = 0;
+      if (oldPattern !== null) {
+        this.selectedPattern.frames.forEach(frame => {
+          if (oldPattern.nbrFrames >= frameId + 1) {
+            frame.poster = oldPattern.frames[frameId].poster;
+            frameId += 1;
+          } else {
+            frame.poster = null;
+          }
+        });
+      }
+
+      saveToStorage("selectedPattern", this.selectedPattern);
+    }
   }
-}
+};
 </script>
 
 <style lang="scss">

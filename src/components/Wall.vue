@@ -25,50 +25,43 @@
       :open="switchingFrame != null"
       :frame="switchingFrame"
       :posters="posters"
-      :add-poster="addPoster"
+      @posterAdded="posterAdded"
       @close="closeSwitcher"
-      @frameChanged="frameSwitchedPoster"
+      @frameChanged="frameChanged"
     />
   </div>
 </template>
 
-<script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+<script>
 import FrameDisplay from "./FrameDisplay.vue";
 import PosterSwitcher from "./PosterSwitcher.vue";
-import { Pattern } from "../pattern";
-import { Poster } from "../poster";
-import { Frame, FrameHelper } from "../frame";
+import { Pattern, Poster, FrameHelper } from "../frame";
 
-@Component({
+export default {
+  name: "Wall",
   components: {
     FrameDisplay,
     PosterSwitcher
-  }
-})
-export default class Wall extends Vue {
-  @Prop()
-  posters!: Poster[];
-
-  @Prop()
-  pattern!: Pattern;
-
-  @Prop({ default: 1 })
-  hScale!: number;
-
-  @Prop({ default: 1 })
-  wScale!: number;
-
-  @Prop()
-  frameSwitchedPoster!: Function;
-
-  @Prop()
-  addPoster!: Function;
-
-  helper: FrameHelper | null = null;
-  switchingFrame: Frame | null = null;
-  bgImage = require("../assets/rawpixel-760112-unsplash.jpg");
-
+  },
+  data() {
+    return {
+      helper: null,
+      switchingFrame: null,
+      bgImage: require("../assets/rawpixel-760112-unsplash.jpg")
+    };
+  },
+  props: {
+    posters: Array,
+    pattern: Object,
+    hScale: {
+      type: Number,
+      default: 1.0
+    },
+    wScale: {
+      type: Number,
+      default: 1.0
+    }
+  },
   created() {
     this.helper = new FrameHelper(
       this.wScale,
@@ -76,29 +69,28 @@ export default class Wall extends Vue {
       this.pattern.offsetX,
       this.pattern.offsetY
     );
-  }
-
-  get frames(): Frame[] {
-    if (this.pattern === null) {
-      return [];
+  },
+  methods: {
+    posterAdded(poster) {
+      this.$emit("posterAdded", poster);
+    },
+    selectFrame(frame) {
+      this.switchingFrame = frame;
+    },
+    frameChanged(frame, poster) {
+      this.$emit("frameChanged", frame, poster);
+    },
+    closeSwitcher() {
+      this.switchingFrame = null;
     }
-    return this.pattern.frames;
+  },
+  computed: {
+    frames() {
+      if (this.pattern === null) {
+        return [];
+      }
+      return this.pattern.frames;
+    }
   }
-
-  get emptyFrames(): Frame[] {
-    return this.frames.filter(frame => frame.poster === null);
-  }
-
-  get posterFrames(): Frame[] {
-    return this.frames.filter(frame => frame.poster !== null);
-  }
-
-  selectFrame(frame: Frame): void {
-    this.switchingFrame = frame;
-  }
-
-  closeSwitcher(): void {
-    this.switchingFrame = null;
-  }
-}
+};
 </script>
