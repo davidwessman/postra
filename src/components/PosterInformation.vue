@@ -3,7 +3,7 @@
     class="flex items-center h-auto p-3 mb-2 w-1/3 lg:w-1/5"
     :class="{
       rotated: rotate,
-      'px-4': rotate,
+      'px-4': rotate
     }"
   >
     <img
@@ -11,7 +11,7 @@
       :alt="poster.title"
       class="mx-auto max-h-full w-auto"
       :class="{
-      'border-4 border-teal-400': selected
+        'border-4 border-teal-400': selected
       }"
       @click="select(poster, selected)"
     />

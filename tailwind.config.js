@@ -90,7 +90,7 @@ module.exports = {
         600: "#3182ce",
         700: "#2b6cb0",
         800: "#2c5282",
-        "transparent": "#2c528230",
+        transparent: "#2c528230",
         900: "#2a4365"
       },
       indigo: {

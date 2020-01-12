@@ -106,7 +106,7 @@ export default class App extends Vue {
   created(): void {
     this.jsonPatterns.forEach(pattern => this.addPattern(pattern));
     this.jsonPosters.forEach(poster => this.addPoster(poster));
-    const selectedPattern = checkStorage('selectedPattern');
+    const selectedPattern = checkStorage("selectedPattern");
     if (selectedPattern === null || selectedPattern === undefined) {
       this.patternSwitched(this.patterns[0]);
     } else {
@@ -116,9 +116,7 @@ export default class App extends Vue {
   }
 
   frameSwitchedPoster(frame: Frame, poster: Poster): void {
-    const index = this.selectedPattern.frames.findIndex(
-      f => frame.id === f.id
-    );
+    const index = this.selectedPattern.frames.findIndex(f => frame.id === f.id);
     frame.poster = poster;
     this.selectedPattern.frames.splice(index, 1, frame);
   }
@@ -138,11 +136,11 @@ export default class App extends Vue {
     poster.link = poster.src;
     this.posters.push(poster);
     this.personalPosters.push(poster);
-    saveToStorage('personalPosters', this.personalPosters);
+    saveToStorage("personalPosters", this.personalPosters);
   }
 
   loadPersonalPosters(): void {
-    const personalPosters: Poster[] | null = checkStorage('personalPosters')
+    const personalPosters: Poster[] | null = checkStorage("personalPosters");
     if (personalPosters === null || personalPosters === undefined) {
       return;
     }
@@ -169,17 +167,16 @@ export default class App extends Vue {
     this.selectedPattern = pattern;
     this.switchPattern = false;
     let frameId = 0;
-    this.selectedPattern.frames
-      .forEach(frame => {
-        if (oldPattern.nbrFrames >= frameId + 1) {
-          frame.poster = oldPattern.frames[frameId].poster;
-          frameId += 1;
-        } else {
-          frame.poster = null;
-        }
-      });
+    this.selectedPattern.frames.forEach(frame => {
+      if (oldPattern.nbrFrames >= frameId + 1) {
+        frame.poster = oldPattern.frames[frameId].poster;
+        frameId += 1;
+      } else {
+        frame.poster = null;
+      }
+    });
 
-    saveToStorage('selectedPattern', this.selectedPattern);
+    saveToStorage("selectedPattern", this.selectedPattern);
   }
 }
 </script>

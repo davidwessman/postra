@@ -14,33 +14,18 @@
         preserveAspectRatio="xMinYMid meet"
       />
       <FrameDisplay
-        v-for="frame in emptyFrames"
+        v-for="frame in frames"
         :key="frame.id"
-        :x="helper.x(frame)"
-        :y="helper.y(frame)"
-        :xc="helper.xc(frame)"
-        :yc="helper.yc(frame)"
-        :height="helper.height(frame)"
-        :width="helper.width(frame)"
-        :on-click="() => selectFrame(frame)"
+        :frame="frame"
+        :helper="helper"
+        @select="selectFrame"
       ></FrameDisplay>
-      <PosterDisplay
-        v-for="frame in posterFrames"
-        :key="frame.id"
-        :image="frame.poster.src"
-        :x="helper.x(frame)"
-        :y="helper.y(frame)"
-        :height="helper.height(frame)"
-        :width="helper.width(frame)"
-        :transform="helper.rotateSvg(frame)"
-        :on-click="() => selectFrame(frame)"
-      ></PosterDisplay>
     </svg>
     <PosterSwitcher
       :open="switchingFrame != null"
       :frame="switchingFrame"
       :posters="posters"
-      :addPoster="addPoster"
+      :add-poster="addPoster"
       @close="closeSwitcher"
       @frameChanged="frameSwitchedPoster"
     />
@@ -50,7 +35,6 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import FrameDisplay from "./FrameDisplay.vue";
-import PosterDisplay from "./PosterDisplay.vue";
 import PosterSwitcher from "./PosterSwitcher.vue";
 import { Pattern } from "../pattern";
 import { Poster } from "../poster";
@@ -59,7 +43,6 @@ import { Frame, FrameHelper } from "../frame";
 @Component({
   components: {
     FrameDisplay,
-    PosterDisplay,
     PosterSwitcher
   }
 })
@@ -82,8 +65,18 @@ export default class Wall extends Vue {
   @Prop()
   addPoster!: Function;
 
+  helper: FrameHelper | null = null;
   switchingFrame: Frame | null = null;
   bgImage = require("../assets/rawpixel-760112-unsplash.jpg");
+
+  created() {
+    this.helper = new FrameHelper(
+      this.wScale,
+      this.hScale,
+      this.pattern.offsetX,
+      this.pattern.offsetY
+    );
+  }
 
   get frames(): Frame[] {
     if (this.pattern === null) {
@@ -106,15 +99,6 @@ export default class Wall extends Vue {
 
   closeSwitcher(): void {
     this.switchingFrame = null;
-  }
-
-  get helper(): FrameHelper {
-    return new FrameHelper(
-      this.wScale,
-      this.hScale,
-      this.pattern.offsetX,
-      this.pattern.offsetY
-    );
   }
 }
 </script>

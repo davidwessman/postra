@@ -29,44 +29,27 @@ export class FrameHelper {
   }
 
   asPercent(value: number): string {
-    return value * 100 + "%";
+    return `${value * 100}%`;
   }
 
   width(frame: Frame): string {
-    if (this.shouldRotate(frame)) {
-      return this.asPercent(frame.height * this.wScale);
-    }
     return this.asPercent(frame.width * this.wScale);
   }
 
   widthNum(frame: Frame): number {
-    if (this.shouldRotate(frame)) {
-      return frame.height * this.wScale * this.svgWidth;
-    }
     return frame.width * this.wScale * this.svgWidth;
   }
 
   height(frame: Frame): string {
-    if (this.shouldRotate(frame)) {
-      return this.asPercent(frame.width * this.hScale);
-    }
     return this.asPercent(frame.height * this.hScale);
   }
 
   heightNum(frame: Frame): number {
-    if (this.shouldRotate(frame)) {
-      return frame.width * this.hScale * this.svgHeight;
-    }
     return frame.height * this.hScale * this.svgHeight;
   }
 
   xNum(frame: Frame): number {
-    let x;
-    if (this.shouldRotate(frame)) {
-      x = frame.x - frame.height / 2 + this.offsetX;
-    } else {
-      x = frame.x - frame.width / 2 + this.offsetX;
-    }
+    const x = frame.x - frame.width / 2 + this.offsetX;
     return x * this.wScale + 1 / 2;
   }
 
@@ -79,17 +62,8 @@ export class FrameHelper {
     return this.asPercent(this.xNum(frame));
   }
 
-  xc(frame: Frame): string {
-    return this.asPercent(this.xCenter(frame));
-  }
-
   yNum(frame: Frame): number {
-    let y;
-    if (this.shouldRotate(frame)) {
-      y = frame.y + frame.width / 2 + this.offsetY;
-    } else {
-      y = frame.y + frame.height / 2 + this.offsetY;
-    }
+    const y = frame.y + frame.height / 2 + this.offsetY;
     return -(y * this.hScale) + 1 / 2;
   }
 
@@ -100,25 +74,5 @@ export class FrameHelper {
 
   y(frame: Frame): string {
     return this.asPercent(this.yNum(frame));
-  }
-
-  yc(frame: Frame): string {
-    return this.asPercent(this.yCenter(frame));
-  }
-
-  shouldRotate(frame: Frame) {
-    return (
-      frame.orientation === Orientation.Landscape &&
-      frame.poster &&
-      frame.poster.orientation === Orientation.Both
-    );
-  }
-
-  rotateSvg(frame: Frame) {
-    if (this.shouldRotate(frame)) {
-      return `rotate(90, ${145 * this.xCenter(frame)}, ${100 *
-        this.yCenter(frame)})`;
-    }
-    return "";
   }
 }

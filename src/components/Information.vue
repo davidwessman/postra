@@ -12,8 +12,8 @@
         class="flex flex-col overflow-y-auto p-3 z-40 w-full md:w-4/5 mx-2 text-lg"
       >
         <span class="mb-4">
-          I tried to decide which posters to buy for our wall at home and followed
-          these steps:
+          I tried to decide which posters to buy for our wall at home and
+          followed these steps:
           <ol class="my-4">
             <li>Pick out posters we liked.</li>
             <li>Tried to imagine in what pattern we would want them.</li>
@@ -27,8 +27,8 @@
         </span>
 
         <span class="mb-4">
-          This project gives you a way to visualize a few patterns with different
-          selections for posters.
+          This project gives you a way to visualize a few patterns with
+          different selections for posters.
           <br />
           <br />
           All the currently included posters are borrowed from Posterstore:

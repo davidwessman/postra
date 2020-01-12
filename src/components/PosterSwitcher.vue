@@ -1,7 +1,10 @@
 <template>
   <Modal name="poster-switcher" :open="open" @close="close">
     <template v-slot:title>
-      <div v-if="formMode" class="flex flex-row flex-wrap justify-between border-b border-gray-600">
+      <div
+        v-if="formMode"
+        class="flex flex-row flex-wrap justify-between border-b border-gray-600"
+      >
         <div class="mr-6 mb-4">
           <h2 class="text-l font-semibold mr-2">Change poster - add one</h2>
         </div>
@@ -21,7 +24,10 @@
           </button>
         </div>
       </div>
-      <div v-else class="flex flex-row flex-wrap justify-between border-b border-gray-600">
+      <div
+        v-else
+        class="flex flex-row flex-wrap justify-between border-b border-gray-600"
+      >
         <div class="mr-6 mb-4">
           <h2 class="text-l font-semibold mr-2">Change poster - pick one</h2>
         </div>
@@ -47,10 +53,7 @@
         <PosterForm :poster="newPoster" :on-submit="onSubmitPoster" />
       </div>
       <div v-if="!formMode" class="flex flex-wrap">
-        <SelectedPoster
-          :poster="selectedPoster"
-          :frame-rotated="rotated"
-        />
+        <SelectedPoster :poster="selectedPoster" :frame-rotated="rotated" />
 
         <PosterInformation
           v-for="poster in posters"
@@ -80,7 +83,7 @@ import { Poster } from "../poster";
     Modal,
     PosterForm,
     PosterInformation,
-    SelectedPoster,
+    SelectedPoster
   }
 })
 export default class PosterSwitcher extends Vue {
@@ -109,9 +112,6 @@ export default class PosterSwitcher extends Vue {
     if (this.selectedPoster == null) {
       return false;
     }
-    console.log(poster.id);
-    console.log(this.selectedPoster.id === poster.id);
-    console.log(this.selectedPoster.id == poster.id);
     return this.selectedPoster != null && this.selectedPoster.id === poster.id;
   }
 

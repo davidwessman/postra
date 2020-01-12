@@ -10,18 +10,16 @@
     <div class="flex flex-row flex-wrap p-3">
       <div class="flex flex-row w-full justify-between flex-wrap">
         <h3 class="font-bold mb-2 ">{{ poster.title }}</h3>
-        <a class="p-2 ml-1 border rounded border-gray-800 bg-white hover:bg-gray-800 hover:border-gray-300 hover:text-white"
+        <a
+          class="p-2 ml-1 border rounded border-gray-800 bg-white hover:bg-gray-800 hover:border-gray-300 hover:text-white"
           :href="poster.link"
-          target="_blank">
+          target="_blank"
+        >
           Source
         </a>
       </div>
       <div class="flex flex-row w-full justify-between">
-        <img
-          v-lazy="poster.src"
-          :alt="poster.title"
-          class="h-auto w-1/4"
-        />
+        <img v-lazy="poster.src" :alt="poster.title" class="h-auto w-1/4" />
       </div>
     </div>
   </div>
