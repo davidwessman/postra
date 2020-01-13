@@ -29,7 +29,7 @@
     "postcss-preset-env": "^6.7.0",
     "prettier": "^1.18.2",
     "purgecss": "^1.4.2",
-    "sass-loader": "^8.0.0",
+    "sass-loader": "^8.0.1",
     "tailwindcss": "^1.1.4",
     "typescript": "~3.7.4",
     "vue-template-compiler": "^2.6.11"
