@@ -26,18 +26,20 @@
 </template>
 
 <script>
-import { Poster, orientations } from "../frame";
+import { orientations } from "../frame";
 
 export default {
   name: "SelectedPoster",
   props: {
-    poster: Object,
+    poster: {
+      type: Object,
+      default: () => {}
+    },
     frameRotated: {
       type: Boolean,
       default: false
     }
   },
-  methods: {},
   computed: {
     rotate() {
       if (this.poster == null) {
@@ -46,6 +48,7 @@ export default {
 
       return this.frameRotated && this.poster.orientation === orientations.BOTH;
     }
-  }
+  },
+  methods: {}
 };
 </script>

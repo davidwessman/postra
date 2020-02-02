@@ -10,9 +10,9 @@ module.exports = {
     node: true
   },
 
-  extends: [
-    "plugin:vue/recommended",
-    "plugin:vue/essential",
-    "@vue/prettier",
-  ],
+  extends: ["plugin:vue/recommended", "plugin:vue/essential", "@vue/prettier"],
+
+  parserOptions: {
+    parser: "babel-eslint"
+  }
 };

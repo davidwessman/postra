@@ -19,12 +19,15 @@
 </template>
 
 <script>
-import { Poster, orientations } from "../frame";
+import { orientations } from "../frame";
 
 export default {
   name: "PosterInformation",
   props: {
-    poster: Object,
+    poster: {
+      type: Object,
+      default: () => {}
+    },
     selected: {
       type: Boolean,
       default: false
@@ -34,14 +37,14 @@ export default {
       default: false
     }
   },
-  methods: {
-    select(poster, confirmed = false) {
-      this.$emit("select", poster, confirmed);
-    }
-  },
   computed: {
     rotate() {
       return this.frameRotated && this.poster.orientation === orientations.BOTH;
+    }
+  },
+  methods: {
+    select(poster, confirmed = false) {
+      this.$emit("select", poster, confirmed);
     }
   }
 };

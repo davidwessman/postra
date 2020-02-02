@@ -5,8 +5,6 @@
       class="fixed inset-0 flex items-center justify-center max-h-screen max-w-full p-2"
     >
       <transition
-        @before-leave="backdropLeaving = true"
-        @after-leave="backdropLeaving = false"
         enter-active-class="transition-all transition-fast ease-out-quad"
         leave-active-class="transition-all transition-medium ease-in-quad"
         enter-class="opacity-0"
@@ -14,6 +12,8 @@
         leave-class="opacity-100"
         leave-to-class="opacity-0"
         appear
+        @before-leave="backdropLeaving = true"
+        @after-leave="backdropLeaving = false"
       >
         <div v-if="showBackdrop">
           <div
@@ -24,8 +24,6 @@
       </transition>
 
       <transition
-        @before-leave="cardLeaving = true"
-        @after-leave="cardLeaving = false"
         enter-active-class="transition-all transition-fast ease-out-quad"
         leave-active-class="transition-all transition-medium ease-in-quad"
         enter-class="opacity-0 scale-70"
@@ -33,10 +31,12 @@
         leave-class="opacity-100 scale-100"
         leave-to-class="opacity-0 scale-70"
         appear
+        @before-leave="cardLeaving = true"
+        @after-leave="cardLeaving = false"
       >
         <div v-if="showContent" class="relative max-w-full">
           <div
-            class="max-w-lg w-full bg-white rounded-lg shadow-2xl p-2 lg:p-6 max-h-screen overflow-y-auto"
+            class="max-w-6xl w-full bg-white rounded-lg shadow-2xl p-2 lg:p-6 max-h-screen overflow-y-auto"
           >
             <slot name="title">
               <h2
@@ -56,7 +56,9 @@
 <script>
 export default {
   name: "Modal",
-  props: ["open"],
+  props: {
+    open: Boolean
+  },
   data() {
     return {
       showModal: false,
@@ -66,18 +68,10 @@ export default {
       cardLeaving: false
     };
   },
-  created() {
-    const onEscape = e => {
-      if (this.open && e.keyCode === 27) {
-        this.close();
-      }
-    };
-
-    document.addEventListener("keydown", onEscape);
-
-    this.$once("hook:destroyed", () => {
-      document.removeEventListener("keydown", onEscape);
-    });
+  computed: {
+    leaving() {
+      return this.backdropLeaving || this.cardLeaving;
+    }
   },
   watch: {
     open: {
@@ -97,10 +91,18 @@ export default {
       }
     }
   },
-  computed: {
-    leaving() {
-      return this.backdropLeaving || this.cardLeaving;
-    }
+  created() {
+    const onEscape = e => {
+      if (this.open && e.keyCode === 27) {
+        this.close();
+      }
+    };
+
+    document.addEventListener("keydown", onEscape);
+
+    this.$once("hook:destroyed", () => {
+      document.removeEventListener("keydown", onEscape);
+    });
   },
   methods: {
     show() {
