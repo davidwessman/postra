@@ -35,13 +35,31 @@
 <script>
 import FrameDisplay from "./FrameDisplay.vue";
 import PosterSwitcher from "./PosterSwitcher.vue";
-import { Pattern, Poster, FrameHelper } from "../frame";
+import { FrameHelper } from "../frame";
 
 export default {
   name: "Wall",
   components: {
     FrameDisplay,
     PosterSwitcher
+  },
+  props: {
+    posters: {
+      type: Array,
+      default: () => []
+    },
+    pattern: {
+      type: Object,
+      default: () => {}
+    },
+    hScale: {
+      type: Number,
+      default: 1.0
+    },
+    wScale: {
+      type: Number,
+      default: 1.0
+    }
   },
   data() {
     return {
@@ -50,16 +68,12 @@ export default {
       bgImage: require("../assets/rawpixel-760112-unsplash.jpg")
     };
   },
-  props: {
-    posters: Array,
-    pattern: Object,
-    hScale: {
-      type: Number,
-      default: 1.0
-    },
-    wScale: {
-      type: Number,
-      default: 1.0
+  computed: {
+    frames() {
+      if (this.pattern === null) {
+        return [];
+      }
+      return this.pattern.frames;
     }
   },
   created() {
@@ -82,14 +96,6 @@ export default {
     },
     closeSwitcher() {
       this.switchingFrame = null;
-    }
-  },
-  computed: {
-    frames() {
-      if (this.pattern === null) {
-        return [];
-      }
-      return this.pattern.frames;
     }
   }
 };

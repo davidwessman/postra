@@ -9,7 +9,7 @@
       stroke-width="0.5"
       fill="transparent"
     />
-    <svg v-if="!hasPoster" x="41%" y="40%">
+    <svg v-if="!hasPoster" x="37%" y="40%">
       <path d="M2 1 h1 v1 h1 v1 h-1 v1 h-1 v-1 h-1 v-1 h1 z" />
     </svg>
     <image
@@ -24,15 +24,19 @@
 </template>
 
 <script>
-import { Frame, FrameHelper } from "../frame";
 export default {
   props: {
-    frame: Object,
-    helper: Object
-  },
-  methods: {
-    onClick() {
-      this.$emit("select", this.frame);
+    frame: {
+      type: Object,
+      default() {
+        return {};
+      }
+    },
+    helper: {
+      type: Object,
+      default() {
+        return {};
+      }
     }
   },
   computed: {
@@ -54,7 +58,11 @@ export default {
     viewBox() {
       return `0 0 ${this.width} ${this.height}`;
     }
+  },
+  methods: {
+    onClick() {
+      this.$emit("select", this.frame);
+    }
   }
-
-}
+};
 </script>

@@ -58,6 +58,7 @@
       :selected="selectedPattern"
       :w-scale="wScale"
       @switched="patternSwitched"
+      @close="patternSwitcherClosed"
     />
     <Information :open="information" @close="closeInformation" />
     <portal-target name="modals"></portal-target>
@@ -140,7 +141,7 @@ export default {
       poster.link = poster.src;
       this.posters.push(poster);
       this.personalPosters.push(poster);
-      this.saveToStorage("personalPosters", this.personalPosters);
+      saveToStorage("personalPosters", this.personalPosters);
     },
 
     loadPersonalPosters() {
@@ -182,6 +183,9 @@ export default {
       }
 
       saveToStorage("selectedPattern", this.selectedPattern);
+    },
+    patternSwitcherClosed() {
+      this.switchPattern = false;
     }
   }
 };

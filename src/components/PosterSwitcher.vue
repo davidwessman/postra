@@ -50,7 +50,7 @@
     </template>
     <template v-slot:body>
       <div v-if="formMode" class="flex flex-wrap pt-2">
-        <PosterForm :poster="newPoster" :on-submit="onSubmitPoster" />
+        <PosterForm :poster="newPoster" @submit="onSubmitPoster" />
       </div>
       <div v-if="!formMode" class="flex flex-wrap">
         <SelectedPoster :poster="selectedPoster" :frame-rotated="rotated" />
@@ -82,6 +82,20 @@ export default {
     PosterInformation,
     SelectedPoster
   },
+  props: {
+    open: {
+      type: Boolean,
+      default: false
+    },
+    frame: {
+      type: Object,
+      default: () => {}
+    },
+    posters: {
+      type: Array,
+      default: () => []
+    }
+  },
   data() {
     return {
       formMode: false,
@@ -89,10 +103,21 @@ export default {
       newPoster: new Poster(0, "", "", "")
     };
   },
-  props: {
-    open: Boolean,
-    frame: Object,
-    posters: Array
+  computed: {
+    rotated() {
+      return this.frame && this.frame.orientation === orientations.LANDSCAPE;
+    }
+  },
+  watch: {
+    frame: {
+      handler: function() {
+        if (this.frame === null) {
+          this.selectedPoster = null;
+        } else {
+          this.selectedPoster = this.frame.poster;
+        }
+      }
+    }
   },
   methods: {
     selected(poster) {
@@ -109,6 +134,8 @@ export default {
     onSubmitPoster(poster) {
       this.$emit("posterAdded", poster);
       this.onSelectPoster(poster);
+      this.formMode = false;
+      this.close();
     },
     onSelectPoster(poster, confirmed = false) {
       const frame = this.frame;
@@ -117,22 +144,6 @@ export default {
       this.selectedPoster = poster;
       if (confirmed) {
         this.close();
-      }
-    }
-  },
-  computed: {
-    rotated() {
-      return this.frame && this.frame.orientation === orientations.LANDSCAPE;
-    }
-  },
-  watch: {
-    frame: {
-      handler: function(value, oldValue) {
-        if (this.frame === null) {
-          this.selectedPoster = null;
-        } else {
-          this.selectedPoster = this.frame.poster;
-        }
       }
     }
   }

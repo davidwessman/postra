@@ -26,7 +26,6 @@
 </template>
 
 <script>
-import { Pattern } from "../frame";
 import PatternDisplay from "./PatternDisplay.vue";
 import Modal from "./modal.vue";
 
@@ -42,7 +41,10 @@ export default {
       type: Array,
       default: () => []
     },
-    selected: Object,
+    selected: {
+      type: Object,
+      default: () => {}
+    },
     hScale: {
       type: Number,
       default: 1.0

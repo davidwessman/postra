@@ -30,8 +30,8 @@ export class Frame {
     id,
     height,
     width,
-    x,
-    y,
+    xpos,
+    ypos,
     orientation = orientations.PORTRAIT,
     poster
   ) {
