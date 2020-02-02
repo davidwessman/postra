@@ -31,7 +31,6 @@
     "purgecss": "^2.0.5",
     "sass-loader": "^8.0.2",
     "tailwindcss": "^1.1.4",
-    "typescript": "~3.7.5",
     "vue-template-compiler": "^2.6.11"
   },
   "browserslist": [
