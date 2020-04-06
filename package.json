@@ -28,7 +28,7 @@
     "lint-staged": "^10.1.1",
     "node-sass": "^4.13.1",
     "postcss-preset-env": "^6.7.0",
-    "prettier": "^2.0.2",
+    "prettier": "^2.0.3",
     "purgecss": "^2.0.6",
     "sass-loader": "^8.0.2",
     "tailwindcss": "^1.2.0",
