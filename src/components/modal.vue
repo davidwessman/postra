@@ -2,11 +2,11 @@
   <portal to="modals">
     <div
       v-if="showModal"
-      class="fixed inset-0 flex items-center justify-center max-h-screen max-w-full p-2"
+      class="fixed inset-x-0 bottom-0 px-4 pb-6 sm:inset-0 sm:p-0 sm:flex sm:items-center sm:justify-center"
     >
       <transition
-        enter-active-class="transition-all transition-fast ease-out-quad"
-        leave-active-class="transition-all transition-medium ease-in-quad"
+        enter-active-class="duration-300 ease-out"
+        leave-active-class="duration-200 ease-in"
         enter-class="opacity-0"
         enter-to-class="opacity-100"
         leave-class="opacity-100"
@@ -15,37 +15,41 @@
         @before-leave="backdropLeaving = true"
         @after-leave="backdropLeaving = false"
       >
-        <div v-if="showBackdrop">
+        <div v-if="showBackdrop" class="fixed inset-0 transition-opacity">
           <div
-            class="absolute inset-0 bg-black opacity-25"
+            class="absolute inset-0 bg-gray-500 opacity-75"
             @click="close"
           ></div>
         </div>
       </transition>
 
       <transition
-        enter-active-class="transition-all transition-fast ease-out-quad"
+        enter-active-class="duration-300 ease-out"
         leave-active-class="transition-all transition-medium ease-in-quad"
-        enter-class="opacity-0 scale-70"
-        enter-to-class="opacity-100 scale-100"
-        leave-class="opacity-100 scale-100"
-        leave-to-class="opacity-0 scale-70"
+        enter-class="translate-y-4 opacity-0 sm:translate-y-0 sm:scale-95"
+        enter-to-class="translate-y-0 opacity-100 sm:scale-100"
+        leave-class="translate-y-0 opacity-100 sm:scale-100"
+        leave-to-class="translate-y-4 opacity-0 sm:translate-y-0 sm:scale-95"
         appear
         @before-leave="cardLeaving = true"
         @after-leave="cardLeaving = false"
       >
-        <div v-if="showContent" class="relative max-w-full">
-          <div
-            class="max-w-6xl w-full bg-white rounded-lg shadow-2xl p-2 lg:p-6 max-h-screen overflow-y-auto"
-          >
-            <slot name="title">
-              <h2
-                class="font-semibold text-gray-900 text-2xl leading-tight border-b-2 border-gray-200 pb-4"
+        <div
+          class="px-4 pt-5 pb-4 overflow-hidden transition-all transform bg-white rounded-lg shadow-xl sm:max-w-sm md:max-w-md lg:max-w-lg sm:w-full sm:p-6"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="modal-headline"
+        >
+          <slot name="body"> </slot>
+          <div class="mt-5 sm:mt-6">
+            <span class="flex w-full rounded-md shadow-sm">
+              <button
+                type="button"
+                class="inline-flex justify-center w-full px-4 py-2 text-base font-medium leading-6 text-white transition duration-150 ease-in-out bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo sm:text-sm sm:leading-5"
               >
-                Title
-              </h2>
-            </slot>
-            <slot name="body"></slot>
+                Go back to dashboard
+              </button>
+            </span>
           </div>
         </div>
       </transition>
@@ -57,7 +61,7 @@
 export default {
   name: "Modal",
   props: {
-    open: Boolean
+    open: Boolean,
   },
   data() {
     return {
@@ -65,34 +69,34 @@ export default {
       showBackdrop: false,
       showContent: false,
       backdropLeaving: false,
-      cardLeaving: false
+      cardLeaving: false,
     };
   },
   computed: {
     leaving() {
       return this.backdropLeaving || this.cardLeaving;
-    }
+    },
   },
   watch: {
     open: {
-      handler: function(newValue) {
+      handler: function (newValue) {
         if (newValue) {
           this.show();
         } else {
           this.close();
         }
       },
-      immediate: true
+      immediate: true,
     },
     leaving(newValue) {
       if (newValue === false) {
         this.showModal = false;
         this.$emit("close");
       }
-    }
+    },
   },
   created() {
-    const onEscape = e => {
+    const onEscape = (e) => {
       if (this.open && e.keyCode === 27) {
         this.close();
       }
@@ -113,7 +117,7 @@ export default {
     close() {
       this.showBackdrop = false;
       this.showContent = false;
-    }
-  }
+    },
+  },
 };
 </script>

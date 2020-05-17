@@ -2,37 +2,37 @@
   <div class="flex w-full">
     <div class="flex flex-col w-2/3 p-2">
       <div class="mb-4">
-        <label class="block text-gray-700 text-sm font-bold mb-2" for="title"
+        <label class="block mb-2 text-sm font-bold text-gray-700" for="title"
           >Title</label
         >
         <input
           id="title"
           v-model="poster.title"
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
           type="text"
           placeholder="Title"
         />
       </div>
       <div class="mb-4">
-        <label class="block text-gray-700 text-sm font-bold mb-2" for="title"
+        <label class="block mb-2 text-sm font-bold text-gray-700" for="title"
           >Image link</label
         >
         <input
           id="src"
           v-model="poster.src"
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
           type="text"
           placeholder="Link"
         />
       </div>
       <div class="mb-4">
-        <label class="block text-gray-700 text-sm font-bold mb-2" for="title"
+        <label class="block mb-2 text-sm font-bold text-gray-700" for="title"
           >Orientation</label
         >
         <select
           id="orientation"
           v-model="poster.orientation"
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
           type="text"
           placeholder="Orientation"
         >
@@ -44,7 +44,7 @@
       <span class="my-3">
         <button
           type="button"
-          class="px-3 py-1 rounded-lg border bg-blue-700 border-blue-700 text-white hover:bg-blue-dark"
+          class="px-3 py-1 text-white bg-blue-700 border border-blue-700 rounded-lg hover:bg-blue-dark"
           @click="handleSubmit(poster)"
         >
           Save
@@ -55,9 +55,9 @@
       <img
         v-lazy="poster.src"
         :alt="poster.title"
-        class="mx-auto max-h-full w-auto"
+        class="w-auto max-h-full mx-auto"
         :class="{
-          'border-4 border-teal-400': selected
+          'border-4 border-teal-400': selected,
         }"
       />
     </div>
@@ -73,19 +73,19 @@ export default {
     poster: Poster,
     selected: {
       type: Boolean,
-      default: false
+      default: false,
     },
-    frameRotated: Boolean
+    frameRotated: Boolean,
   },
   data() {
     return {
-      orientations: orientations
+      orientations: orientations,
     };
   },
   methods: {
     handleSubmit(poster) {
       this.$emit("submit", poster);
-    }
-  }
+    },
+  },
 };
 </script>

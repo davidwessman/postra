@@ -1,25 +1,25 @@
 <template>
   <div
     v-if="poster != null"
-    class="flex items-center h-auto p-3 mb-2 w-full p-3 border border-gray-400 rounded-md"
+    class="flex items-center w-full h-auto p-3 mb-2 border border-gray-400 rounded-md"
     :class="{
       rotated: rotate,
-      'px-4': rotate
+      'px-4': rotate,
     }"
   >
     <div class="flex flex-row flex-wrap p-3">
-      <div class="flex flex-row w-full justify-between flex-wrap">
-        <h3 class="font-bold mb-2 ">{{ poster.title }}</h3>
+      <div class="flex flex-row flex-wrap justify-between w-full">
+        <h3 class="mb-2 font-bold">{{ poster.title }}</h3>
         <a
-          class="p-2 ml-1 border rounded border-gray-800 bg-white hover:bg-gray-800 hover:border-gray-300 hover:text-white"
+          class="p-2 ml-1 bg-white border border-gray-800 rounded hover:bg-gray-800 hover:border-gray-300 hover:text-white"
           :href="poster.link"
           target="_blank"
         >
           Source
         </a>
       </div>
-      <div class="flex flex-row w-full justify-between">
-        <img v-lazy="poster.src" :alt="poster.title" class="h-auto w-1/4" />
+      <div class="flex flex-row justify-between w-full">
+        <img v-lazy="poster.src" :alt="poster.title" class="w-1/4 h-auto" />
       </div>
     </div>
   </div>
@@ -33,12 +33,12 @@ export default {
   props: {
     poster: {
       type: Object,
-      default: () => {}
+      default: () => {},
     },
     frameRotated: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   computed: {
     rotate() {
@@ -47,8 +47,8 @@ export default {
       }
 
       return this.frameRotated && this.poster.orientation === orientations.BOTH;
-    }
+    },
   },
-  methods: {}
+  methods: {},
 };
 </script>

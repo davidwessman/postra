@@ -5,19 +5,19 @@
         v-if="formMode"
         class="flex flex-row flex-wrap justify-between border-b border-gray-600"
       >
-        <div class="mr-6 mb-4">
-          <h2 class="text-l font-semibold mr-2">Change poster - add one</h2>
+        <div class="mb-4 mr-6">
+          <h2 class="mr-2 font-semibold text-l">Change poster - add one</h2>
         </div>
         <div class="flex flex-row justify-between mb-4">
           <button
-            class="p-2 ml-1 border rounded border-gray-800 bg-white mr-2 hover:bg-gray-800 hover:border-gray-300 hover:text-white"
+            class="p-2 ml-1 mr-2 bg-white border border-gray-800 rounded hover:bg-gray-800 hover:border-gray-300 hover:text-white"
             @click="formMode = false"
           >
             Choose poster instead
           </button>
           <button
             type="button"
-            class="p-2 ml-1 rounded border bg-blue-700 border-blue-700 text-white hover:bg-blue-900"
+            class="p-2 ml-1 text-white bg-blue-700 border border-blue-700 rounded hover:bg-blue-900"
             @click="close"
           >
             Close
@@ -28,19 +28,19 @@
         v-else
         class="flex flex-row flex-wrap justify-between border-b border-gray-600"
       >
-        <div class="mr-6 mb-4">
-          <h2 class="text-l font-semibold mr-2">Change poster - pick one</h2>
+        <div class="mb-4 mr-6">
+          <h2 class="mr-2 font-semibold text-l">Change poster - pick one</h2>
         </div>
         <div class="flex flex-row justify-between mb-4">
           <button
-            class="p-2 ml-1 border rounded border-gray-800 bg-white mr-2 hover:bg-gray-800 hover:border-gray-300 hover:text-white"
+            class="p-2 ml-1 mr-2 bg-white border border-gray-800 rounded hover:bg-gray-800 hover:border-gray-300 hover:text-white"
             @click="formMode = true"
           >
             + Add a poster
           </button>
           <button
             type="button"
-            class="p-2 ml-1 rounded border bg-blue-700 border-blue-700 text-white hover:bg-blue-900"
+            class="p-2 ml-1 text-white bg-blue-700 border border-blue-700 rounded hover:bg-blue-900"
             @click="close"
           >
             Close
@@ -80,44 +80,44 @@ export default {
     Modal,
     PosterForm,
     PosterInformation,
-    SelectedPoster
+    SelectedPoster,
   },
   props: {
     open: {
       type: Boolean,
-      default: false
+      default: false,
     },
     frame: {
       type: Object,
-      default: () => {}
+      default: () => {},
     },
     posters: {
       type: Array,
-      default: () => []
-    }
+      default: () => [],
+    },
   },
   data() {
     return {
       formMode: false,
       selectedPoster: null,
-      newPoster: new Poster(0, "", "", "")
+      newPoster: new Poster(0, "", "", ""),
     };
   },
   computed: {
     rotated() {
       return this.frame && this.frame.orientation === orientations.LANDSCAPE;
-    }
+    },
   },
   watch: {
     frame: {
-      handler: function() {
+      handler: function () {
         if (this.frame === null) {
           this.selectedPoster = null;
         } else {
           this.selectedPoster = this.frame.poster;
         }
-      }
-    }
+      },
+    },
   },
   methods: {
     selected(poster) {
@@ -145,7 +145,7 @@ export default {
       if (confirmed) {
         this.close();
       }
-    }
-  }
+    },
+  },
 };
 </script>

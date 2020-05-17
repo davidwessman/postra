@@ -1,17 +1,17 @@
 <template>
   <div
-    class="flex items-center h-auto p-3 mb-2 w-1/3 lg:w-1/5"
+    class="flex items-center w-1/3 h-auto p-3 mb-2 lg:w-1/5"
     :class="{
       rotated: rotate,
-      'px-4': rotate
+      'px-4': rotate,
     }"
   >
     <img
       v-lazy="poster.src"
       :alt="poster.title"
-      class="mx-auto max-h-full w-auto"
+      class="w-auto max-h-full mx-auto"
       :class="{
-        'border-4 border-teal-400': selected
+        'border-4 border-teal-400': selected,
       }"
       @click="select(poster, selected)"
     />
@@ -26,26 +26,26 @@ export default {
   props: {
     poster: {
       type: Object,
-      default: () => {}
+      default: () => {},
     },
     selected: {
       type: Boolean,
-      default: false
+      default: false,
     },
     frameRotated: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   computed: {
     rotate() {
       return this.frameRotated && this.poster.orientation === orientations.BOTH;
-    }
+    },
   },
   methods: {
     select(poster, confirmed = false) {
       this.$emit("select", poster, confirmed);
-    }
-  }
+    },
+  },
 };
 </script>

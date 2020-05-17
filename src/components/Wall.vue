@@ -1,7 +1,7 @@
 <template>
-  <div class="flex w-full h-screen px-auto justify-center">
+  <div class="flex justify-center w-full h-screen px-auto">
     <svg
-      class="h-screen w-auto"
+      class="w-auto h-screen"
       xmlns="http://www.w3.org/2000/svg"
       role="presentation"
       viewBox="0 0 145 100"
@@ -41,31 +41,31 @@ export default {
   name: "Wall",
   components: {
     FrameDisplay,
-    PosterSwitcher
+    PosterSwitcher,
   },
   props: {
     posters: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     pattern: {
       type: Object,
-      default: () => {}
+      default: () => {},
     },
     hScale: {
       type: Number,
-      default: 1.0
+      default: 1.0,
     },
     wScale: {
       type: Number,
-      default: 1.0
-    }
+      default: 1.0,
+    },
   },
   data() {
     return {
       helper: null,
       switchingFrame: null,
-      bgImage: require("../assets/rawpixel-760112-unsplash.jpg")
+      bgImage: require("../assets/rawpixel-760112-unsplash.jpg"),
     };
   },
   computed: {
@@ -74,7 +74,7 @@ export default {
         return [];
       }
       return this.pattern.frames;
-    }
+    },
   },
   created() {
     this.helper = new FrameHelper(
@@ -96,7 +96,7 @@ export default {
     },
     closeSwitcher() {
       this.switchingFrame = null;
-    }
-  }
+    },
+  },
 };
 </script>

@@ -1,15 +1,15 @@
 <template>
   <Modal name="poster-switcher" :open="open" @close="close">
     <template v-slot:title>
-      <h2 class="text-l font-semibold mr-2">Change pattern</h2>
+      <h2 class="mr-2 font-semibold text-l">Change pattern</h2>
       <span>
         Select a pattern by clicking it.
       </span>
     </template>
     <template v-slot:body>
       <div
-        class="flex flex-wrap justify-center overflow-y-auto p-3 z-40 w-full"
-        style="max-height: 60%"
+        class="z-40 flex flex-wrap justify-center w-full p-3 overflow-y-auto"
+        style="max-height: 60%;"
       >
         <PatternDisplay
           v-for="pattern in patterns"
@@ -33,26 +33,26 @@ export default {
   name: "PatternSwitcher",
   components: {
     Modal,
-    PatternDisplay
+    PatternDisplay,
   },
   props: {
     open: Boolean,
     patterns: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     selected: {
       type: Object,
-      default: () => {}
+      default: () => {},
     },
     hScale: {
       type: Number,
-      default: 1.0
+      default: 1.0,
     },
     wScale: {
       type: Number,
-      default: 1.0
-    }
+      default: 1.0,
+    },
   },
   methods: {
     onSelect(pattern) {
@@ -60,7 +60,7 @@ export default {
     },
     close() {
       this.$emit("close", this.selected);
-    }
-  }
+    },
+  },
 };
 </script>

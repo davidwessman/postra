@@ -1,10 +1,10 @@
 <template>
-  <div class="flex p-2 w-full sm:w-1/2 md:w-1/3 justify-center">
+  <div class="flex justify-center w-full p-2 sm:w-1/2 md:w-1/3">
     <svg
-      class="bg-white h-64 w-64 z-20"
+      class="z-20 w-64 h-64 bg-white"
       :class="{
         'border-4 border-teal-400': selected,
-        'border border-black hover:border-4 hover:border-blue': !selected
+        'border border-black hover:border-4 hover:border-blue': !selected,
       }"
       viewBox="0 0 145 100"
       @click="onClick(pattern)"
@@ -33,17 +33,17 @@ export default {
     pattern: Pattern,
     hScale: {
       type: Number,
-      default: 1.0
+      default: 1.0,
     },
     wScale: {
       type: Number,
-      default: 1.0
+      default: 1.0,
     },
-    selected: Boolean
+    selected: Boolean,
   },
   data() {
     return {
-      helper: null
+      helper: null,
     };
   },
   created() {
@@ -52,7 +52,7 @@ export default {
   methods: {
     onClick(pattern) {
       this.$emit("select", pattern);
-    }
-  }
+    },
+  },
 };
 </script>

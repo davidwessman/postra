@@ -2,14 +2,14 @@
   <Modal name="information" :open="open" @close="close">
     <template v-slot:title>
       <h2
-        class="font-semibold text-gray-900 text-2xl leading-tight border-b-2 border-gray-200 ml-2 mb-4"
+        class="mb-4 ml-2 text-2xl font-semibold leading-tight text-gray-900 border-b-2 border-gray-200"
       >
         About this page
       </h2>
     </template>
     <template v-slot:body>
       <div
-        class="flex flex-col overflow-y-auto p-3 z-40 w-full md:w-4/5 mx-2 text-lg"
+        class="z-40 flex flex-col w-full p-3 mx-2 overflow-y-auto text-lg md:w-4/5"
       >
         <span class="mb-4">
           I tried to decide which posters to buy for our wall at home and
@@ -36,7 +36,7 @@
             <img
               v-lazy="posterStoreImage"
               alt="Posterstore"
-              class="h-auto w-64 my-4"
+              class="w-64 h-auto my-4"
             />
           </a>
         </span>
@@ -49,12 +49,6 @@
           <br />
           / David
         </span>
-        <button
-          class="p-2 border rounded border-gray-800 bg-white mr-2 hover:bg-gray-800 hover:border-gray-300 hover:text-white"
-          @click="close"
-        >
-          Close
-        </button>
       </div>
     </template>
   </Modal>
@@ -66,17 +60,18 @@ export default {
   name: "Information",
   components: { Modal },
   props: {
-    open: Boolean
+    open: Boolean,
   },
   data() {
     return {
-      posterStoreImage: "https://posterstore.se/userfiles/image/logotype-ps.png"
+      posterStoreImage:
+        "https://posterstore.se/userfiles/image/logotype-ps.png",
     };
   },
   methods: {
     close() {
       this.$emit("close");
-    }
-  }
+    },
+  },
 };
 </script>
