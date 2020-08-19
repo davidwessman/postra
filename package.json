@@ -33,7 +33,7 @@
     "prettier": "^2.0.5",
     "purgecss": "^2.1.2",
     "sass-loader": "^9.0.3",
-    "tailwindcss": "^1.6.2",
+    "tailwindcss": "^1.7.1",
     "vue-template-compiler": "^2.6.11"
   },
   "browserslist": [
