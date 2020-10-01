@@ -7,7 +7,7 @@
         >
         <input
           id="title"
-          v-model="poster.title"
+          v-model="localPoster.title"
           class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
           type="text"
           placeholder="Title"
@@ -19,7 +19,7 @@
         >
         <input
           id="src"
-          v-model="poster.src"
+          v-model="localPoster.src"
           class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
           type="text"
           placeholder="Link"
@@ -31,7 +31,7 @@
         >
         <select
           id="orientation"
-          v-model="poster.orientation"
+          v-model="localPoster.orientation"
           class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
           type="text"
           placeholder="Orientation"
@@ -45,7 +45,7 @@
         <button
           type="button"
           class="px-3 py-1 text-white bg-blue-700 border border-blue-700 rounded-lg hover:bg-blue-dark"
-          @click="handleSubmit(poster)"
+          @click="handleSubmit()"
         >
           Save
         </button>
@@ -80,11 +80,18 @@ export default {
   data() {
     return {
       orientations: orientations,
+      localPoster: JSON.parse(JSON.stringify(this.poster)),
     };
   },
+
+  watch: {
+    poster(newValue) {
+      this.localPoster = JSON.parse(JSON.stringify(this.poster));
+    },
+  },
   methods: {
-    handleSubmit(poster) {
-      this.$emit("submit", poster);
+    handleSubmit() {
+      this.$emit("submit", this.localPoster);
     },
   },
 };
