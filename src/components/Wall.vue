@@ -25,9 +25,9 @@
       :open="switchingFrame != null"
       :frame="switchingFrame"
       :posters="posters"
-      @posterAdded="posterAdded"
+      @poster-added="posterAdded"
       @close="closeSwitcher"
-      @frameChanged="frameChanged"
+      @frame-changed="frameChanged"
     />
   </div>
 </template>
@@ -86,13 +86,13 @@ export default {
   },
   methods: {
     posterAdded(poster) {
-      this.$emit("posterAdded", poster);
+      this.$emit("poster-added", poster);
     },
     selectFrame(frame) {
       this.switchingFrame = frame;
     },
     frameChanged(frame, poster) {
-      this.$emit("frameChanged", frame, poster);
+      this.$emit("frame-changed", frame, poster);
     },
     closeSwitcher() {
       this.switchingFrame = null;

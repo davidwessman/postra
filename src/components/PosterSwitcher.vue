@@ -1,6 +1,6 @@
 <template>
   <Modal name="poster-switcher" :open="open" @close="close">
-    <template v-slot:title>
+    <template #title>
       <div
         v-if="formMode"
         class="flex flex-row flex-wrap justify-between border-b border-gray-600"
@@ -48,7 +48,7 @@
         </div>
       </div>
     </template>
-    <template v-slot:body>
+    <template #body>
       <div v-if="formMode" class="flex flex-wrap pt-2">
         <PosterForm :poster="newPoster" @submit="onSubmitPoster" />
       </div>
@@ -132,7 +132,7 @@ export default {
       this.$emit("close");
     },
     onSubmitPoster(poster) {
-      this.$emit("posterAdded", poster);
+      this.$emit("poster-added", poster);
       this.onSelectPoster(poster);
       this.formMode = false;
       this.close();
@@ -140,7 +140,7 @@ export default {
     onSelectPoster(poster, confirmed = false) {
       const frame = this.frame;
       frame.poster = poster;
-      this.$emit("frameChanged", frame, poster);
+      this.$emit("frame-changed", frame, poster);
       this.selectedPoster = poster;
       if (confirmed) {
         this.close();

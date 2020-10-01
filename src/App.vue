@@ -5,8 +5,8 @@
       :pattern="selectedPattern"
       :posters="posters"
       :w-scale="wScale"
-      @frameSwitched="frameSwitchedPoster"
-      @posterAdded="addPersonalPoster"
+      @frame-changed="frameSwitchedPoster"
+      @poster-added="addPersonalPoster"
     />
     <div
       class="fixed top-0 flex justify-center w-full p-3 px-6 bg-blue-800-transparent md:justify-between"
