@@ -191,16 +191,15 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="css">
 img {
   max-width: unset;
   height: unset;
   max-height: 100%;
   width: auto;
 }
-.rotated {
-  img {
-    transform: rotate(90deg);
-  }
+
+.rotated img {
+  transform: rotate(90deg);
 }
 </style>
