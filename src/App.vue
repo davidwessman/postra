@@ -12,7 +12,7 @@
       class="fixed top-0 flex justify-center w-full p-3 px-6 bg-blue-800-transparent md:justify-between"
     >
       <div class="flex flex-row items-center">
-        <img :src="logoUrl" class="h-16" />
+        <SvgLogo class="h-16" />
         <h1 class="ml-3 text-xl font-semibold">Postra</h1>
       </div>
       <div class="hidden md:flex">
@@ -61,7 +61,6 @@
       @close="patternSwitcherClosed"
     />
     <Information :open="information" @close="closeInformation" />
-    <portal-target name="modals"></portal-target>
   </div>
 </template>
 
@@ -73,12 +72,14 @@ import { checkStorage, saveToStorage } from "./localStorage";
 import patternsJson from "./assets/patterns.json";
 import postersJson from "./assets/posters.json";
 import { Pattern } from "./frame";
+import SvgLogo from "./assets/logo.svg";
 
 export default {
   name: "App",
   components: {
     Information,
     PatternSwitcher,
+    SvgLogo,
     Wall,
   },
   data: function () {
@@ -94,7 +95,6 @@ export default {
       jsonPosters: postersJson.posters,
       jsonPatterns: patternsJson.patterns,
       selectedPattern: null,
-      logoUrl: require("./assets/logo.svg"),
       wScale: 1 / 300,
       hScale: 1 / 200,
     };
@@ -198,7 +198,6 @@ img {
   max-height: 100%;
   width: auto;
 }
-
 .rotated img {
   transform: rotate(90deg);
 }

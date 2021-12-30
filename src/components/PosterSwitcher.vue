@@ -1,5 +1,5 @@
 <template>
-  <Modal name="poster-switcher" :open="open" @close="close">
+  <Modal :open="open" @close="close">
     <template #title>
       <div
         v-if="formMode"
@@ -96,6 +96,7 @@ export default {
       default: () => [],
     },
   },
+  emits: ["close", "frame-changed", "poster-added"],
   data() {
     return {
       formMode: false,

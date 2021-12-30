@@ -1,7 +1,7 @@
 const orientations = {
   PORTRAIT: "portrait",
   LANDSCAPE: "landscape",
-  BOTH: "both"
+  BOTH: "both",
 };
 
 export class Poster {

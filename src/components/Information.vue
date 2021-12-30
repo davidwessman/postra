@@ -1,5 +1,5 @@
 <template>
-  <Modal name="information" :open="open" @close="close">
+  <Modal :open="open" @close="close">
     <template v-slot:title>
       <h2
         class="mb-4 ml-2 text-2xl font-semibold leading-tight text-gray-900 border-b-2 border-gray-200"
