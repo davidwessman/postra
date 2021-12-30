@@ -53,7 +53,7 @@
     </div>
     <div class="w-1/3 p-2">
       <img
-        v-lazy="poster.src"
+        :src="poster.src"
         :alt="poster.title"
         class="w-auto max-h-full mx-auto"
         :class="{
