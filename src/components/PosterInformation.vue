@@ -7,7 +7,7 @@
     }"
   >
     <img
-      v-lazy="poster.src"
+      :src="poster.src"
       :alt="poster.title"
       class="w-auto max-h-full mx-auto"
       :class="{

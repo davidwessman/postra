@@ -19,7 +19,7 @@
         </a>
       </div>
       <div class="flex flex-row justify-between w-full">
-        <img v-lazy="poster.src" :alt="poster.title" class="w-1/4 h-auto" />
+        <img :src="poster.src" :alt="poster.title" class="w-1/4 h-auto" />
       </div>
     </div>
   </div>

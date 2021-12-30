@@ -34,7 +34,7 @@
           All the currently included posters are borrowed from Posterstore:
           <a href="https://posterstore.se/" class="text-blue-700 underline">
             <img
-              v-lazy="posterStoreImage"
+              :src="posterStoreImage"
               alt="Posterstore"
               class="w-64 h-auto my-4"
             />
