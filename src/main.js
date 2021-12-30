@@ -1,14 +1,11 @@
-import Vue from "vue";
-import PortalVue from "portal-vue";
-import VueLazyLoad from "vue-lazyload";
+import { createApp } from "vue";
+import VueLazyLoad from "vue3-lazyload";
 import App from "./App.vue";
-import "./main.css";
+import "./index.css";
 import "./registerServiceWorker";
 
-Vue.config.productionTip = false;
-Vue.use(PortalVue);
-Vue.use(VueLazyLoad);
+const app = createApp(App);
 
-new Vue({
-  render: h => h(App)
-}).$mount("#app");
+app.use(VueLazyLoad);
+
+app.mount("#app");

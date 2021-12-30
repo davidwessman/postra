@@ -1,15 +1,13 @@
 <template>
-  <Modal name="poster-switcher" :open="open" @close="close">
+  <Modal :open="open" @close="close">
     <template v-slot:title>
       <h2 class="mr-2 font-semibold text-l">Change pattern</h2>
-      <span>
-        Select a pattern by clicking it.
-      </span>
+      <span> Select a pattern by clicking it. </span>
     </template>
     <template v-slot:body>
       <div
         class="z-40 flex flex-wrap justify-center w-full p-3 overflow-y-auto"
-        style="max-height: 60%;"
+        style="max-height: 60%"
       >
         <PatternDisplay
           v-for="pattern in patterns"
@@ -35,6 +33,7 @@ export default {
     Modal,
     PatternDisplay,
   },
+  emits: ["close", "switched"],
   props: {
     open: Boolean,
     patterns: {

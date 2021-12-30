@@ -8,7 +8,7 @@
     >
       <image
         class="z-0"
-        :xlink:href="bgImage"
+        :xlink:href="bgImageUrl"
         height="100%"
         width="100%"
         preserveAspectRatio="xMinYMid meet"
@@ -36,6 +36,7 @@
 import FrameDisplay from "./FrameDisplay.vue";
 import PosterSwitcher from "./PosterSwitcher.vue";
 import { FrameHelper } from "../frame";
+import bgImage from "../assets/rawpixel-760112-unsplash.jpg";
 
 export default {
   name: "Wall",
@@ -43,6 +44,7 @@ export default {
     FrameDisplay,
     PosterSwitcher,
   },
+  emits: ["frame-changed", "poster-added"],
   props: {
     posters: {
       type: Array,
@@ -65,7 +67,7 @@ export default {
     return {
       helper: null,
       switchingFrame: null,
-      bgImage: require("../assets/rawpixel-760112-unsplash.jpg"),
+      bgImageUrl: bgImage,
     };
   },
   computed: {

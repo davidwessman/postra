@@ -30,14 +30,14 @@ export default {
       type: Object,
       default() {
         return {};
-      }
+      },
     },
     helper: {
       type: Object,
       default() {
         return {};
-      }
-    }
+      },
+    },
   },
   computed: {
     hasPoster() {
@@ -57,12 +57,12 @@ export default {
     },
     viewBox() {
       return `0 0 ${this.width} ${this.height}`;
-    }
+    },
   },
   methods: {
     onClick() {
       this.$emit("select", this.frame);
-    }
-  }
+    },
+  },
 };
 </script>
