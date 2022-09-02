@@ -1980,10 +1980,10 @@ v8-compile-cache@^2.0.3:
   resolved "https://registry.yarnpkg.com/v8-compile-cache/-/v8-compile-cache-2.3.0.tgz#2de19618c66dc247dcfb6f99338035d8245a2cee"
   integrity sha512-l8lCEmLcLYZh4nbunNZvQCJc5pv7+RCwa8q/LdUx8u7lsWvPDKmpodJAJNwkAhJC//dFY48KuIEmjtd4RViDrA==
 
-vite-svg-loader@^3.5.0:
-  version "3.5.0"
-  resolved "https://registry.yarnpkg.com/vite-svg-loader/-/vite-svg-loader-3.5.0.tgz#da03c03096d0ef8e6c7011648b150e04163e0cb5"
-  integrity sha512-lFIA9YBMM24szNn5Gjk3d7f7dsfMcp/1Gmto7MCxdc0oCMJzjQZraDj1l0Ay/SRq2p6N1E069D1imwgXo0Zd3A==
+vite-svg-loader@^3.5.1:
+  version "3.5.1"
+  resolved "https://registry.yarnpkg.com/vite-svg-loader/-/vite-svg-loader-3.5.1.tgz#badf2bdc613198df91351e64932383221a7c360c"
+  integrity sha512-zGAq7qQEh21bWDIuJUwl2t9Vmr4iH7PLqKM1yqS30BjjkLilSYuOokn6wa+Rg/M8m8k1XnQowuj3zRrZq9rYMg==
   dependencies:
     "@vue/compiler-sfc" "^3.2.20"
     svgo "^2.7.0"
