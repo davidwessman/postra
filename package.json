@@ -26,7 +26,7 @@
     "postcss": "^8.4.24",
     "prettier": "^2.8.8",
     "tailwindcss": "^3.3.2",
-    "vite": "^2.9.14",
+    "vite": "^2.9.16",
     "vite-svg-loader": "^4.0.0"
   },
   "browserslist": [
