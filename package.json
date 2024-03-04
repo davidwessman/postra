@@ -17,7 +17,7 @@
     "@tailwindcss/forms": "^0.5.7",
     "@tailwindcss/typography": "^0.5.10",
     "@vitejs/plugin-vue": "^2.3.4",
-    "autoprefixer": "^10.4.17",
+    "autoprefixer": "^10.4.18",
     "eslint": "^7",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-vue": "^9.22.0",
