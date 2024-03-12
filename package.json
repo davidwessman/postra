@@ -20,7 +20,7 @@
     "autoprefixer": "^10.4.18",
     "eslint": "^7",
     "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-vue": "^9.22.0",
+    "eslint-plugin-vue": "^9.23.0",
     "husky": "^9.0.11",
     "lint-staged": "^15.2.2",
     "postcss": "^8.4.35",
