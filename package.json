@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "register-service-worker": "^1.7.2",
-    "vue": "^3.4.24"
+    "vue": "^3.4.25"
   },
   "devDependencies": {
     "@tailwindcss/aspect-ratio": "^0.4.2",
