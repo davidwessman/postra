@@ -8,7 +8,7 @@
         <input
           id="title"
           v-model="localPoster.title"
-          class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+          class="w-full px-3 py-2 leading-tight text-gray-700 border rounded-sm shadow-sm appearance-none focus:outline-hidden focus:shadow-outline"
           type="text"
           placeholder="Title"
         />
@@ -20,7 +20,7 @@
         <input
           id="src"
           v-model="localPoster.src"
-          class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+          class="w-full px-3 py-2 leading-tight text-gray-700 border rounded-sm shadow-sm appearance-none focus:outline-hidden focus:shadow-outline"
           type="text"
           placeholder="Link"
         />
@@ -32,7 +32,7 @@
         <select
           id="orientation"
           v-model="localPoster.orientation"
-          class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+          class="w-full px-3 py-2 leading-tight text-gray-700 border rounded-sm shadow-sm appearance-none focus:outline-hidden focus:shadow-outline"
           type="text"
           placeholder="Orientation"
         >

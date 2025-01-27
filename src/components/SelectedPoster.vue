@@ -11,7 +11,7 @@
       <div class="flex flex-row flex-wrap justify-between w-full">
         <h3 class="mb-2 font-bold">{{ poster.title }}</h3>
         <a
-          class="p-2 ml-1 bg-white border border-gray-800 rounded hover:bg-gray-800 hover:border-gray-300 hover:text-white"
+          class="p-2 ml-1 bg-white border border-gray-800 rounded-sm hover:bg-gray-800 hover:border-gray-300 hover:text-white"
           :href="poster.link"
           target="_blank"
         >

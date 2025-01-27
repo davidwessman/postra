@@ -17,13 +17,13 @@
       </div>
       <div class="hidden md:flex">
         <button
-          class="p-2 mr-2 bg-white border border-gray-800 rounded hover:bg-gray-800 hover:border-gray-300 hover:text-white"
+          class="p-2 mr-2 bg-white border border-gray-800 rounded-sm hover:bg-gray-800 hover:border-gray-300 hover:text-white"
           @click="togglePatternSwitching"
         >
           Switch pattern
         </button>
         <button
-          class="p-2 bg-white border border-gray-800 rounded hover:bg-gray-800 hover:border-gray-300 hover:text-white"
+          class="p-2 bg-white border border-gray-800 rounded-sm hover:bg-gray-800 hover:border-gray-300 hover:text-white"
           @click="openInformation"
         >
           About this page
@@ -35,7 +35,7 @@
     >
       <div class="flex justify-center w-1/2">
         <button
-          class="p-2 mr-2 bg-white border border-gray-800 rounded hover:bg-gray-800 hover:border-gray-300 hover:text-white"
+          class="p-2 mr-2 bg-white border border-gray-800 rounded-sm hover:bg-gray-800 hover:border-gray-300 hover:text-white"
           @click="togglePatternSwitching"
         >
           Switch pattern
@@ -43,7 +43,7 @@
       </div>
       <div class="flex justify-center w-1/2">
         <button
-          class="p-2 bg-white border border-gray-800 rounded hover:bg-gray-800 hover:border-gray-300 hover:text-white"
+          class="p-2 bg-white border border-gray-800 rounded-sm hover:bg-gray-800 hover:border-gray-300 hover:text-white"
           @click="openInformation"
         >
           About this page
