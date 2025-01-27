@@ -10,14 +10,14 @@
         </div>
         <div class="flex flex-row justify-between mb-4">
           <button
-            class="p-2 ml-1 mr-2 bg-white border border-gray-800 rounded hover:bg-gray-800 hover:border-gray-300 hover:text-white"
+            class="p-2 ml-1 mr-2 bg-white border border-gray-800 rounded-sm hover:bg-gray-800 hover:border-gray-300 hover:text-white"
             @click="formMode = false"
           >
             Choose poster instead
           </button>
           <button
             type="button"
-            class="p-2 ml-1 text-white bg-blue-700 border border-blue-700 rounded hover:bg-blue-900"
+            class="p-2 ml-1 text-white bg-blue-700 border border-blue-700 rounded-sm hover:bg-blue-900"
             @click="close"
           >
             Close
@@ -33,14 +33,14 @@
         </div>
         <div class="flex flex-row justify-between mb-4">
           <button
-            class="p-2 ml-1 mr-2 bg-white border border-gray-800 rounded hover:bg-gray-800 hover:border-gray-300 hover:text-white"
+            class="p-2 ml-1 mr-2 bg-white border border-gray-800 rounded-sm hover:bg-gray-800 hover:border-gray-300 hover:text-white"
             @click="formMode = true"
           >
             + Add a poster
           </button>
           <button
             type="button"
-            class="p-2 ml-1 text-white bg-blue-700 border border-blue-700 rounded hover:bg-blue-900"
+            class="p-2 ml-1 text-white bg-blue-700 border border-blue-700 rounded-sm hover:bg-blue-900"
             @click="close"
           >
             Close
