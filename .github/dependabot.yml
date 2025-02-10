@@ -10,3 +10,8 @@ updates:
       - dependency-name: sass-loader
         versions:
           - ">= 11.a, < 12"
+    groups:
+      tailwind:
+        patterns:
+          - "tailwindcss"
+          - "@tailwindcss/*"
