@@ -17,7 +17,7 @@
     "@tailwindcss/forms": "^0.5.10",
     "@tailwindcss/postcss": "^4.0.14",
     "@tailwindcss/typography": "^0.5.16",
-    "@vitejs/plugin-vue": "^5.2.2",
+    "@vitejs/plugin-vue": "^5.2.3",
     "eslint": "^9",
     "eslint-plugin-prettier": "^5.2.3",
     "eslint-plugin-vue": "^9.33.0",
